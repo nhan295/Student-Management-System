@@ -1,3 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.layout {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    height: 100%;
+}
+
+.layout header {
+    grid-area: header;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.layout header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.layout .sidebar {
+    grid-area: sidebar;
+    background-color: #42a5f5;
+    padding: 1rem;
+}
+
+.layout .sidebar ul {
+    list-style: none;
+}
+
+.layout .sidebar li {
+    margin: 0.75rem 0;
+    color: white;
+    cursor: pointer;
+}
+
+.layout .sidebar li:hover {
+    opacity: 0.8;
+}
+
+.layout .main {
+    grid-area: main;
+    background-color: #fff;
+    padding: 2rem 3rem;
+    overflow-y: auto; }

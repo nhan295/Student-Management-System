@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import "tailwindcss";
 
-
 function AddSubject() {
   const [subjectName, setSubjectName] = useState('');
   const [subjectCode, setSubjectCode] = useState('');
@@ -10,7 +9,7 @@ function AddSubject() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/api/subjects', {
+      await axios.post('http://localhost:3000/api/subjects', {
         subject_name: subjectName,
         subject_code: subjectCode
       });
@@ -22,56 +21,61 @@ function AddSubject() {
       console.error(err);
     }
   };
-  const handleRefresh = () => {
-    setSubjectName('');
-    setSubjectCode('');
-  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-blue-100 border border-blue-300 p-8 rounded-xl shadow-lg">
-        <div className="border-2 border-blue-600 p-6 rounded-md bg-white">
-          <h2 className="text-xl font-bold text-center mb-6">Thêm học phần</h2>
-          <form onSubmit={handleSubmit} className="space-y-4 w-72">
-            <div>
-              <label className="block mb-1">Tên học phần:</label>
-              <input
-                type="text"
-                value={subjectName}
-                onChange={(e) => setSubjectName(e.target.value)}
-                className="w-full border px-3 py-2 rounded"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-1">Mã số học phần:</label>
-              <input
-                type="text"
-                value={subjectCode}
-                onChange={(e) => setSubjectCode(e.target.value)}
-                className="w-full border px-3 py-2 rounded"
-                required
-              />
-            </div>
-            <div className="flex justify-between">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Thêm
-              </button>
-              <button
-                type="button"
-                onClick={handleRefresh}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-              >
-                Refresh
-              </button>
-            </div>
-          </form>
+    <>
+      <h1 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Thêm học phần</h1>
+      <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
+          <label style={{ width: 150, fontWeight: 500 }}>Tên học phần:</label>
+          <input
+            type="text"
+            value={subjectName}
+            onChange={(e) => setSubjectName(e.target.value)}
+            placeholder="Nhập tên học phần"
+            style={{
+              flex: 1,
+              padding: 8,
+              border: '1px solid #ccc',
+              borderRadius: 4
+            }}
+            required
+          />
         </div>
-      </div>
-    </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 25 }}>
+          <label style={{ width: 150, fontWeight: 500 }}>Mã số học phần:</label>
+          <input
+            type="text"
+            value={subjectCode}
+            onChange={(e) => setSubjectCode(e.target.value)}
+            placeholder="Nhập mã số học phần"
+            style={{
+              flex: 1,
+              padding: 8,
+              border: '1px solid #ccc',
+              borderRadius: 4
+            }}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          style={{
+            display: 'block',
+            margin: '0 auto',
+            padding: '0.75rem 2rem',
+            backgroundColor: '#1976d2',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 24,
+            fontSize: '1rem',
+            cursor: 'pointer'
+          }}
+        >
+          THÊM
+        </button>
+      </form>
+    </>
   );
 }
 

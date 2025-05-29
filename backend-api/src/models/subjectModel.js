@@ -1,15 +1,20 @@
-// models/subjectModel.js
 const db = require("../config/db");
 
-const Subject = {
-  getAll: () => db("subjects").select("*"),
+module.exports = {
+  // Lấy danh sách tất cả học phần
+  getAll: () =>
+    db("subjects").select("subject_id", "subject_name", "subject_code"),
 
-  create: (subject) => db("subjects").insert(subject),
+  // Lấy một học phần theo ID
+  getById: (id) => db("subjects").where({ subject_id: id }).first(),
 
-  updateById: (subject_id, subject) =>
-    db("subjects").where({ subject_id }).update(subject),
+  // Tạo mới học phần, data = { subject_name, subject_code }
+  create: (data) => db("subjects").insert(data),
 
-  deleteById: (subject_id) => db("subjects").where({ subject_id }).del(),
+  // Cập nhật học phần theo ID
+  updateById: (id, data) =>
+    db("subjects").where({ subject_id: id }).update(data),
+
+  // Xóa học phần theo ID
+  deleteById: (id) => db("subjects").where({ subject_id: id }).del(),
 };
-
-module.exports = Subject;

@@ -9,7 +9,7 @@ function AddSubject() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/subjects', {
+      await axios.post('http://localhost:3000/api/v1/subjects', {
         subject_name: subjectName,
         subject_code: subjectCode
       });
@@ -23,7 +23,8 @@ function AddSubject() {
   };
 
   return (
-    <>
+    <> 
+    <div className="form-container">
       <h1 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Thêm học phần</h1>
       <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
@@ -75,6 +76,7 @@ function AddSubject() {
           THÊM
         </button>
       </form>
+      </div>
     </>
   );
 }

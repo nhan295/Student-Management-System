@@ -11,6 +11,7 @@ body,
     font-family: Arial, sans-serif;
 }
 
+/* --- Layout Grid --- */
 .layout {
     display: grid;
     grid-template-rows: auto 1fr;
@@ -20,47 +21,122 @@ body,
         "sidebar main";
     height: 100%;
 }
+.header-menu-btn {
+    position: absolute;
+    width: 240px;
+    bottom: 0px;
+    left: 0px;
+    top: auto;
+    display: flex;
+    align-items: center;
+    background-color: #83aedf;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color .2s, box-shadow .2s;
+}
 
-.layout header {
-    grid-area: header;
-    height: 130px;
+.header-menu-btn:hover {
+    background-color: #2185f7;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); }
+
+.hamburger-icon {
+    font-size: 1.25rem;
+    margin-right: 6px;
+}
+
+.hamburger-text {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* --- Header --- */
+.header {
+    grid-column: 1 / -1;
     position: relative;
     overflow: hidden;
+    height: 110px;
     background-color: #0861c8;
 }
 
-.layout header img {
+.header-banner {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.layout .sidebar {
-    grid-area: sidebar;
-    background-color: #42a5f5;
-    padding: 1rem;
-}
-
-.layout .sidebar ul {
-    list-style: none;
-}
-
-.layout .sidebar li {
-    margin: 0.75rem 0;
-    color: white;
+.header-toggle {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 1.5rem;
     cursor: pointer;
+    width: 32px;
+    height: 32px;
+    line-height: 28px;
+    border-radius: 50%; }
+
+/* --- Sidebar --- */
+.sidebar {
+    background: #42a5f5;
+    overflow: hidden;
+    transition: width .3s ease;
 }
 
-.layout .sidebar li:hover {
-    opacity: 0.8;
+.sidebar.open {
+    width: 240px;
 }
 
-.layout .main {
+.sidebar.collapsed {
+    width: 100px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-link .icon {
+    font-size: 1.25rem;
+}
+
+.sidebar-link .label {
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+.sidebar-link.active {
+    background: rgba(0, 0, 0, 0.2); }
+
+/* --- Main --- */
+.main {
     grid-area: main;
-    background-color: #fff;
-    padding: 2rem 3rem;
-    overflow-y: auto; }
+    background: #fff;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+}
+        
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+}
 
+/* Add Form */
 .form-container {
     margin-bottom: 2rem;
     padding: 1.5rem;
@@ -70,6 +146,7 @@ body,
     margin-left: 20%;
     margin-right: 20%;
 }
+
 /* Modal styles */
 .modal-overlay {
     position: fixed;

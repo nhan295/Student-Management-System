@@ -1,5 +1,6 @@
-const knex = require('knex');
-const knexConfig = require('../config/knexfile');
-const db = knex(knexConfig) // khoi tao knex voi cau hinh
+const knex = require("knex");
+const knexConfig = require("./knexfile");
 
-module.exports = db
+const db = knex(knexConfig.development);
+
+module.exports = db;

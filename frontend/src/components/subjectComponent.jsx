@@ -1,9 +1,9 @@
-// subjectComponent.jsx
 import React from 'react';
 import '../styles/index.css';
 import banner from '../assets/images/banner.png'; 
+import { Outlet } from 'react-router-dom';
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
 <div className="layout">
 <header>
@@ -25,7 +25,7 @@ export default function Layout({ children }) {
 
       {/* Nội dung chính */}
       <main className="main">
-        {children}
+        <Outlet />
       </main>
     </div>
   );

@@ -1,31 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
 const items = [
-  { to: '/subjects/add',    icon: '🎓', label: 'Chương trình đào tạo' },
-  { to: '/homepage', icon: '🏠', label: 'Trang Chủ' },
+  { to: "/subjects/add", icon: "🎓", label: "Chương trình đào tạo" },
+  { to: "/homepage", icon: "🏠", label: "Trang Chủ" },
   // ... thêm các link khác ở đây ...
 ];
 
 export default function Sidebar({ isOpen }) {
   return (
-    <nav className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}
-    style={{ transition: 'width .3s ease' }}>
+    <nav
+      className={`sidebar ${isOpen ? "open" : "collapsed"}`}
+      style={{ transition: "width .3s ease" }}
+    >
       <ul>
         {items.map((item) => (
           <li key={item.to}>
             <NavLink to={item.to} className="sidebar-link">
               <span
                 className="icon"
-                style={{ fontSize: '1.75rem', transition: 'font-size 0.3s' }}>
+                style={{ fontSize: "1.75rem", transition: "font-size 0.3s" }}
+              >
                 {item.icon}
-             </span>
-             <span
+              </span>
+              <span
                 className="label"
-                style={{                 opacity: isOpen ? 1 : 0,
-                transform: isOpen ? 'translateX(0)' : 'translateX(-20px)',
-               }}>
+                style={{
+                  opacity: isOpen ? 1 : 0,
+                  transform: isOpen ? "translateX(0)" : "translateX(-20px)",
+                }}
+              >
                 {item.label}
               </span>
             </NavLink>
@@ -37,5 +42,5 @@ export default function Sidebar({ isOpen }) {
 }
 
 Sidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
 };

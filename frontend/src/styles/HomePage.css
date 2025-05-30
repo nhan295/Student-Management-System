@@ -4,15 +4,16 @@
 }
 
 .home-banner {
-    width: 100%;
-    text-align: center;
+    grid-column: 1 / -1;
+        position: relative;
+        overflow: hidden;
+        height: 110px;
+        background-color: #0861c8;
 }
 
-.home-banner img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.home-banner img { width: 100%;
+        height: 100%;
+        object-fit: contain;
 }
 
 .home-bottom {

@@ -9,10 +9,11 @@ export default function Layout() {
   return (
     <div
       className="layout"
-      style={{ gridTemplateColumns: isOpen ? '240px 1fr' : '60px 1fr' }}
+      style={{ gridTemplateColumns: isOpen ? '240px 1fr' : '100px 1fr' }}
     >
-<Header onToggle={() => setIsOpen(o => !o)} />
-        <Sidebar isOpen={isOpen} />
+    <Header isOpen={isOpen}
+       onToggle={() => setIsOpen(o => !o)} />        
+      <Sidebar isOpen={isOpen} />
       <main className="main">
       <div className="main-container">
          <Outlet />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
  import Layout      from './components/layout';
+ 
  import AddSubject  from './pages/addSubject';
  import EditSubject from './pages/editSubject';
  import HomePage    from './pages/HomePage';
@@ -22,7 +23,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
         <Route path="subjects/edit/:id"    element={<EditSubject />} />
       </Route>
 
-     {/* catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -10,13 +10,24 @@ const items = [
 
 export default function Sidebar({ isOpen }) {
   return (
-    <nav className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
+    <nav className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}
+    style={{ transition: 'width .3s ease' }}>
       <ul>
         {items.map((item) => (
           <li key={item.to}>
             <NavLink to={item.to} className="sidebar-link">
-              <span className="icon">{item.icon}</span>
-              {isOpen && <span className="label">{item.label}</span>}
+              <span
+                className="icon"
+                style={{ fontSize: '1.75rem', transition: 'font-size 0.3s' }}>
+                {item.icon}
+             </span>
+             <span
+                className="label"
+                style={{                 opacity: isOpen ? 1 : 0,
+                transform: isOpen ? 'translateX(0)' : 'translateX(-20px)',
+               }}>
+                {item.label}
+              </span>
             </NavLink>
           </li>
         ))}

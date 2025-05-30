@@ -20,6 +20,7 @@ body,
         "header header"
         "sidebar main";
     height: 100%;
+    transition: grid-template-columns 0.3s ease;
 }
 .header-menu-btn {
     position: absolute;
@@ -110,12 +111,14 @@ body,
 }
 
 .sidebar-link .icon {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
+    transition: font-size 0.3s;
 }
 
 .sidebar-link .label {
     margin-left: 8px;
     white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .sidebar-link.active {

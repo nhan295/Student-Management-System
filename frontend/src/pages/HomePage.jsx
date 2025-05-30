@@ -1,5 +1,6 @@
 import "../styles/HomePage.css";
 import { useNavigate } from "react-router-dom";
+import banner from '../assets/images/banner.png';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ function HomePage() {
             {
               icon: "📋",
               label: "Chương trình đào tạo",
-              path: "/subjects/add"       // thêm đường dẫn
+              path: "/subjects/add"
             },
             { icon: "📖", label: "Tuyển sinh" },
             { icon: "📚", label: "Kết quả học tập" },
@@ -18,9 +19,9 @@ function HomePage() {
 
     return (
         <div className="home-page">
-            <div className="home-banner">
-                <img src="../src/assets/images/banner.png" alt="banner" />
-            </div>
+            <header className="home-banner">
+                      <img src= {banner} alt="Banner" className="header-banner" />
+            </header>
 
             <div className="home-bottom">
             {menuItems.map((item, index) => (

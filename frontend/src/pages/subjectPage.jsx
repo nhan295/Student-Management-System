@@ -9,6 +9,9 @@ export default function SubjectPage() {
   const [subjects, setSubjects] = useState([]);
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query]);
   const navigate = useNavigate();
 
   // Subject fetch

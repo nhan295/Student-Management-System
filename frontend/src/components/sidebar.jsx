@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 const items = [
-  { to: "/subjects/add", icon: "🎓", label: "Chương trình đào tạo" },
+  { to: "/subjects/list", icon: "🎓", label: "Chương trình đào tạo" },
   { to: "/homepage", icon: "🏠", label: "Trang Chủ" },
   // ... thêm các link khác ở đây ...
 ];

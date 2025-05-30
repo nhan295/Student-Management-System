@@ -9,7 +9,7 @@ function HomePage() {
     {
       icon: "📋",
       label: "Chương trình đào tạo",
-      path: "/subjects/add",
+      path: "/subjects/list",
     },
     { icon: "📖", label: "Tuyển sinh" },
     { icon: "📚", label: "Kết quả học tập" },

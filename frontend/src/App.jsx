@@ -7,6 +7,7 @@ import AddSubject from "./pages/addSubject";
 import EditSubject from "./pages/editSubject";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import SubjectPage from "./pages/subjectPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>
         <Route index element={<Navigate to="subjects/add" replace />} />
+        <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
         <Route path="subjects/edit/:id" element={<EditSubject />} />
       </Route>

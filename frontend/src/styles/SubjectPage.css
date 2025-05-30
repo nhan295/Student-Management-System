@@ -1,0 +1,141 @@
+.subject-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.search-bar {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.search-bar label {
+  margin-right: 8px;
+  color: #333;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-bar button {
+  margin-left: 8px;
+  background: #ffc;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page-title {
+  text-align: center;
+  margin: 1rem 0;
+  color: #333;
+}
+
+.subject-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.subject-table th,
+.subject-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subject-table thead {
+  background: #9ef;
+}
+.subject-table td,
+.subject-table th {
+  height: 48px;
+}
+.subject-table tr.blank-row td {
+  background: transparent;
+  height: 48px;
+}
+.subject-table tbody tr.odd {
+  background: #eee;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: #6cf;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: #4ab;
+}
+
+.btn-delete {
+  background: #f66;
+  color: #fff;
+  margin-left: 4px;
+}
+
+.btn-delete:hover {
+  background: #d44;
+}
+
+.add-button-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.btn-add {
+  padding: 10px 24px;
+  background: #3cf;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  background: #29a;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid #1976d2;
+  background: #fff;
+  color: #1976d2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pagination span {
+  font-weight: bold;
+}

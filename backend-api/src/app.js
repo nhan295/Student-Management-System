@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 
 const subjectRoutes = require("./routes/subjectRoute");
 const userRoute = require("./routes/userRoute");
+const classRoutes = require("./routes/classRoute");
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cookieParser());
 
 // Mount các route
 app.use("/api/v1/subjects", subjectRoutes);
+app.use("/api/v1/classes", classRoutes);
+
 userRoute.setup(app);
 
 module.exports = app;

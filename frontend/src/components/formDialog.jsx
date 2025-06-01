@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 export default function ConfirmDialog({
   isOpen,
   title,
   message,
   onConfirm,
-  onCancel
+  onCancel,
 }) {
   if (!isOpen) return null;
   return (
@@ -14,14 +14,16 @@ export default function ConfirmDialog({
         <div className="modal-header">{title}</div>
         <div className="modal-body">
           {message.split("\n").map((line, idx) => (
-            <p key={idx} style={{ margin: 0 }}>{line}</p>
+            <p key={idx} style={{ margin: 0 }}>
+              {line}
+            </p>
           ))}
         </div>
         <div className="modal-footer">
           <button onClick={onCancel}>Hủy</button>
           <button
             onClick={onConfirm}
-            style={{ backgroundColor: '#1976d2', color: '#fff' }}
+            style={{ backgroundColor: "#1976d2", color: "#fff" }}
           >
             Đồng ý
           </button>

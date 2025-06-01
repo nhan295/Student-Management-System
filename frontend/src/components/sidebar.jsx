@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 const items = [
   { to: "/subjects/list", icon: "🎓", label: "Chương trình đào tạo" },
   { to: "/homepage", icon: "🏠", label: "Trang Chủ" },
+  { to: "/classes/search", icon: "📚", label: "Kết quả học tập" },
+
+
   // ... thêm các link khác ở đây ...
 ];
 

@@ -1,9 +1,9 @@
 const classModel = require("../models/classModel");
 
 exports.getStudentsBySubject = async (req, res) => {
-  const { name } = req.query;
+  const { name, classId } = req.query;
   try {
-    const students = await classModel.getStudentsBySubjectName(name);
+    const students = await classModel.getStudentsByFilters(name, classId);
     res.json(students);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách sinh viên:", error);

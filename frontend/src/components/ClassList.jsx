@@ -7,11 +7,15 @@ function ClassList() {
   const [students, setStudents] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedGrade, setEditedGrade] = useState("");
+  const [classId, setClassId] = useState("");
 
   const handleSearch = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/v1/classes/students-by-subject", {
-        params: { name: subjectName },
+        params: {
+          name: subjectName,
+          classId: classId,
+        },        
         withCredentials: true,
       });
       setStudents(response.data);
@@ -21,13 +25,18 @@ function ClassList() {
   };
 
   const handleUpdateGrade = async (student) => {
+    if (editedGrade === "") {
+      alert("Vui lòng nhập điểm trước khi lưu.");
+      return;
+    }
+  
     try {
       await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
         studentId: student.student_id,
         subjectName: student.subject_name,
         newGrade: editedGrade,
       }, { withCredentials: true });
-
+  
       const updatedStudents = [...students];
       updatedStudents[editingIndex].grade = editedGrade;
       setStudents(updatedStudents);
@@ -38,7 +47,14 @@ function ClassList() {
       console.error("Lỗi cập nhật điểm:", error);
       alert("Cập nhật thất bại.");
     }
+    console.log({
+      studentId: student.student_id,
+      subjectName: student.subject_name,
+      newGrade: editedGrade,
+    });
+    
   };
+  
 
   return (
     <div className="classlist-container">
@@ -51,6 +67,13 @@ function ClassList() {
           onChange={(e) => setSubjectName(e.target.value)}
           placeholder="Nhập tên môn học"
         />
+        <input
+          type="text"
+          value={classId}
+          onChange={(e) => setClassId(e.target.value)}
+          placeholder="Nhập mã lớp"
+        />
+
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
       </div>
 

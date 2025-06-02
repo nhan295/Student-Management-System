@@ -13,4 +13,10 @@ module.exports = {
         "e.grade"
       )
       .where("sub.subject_name", "like", `%${subjectName}%`),
+
+      getClassList: ()=>{
+        return db('class')
+        .select('class_name','course_name')
+        .join('courses','class.course_id','courses.course_id')
+      }
 };

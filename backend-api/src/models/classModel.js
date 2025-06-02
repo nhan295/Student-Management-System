@@ -13,4 +13,11 @@ module.exports = {
         "e.grade"
       )
       .where("sub.subject_name", "like", `%${subjectName}%`),
+
+  updateGrade: (studentId, subjectName, newGrade) =>
+    db("exams as e")
+      .join("subjects as sub", "e.subject_id", "sub.subject_id")
+      .where("e.student_id", studentId)
+      .andWhere("sub.subject_name", subjectName)
+      .update({ grade: newGrade }),
 };

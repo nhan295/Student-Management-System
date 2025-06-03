@@ -9,12 +9,15 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SubjectPage from "./pages/subjectPage";
 import ClassList from "./components/ClassList";
+import AssignmentPage from "./pages/AssignmentPage";
+
 function App() {
   return (
     <Routes>
       {/*Đường dẫn bình thường*/}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/homepage" element={<HomePage />} /> 
+      <Route path="/assign" element={<AssignmentPage />} /> 
 
       {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>

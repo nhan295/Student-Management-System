@@ -4,7 +4,7 @@ const lectureModel = {
 
     getLecture: ()=>{
         return db('lecturers')
-        .select('lecturer_name')
+        .select('*')
     }
 }
 

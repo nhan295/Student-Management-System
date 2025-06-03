@@ -5,5 +5,5 @@ const router = express.Router();
 module.exports.setup = (app) =>{
     app.use('/api/v1/lecturer',router)
 
-    router.post('/getlecturer',lectureController.getAllLecture)
+    router.get('/',lectureController.getAllLecture)
 }

@@ -4,7 +4,7 @@ const getAllLecture = async(req,res) =>{
     try{
         const lectureList = await lectureModel.getLecture()
         if(lectureList){
-            res.json({message: lectureList})
+            res.json( lectureList)
         }
         else{
             res.status(400).json({message: 'Không tìm thấy giảng viên'})

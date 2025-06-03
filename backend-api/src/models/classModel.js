@@ -16,7 +16,7 @@ module.exports = {
 
       getClassList: ()=>{
         return db('class')
-        .select('class_name','course_name')
+        .select('class_name','class_id','course_name')
         .join('courses','class.course_id','courses.course_id')
       }
 };

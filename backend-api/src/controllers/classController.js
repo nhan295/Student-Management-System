@@ -18,7 +18,7 @@ const getClassList = async(req,res) =>{
   try{
     const data = await classModel.getClassList();
     if(data){
-      res.json({message: data});
+      res.json(data);
     }else{
       return res.status(400).json({message: 'Không tìm thấy lớp'})
 

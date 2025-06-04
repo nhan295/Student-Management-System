@@ -6,23 +6,24 @@ const cookieParser = require("cookie-parser");
 const subjectRoutes = require("./routes/subjectRoute");
 const userRoute = require("./routes/userRoute");
 const classRoutes = require("./routes/classRoute");
+const studentRoute = require("./routes/studentRoute");
 
 const app = express();
 
-// CORS, JSON body, Cookie parser
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
-    credentials: true,
-  })
-);
+// CORS trước mọi routes
+app.use(cors({
+  origin: ['http://localhost:5173'],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 
-// Mount các route
-app.use("/api/v1/subjects", subjectRoutes);
-app.use("/api/v1/classes", classRoutes);
+// Routes
+app.use('/api/v1/student', studentRoute);
 
-userRoute.setup(app);
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
 
 module.exports = app;

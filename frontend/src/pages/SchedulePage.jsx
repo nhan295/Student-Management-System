@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../styles/schedule.css";
 
+//Phân công
 function TeacherAssignmentTab() {
-  //  hoặc đưa form tạo “assignment” mới vào đây…
-
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Ví dụ fetch danh sách assignment (giảng viên–môn–lớp)
     axios
       .get("http://localhost:3000/api/v1/lookups/assignments")
       .then((res) => {
@@ -30,49 +29,53 @@ function TeacherAssignmentTab() {
 
   if (loading) {
     return (
-      <div className="text-gray-600 text-center p-4">
-        Đang tải phân công giảng viên…
+      <div className="loading-container">
+        <p className="loading-text">Đang tải phân công giảng viên…</p>
       </div>
     );
   }
   if (error) {
-    return <div className="text-red-600 text-center p-4">{error}</div>;
+    return (
+      <div className="error-container">
+        <p className="error-text">{error}</p>
+      </div>
+    );
   }
 
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-4">
-        Danh sách phân công Giảng viên
-      </h3>
-      <table className="min-w-full table-auto bg-white shadow rounded-md overflow-hidden">
-        <thead className="bg-gray-200 text-gray-700">
-          <tr>
-            <th className="px-4 py-2 text-left">Giảng viên</th>
-            <th className="px-4 py-2 text-left">Môn học</th>
-            <th className="px-4 py-2 text-left">Lớp học</th>
-          </tr>
-        </thead>
-        <tbody>
-          {assignments.length === 0 ? (
+      <h3 className="form-title">Danh sách phân công Giảng viên</h3>
+      <div className="table-container">
+        <table className="table">
+          <thead>
             <tr>
-              <td colSpan="3" className="px-4 py-2 text-center text-gray-600">
-                Chưa có phân công nào.
-              </td>
+              <th>Giảng viên</th>
+              <th>Môn học</th>
+              <th>Lớp học</th>
             </tr>
-          ) : (
-            assignments.map((item) => (
-              <tr key={item.assignment_id} className="hover:bg-gray-100">
-                <td className="border px-4 py-2">{item.lecturer_name}</td>
-                <td className="border px-4 py-2">{item.subject_name}</td>
-                <td className="border px-4 py-2">{item.class_name}</td>
+          </thead>
+          <tbody>
+            {assignments.length === 0 ? (
+              <tr>
+                <td colSpan="3" className="text-gray-600 text-center">
+                  Chưa có phân công nào.
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-      {/* Nếu bạn cần form thêm/cập nhật phân công mới, có thể đặt vào đây */}
-      {/* Ví dụ placeholder: */}
-      <div className="mt-6 p-4 border border-gray-300 rounded">
+            ) : (
+              assignments.map((item) => (
+                <tr key={item.assignment_id}>
+                  <td>{item.lecturer_name}</td>
+                  <td>{item.subject_name}</td>
+                  <td>{item.class_name}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Placeholder cho form phân công mới */}
+      <div className="form-container" style={{ marginTop: "24px" }}>
         <p className="text-gray-600">
           [Placeholder: Form thêm/cập nhật phân công giảng viên sẽ nằm ở đây]
         </p>
@@ -80,7 +83,7 @@ function TeacherAssignmentTab() {
     </div>
   );
 }
-
+//Lịch học
 function ScheduleTab() {
   const [schedules, setSchedules] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -103,6 +106,7 @@ function ScheduleTab() {
 
   useEffect(() => {
     fetchAllData();
+    // eslint-disable-next-line
   }, []);
 
   const fetchAllData = async () => {
@@ -327,56 +331,48 @@ function ScheduleTab() {
     }
   };
 
-  // ─────────── Render ───────────
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-48">
-        <p className="text-gray-600">Đang tải dữ liệu…</p>
+      <div className="loading-container">
+        <p className="loading-text">Đang tải dữ liệu…</p>
       </div>
     );
   }
   if (error) {
     return (
-      <div className="p-4">
-        <p className="text-red-600">{error}</p>
+      <div className="error-container">
+        <p className="error-text">{error}</p>
       </div>
     );
   }
 
   return (
     <div>
-      {/* FORM Thêm / Cập nhật Lịch học */}
-      <div className="mb-8 bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
+      <div className="form-container">
+        <h2 className="form-title">
           {isEditing ? "Sửa lịch học" : "Thêm lịch học mới"}
         </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-        >
+        <form onSubmit={handleSubmit} className="form-grid">
           {/* Ngày học */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Ngày học
-            </label>
+          <div className="form-group">
+            <label>Ngày học</label>
             <input
               type="date"
               name="study_date"
               value={formData.study_date}
               onChange={handleInputChange}
-              className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
+              className="form-input"
             />
           </div>
+
           {/* Phòng học */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Phòng học
-            </label>
+          <div className="form-group">
+            <label>Phòng học</label>
             <select
               name="room_id"
               value={formData.room_id}
               onChange={handleInputChange}
-              className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
+              className="form-select"
             >
               <option value="">-- Chọn phòng --</option>
               {rooms.map((r) => (
@@ -386,16 +382,15 @@ function ScheduleTab() {
               ))}
             </select>
           </div>
+
           {/* Môn học */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Môn học
-            </label>
+          <div className="form-group">
+            <label>Môn học</label>
             <select
               name="subject_id"
               value={formData.subject_id}
               onChange={handleInputChange}
-              className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
+              className="form-select"
             >
               <option value="">-- Chọn môn --</option>
               {subjectOptions().map((sub) => (
@@ -405,16 +400,15 @@ function ScheduleTab() {
               ))}
             </select>
           </div>
+
           {/* Giáo viên */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Giáo viên
-            </label>
+          <div className="form-group">
+            <label>Giáo viên</label>
             <select
               name="lecturer_id"
               value={formData.lecturer_id}
               onChange={handleInputChange}
-              className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
+              className="form-select"
             >
               <option value="">-- Chọn giáo viên --</option>
               {lecturerOptions().map((lec) => (
@@ -424,16 +418,15 @@ function ScheduleTab() {
               ))}
             </select>
           </div>
+
           {/* Lớp học */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Lớp học
-            </label>
+          <div className="form-group">
+            <label>Lớp học</label>
             <select
               name="class_id"
               value={formData.class_id}
               onChange={handleInputChange}
-              className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
+              className="form-select"
             >
               <option value="">-- Chọn lớp --</option>
               {classOptions().map((cls) => (
@@ -444,12 +437,9 @@ function ScheduleTab() {
             </select>
           </div>
 
-          {/* Nút Add/Update & Cancel */}
-          <div className="col-span-2 flex space-x-4 mt-4">
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
-            >
+          {/* Nút */}
+          <div className="button-group">
+            <button type="submit" className="button button-primary">
               {isEditing ? "Cập nhật" : "Thêm"}
             </button>
             <button
@@ -465,7 +455,7 @@ function ScheduleTab() {
                 });
                 setIsEditing(false);
               }}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded"
+              className="button button-secondary"
             >
               {isEditing ? "Hủy sửa" : "Xóa form"}
             </button>
@@ -474,53 +464,59 @@ function ScheduleTab() {
       </div>
 
       {/* BẢNG HIỂN THỊ SCHEDULE */}
-      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
-        <table className="min-w-full table-auto">
-          <thead className="bg-blue-600 text-white">
+      <div className="table-container">
+        <table className="table">
+          <thead>
             <tr>
-              <th className="px-4 py-2 text-left">Ngày học</th>
-              <th className="px-4 py-2 text-left">Phòng</th>
-              <th className="px-4 py-2 text-left">Lớp</th>
-              <th className="px-4 py-2 text-left">Môn học</th>
-              <th className="px-4 py-2 text-left">Giáo viên</th>
-              <th className="px-4 py-2 text-left">Chú thích</th>
-              <th className="px-4 py-2 text-center">Hành động</th>
+              <th>Ngày học</th>
+              <th>Phòng</th>
+              <th>Lớp</th>
+              <th>Môn học</th>
+              <th>Giáo viên</th>
+              <th>Chú thích</th>
+              <th className="text-center">Hành động</th>
             </tr>
           </thead>
           <tbody>
             {schedules.length === 0 ? (
               <tr>
-                <td colSpan="7" className="px-4 py-2 text-center text-gray-600">
+                <td colSpan="7" className="text-gray-600 text-center">
                   Không có lịch nào.
                 </td>
               </tr>
             ) : (
               schedules.map((row) => (
-                <tr key={row.schedule_id} className="hover:bg-gray-100">
-                  <td className="border px-4 py-2">
+                <tr key={row.schedule_id}>
+                  <td>
                     {new Date(row.study_date).toLocaleDateString("vi-VN")}
                   </td>
-                  <td className="border px-4 py-2">{row.room_name}</td>
-                  <td className="border px-4 py-2">{row.class_name}</td>
-                  <td className="border px-4 py-2">{row.subject_name}</td>
-                  <td className="border px-4 py-2">{row.lecturer_name}</td>
-                  <td className="border px-4 py-2">
+                  <td>{row.room_name}</td>
+                  <td>{row.class_name}</td>
+                  <td>{row.subject_name}</td>
+                  <td>{row.lecturer_name}</td>
+                  <td className="exam-note">
                     {row.exam_format
                       ? `${row.exam_format} (${new Date(
                           row.exam_date_es
                         ).toLocaleDateString("vi-VN")})`
                       : ""}
                   </td>
-                  <td className="border px-4 py-2 text-center space-x-2">
+                  <td className="text-center">
                     <button
                       onClick={() => handleEditClick(row)}
-                      className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded"
+                      className="button button-primary"
+                      style={{
+                        backgroundColor: "#facc15",
+                        color: "#ffffff",
+                        marginRight: "8px",
+                      }}
                     >
                       Sửa
                     </button>
                     <button
                       onClick={() => handleDeleteClick(row.schedule_id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                      className="button button-primary"
+                      style={{ backgroundColor: "#dc2626", color: "#ffffff" }}
                     >
                       Xóa
                     </button>
@@ -539,42 +535,34 @@ export default function SchedulePage() {
   const [activeTab, setActiveTab] = useState("schedule");
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      {/* ─────────── Thanh tab ─────────── */}
-      <div className="flex justify-center mb-6">
-        <div className="flex bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full p-1 border-2 border-black max-w-2xl w-full">
-          {/*Tab 1: Phân công Giảng viên */}
+    <div className="schedule-container">
+      {/* Thanh tab */}
+      <div className="tab-bar">
+        <div className="tab-bar-inner">
           <button
             onClick={() => setActiveTab("assignment")}
-            className={`flex-1 flex items-center justify-center px-4 py-2 text-white font-semibold rounded-full transition-colors
-              ${
-                activeTab === "assignment"
-                  ? "bg-purple-700"
-                  : "bg-white bg-opacity-30 hover:bg-opacity-50"
-              }
-            `}
+            className={
+              activeTab === "assignment" ? "tab-button active" : "tab-button"
+            }
           >
-            <span className="mr-2">👩‍🏫</span>
+            <span style={{ marginRight: "8px" }}>👩‍🏫</span>
             <span>Phân công Giảng viên</span>
           </button>
-          {/* Tab 2: Sắp lịch Học */}
+
           <button
             onClick={() => setActiveTab("schedule")}
-            className={`flex-1 flex items-center justify-center px-4 py-2 text-white font-semibold rounded-full transition-colors
-              ${
-                activeTab === "schedule"
-                  ? "bg-purple-700"
-                  : "bg-white bg-opacity-30 hover:bg-opacity-50"
-              }
-            `}
+            className={
+              activeTab === "schedule" ? "tab-button active" : "tab-button"
+            }
           >
-            <span className="mr-2">🗓️</span>
+            <span style={{ marginRight: "8px" }}>🗓️</span>
             <span>Sắp lịch Học</span>
           </button>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto">
+      {/* Nội dung tab */}
+      <div className="tab-content">
         {activeTab === "assignment" && <TeacherAssignmentTab />}
         {activeTab === "schedule" && <ScheduleTab />}
       </div>

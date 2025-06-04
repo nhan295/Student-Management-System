@@ -18,7 +18,7 @@ module.exports = {
     }
 
     if (classId) {
-      query.andWhere("s.class_id", "like", `%${classId}%`);
+      query.andWhere("s.class_id", classId);
     }
 
     return query;
@@ -26,7 +26,6 @@ module.exports = {
 
   updateGrade: async (studentId, subjectName, newGrade) => {
     try {
-      // Tìm ID môn học từ tên môn
       const subject = await db("subjects")
         .select("subject_id")
         .where("subject_name", subjectName)
@@ -36,7 +35,6 @@ module.exports = {
         throw new Error("Không tìm thấy môn học với tên đã cho");
       }
 
-      // Kiểm tra nếu bản ghi đã tồn tại trong bảng exams
       const existingRecord = await db("exams")
         .where({
           student_id: studentId,
@@ -45,7 +43,6 @@ module.exports = {
         .first();
 
       if (existingRecord) {
-        // Nếu đã có, cập nhật điểm
         await db("exams")
           .where({
             student_id: studentId,
@@ -53,7 +50,6 @@ module.exports = {
           })
           .update({ grade: newGrade });
       } else {
-        // Nếu chưa có, tạo bản ghi mới
         await db("exams").insert({
           student_id: studentId,
           subject_id: subject.subject_id,
@@ -64,5 +60,11 @@ module.exports = {
       console.error("Lỗi trong updateGrade:", error);
       throw error;
     }
+  },
+
+  getAllClasses: async () => {
+    return await db("Class as c")
+      .join("courses as co", "c.course_id", "co.course_id")
+      .select("c.class_id", "c.class_name", "co.course_name");
   },
 };

@@ -1,8 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function SchedulePage() {
-  // ─────────── State ───────────
+function TeacherAssignmentTab() {
+  //  hoặc đưa form tạo “assignment” mới vào đây…
+
+  const [assignments, setAssignments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Ví dụ fetch danh sách assignment (giảng viên–môn–lớp)
+    axios
+      .get("http://localhost:3000/api/v1/lookups/assignments")
+      .then((res) => {
+        if (res.data.success) {
+          setAssignments(res.data.data);
+        } else {
+          setError("Không tải được danh sách phân công");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Lỗi khi fetch phân công");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-gray-600 text-center p-4">
+        Đang tải phân công giảng viên…
+      </div>
+    );
+  }
+  if (error) {
+    return <div className="text-red-600 text-center p-4">{error}</div>;
+  }
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">
+        Danh sách phân công Giảng viên
+      </h3>
+      <table className="min-w-full table-auto bg-white shadow rounded-md overflow-hidden">
+        <thead className="bg-gray-200 text-gray-700">
+          <tr>
+            <th className="px-4 py-2 text-left">Giảng viên</th>
+            <th className="px-4 py-2 text-left">Môn học</th>
+            <th className="px-4 py-2 text-left">Lớp học</th>
+          </tr>
+        </thead>
+        <tbody>
+          {assignments.length === 0 ? (
+            <tr>
+              <td colSpan="3" className="px-4 py-2 text-center text-gray-600">
+                Chưa có phân công nào.
+              </td>
+            </tr>
+          ) : (
+            assignments.map((item) => (
+              <tr key={item.assignment_id} className="hover:bg-gray-100">
+                <td className="border px-4 py-2">{item.lecturer_name}</td>
+                <td className="border px-4 py-2">{item.subject_name}</td>
+                <td className="border px-4 py-2">{item.class_name}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+      {/* Nếu bạn cần form thêm/cập nhật phân công mới, có thể đặt vào đây */}
+      {/* Ví dụ placeholder: */}
+      <div className="mt-6 p-4 border border-gray-300 rounded">
+        <p className="text-gray-600">
+          [Placeholder: Form thêm/cập nhật phân công giảng viên sẽ nằm ở đây]
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ScheduleTab() {
   const [schedules, setSchedules] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -22,10 +101,8 @@ export default function SchedulePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ─────────── Fetch lookup & schedules ───────────
   useEffect(() => {
     fetchAllData();
-    // eslint-disable-next-line
   }, []);
 
   const fetchAllData = async () => {
@@ -61,9 +138,6 @@ export default function SchedulePage() {
     }
   };
 
-  // ─────────── Helper lọc dropdown phụ thuộc ───────────
-
-  // 1) Danh sách môn tùy theo formData.lecturer_id
   const subjectOptions = () => {
     if (formData.lecturer_id) {
       const arr = assignments
@@ -72,7 +146,6 @@ export default function SchedulePage() {
           subject_id: a.subject_id,
           subject_name: a.subject_name,
         }));
-      // Loại trùng
       const uniq = [];
       const seen = new Set();
       arr.forEach((item) => {
@@ -86,7 +159,6 @@ export default function SchedulePage() {
     return subjects;
   };
 
-  // 2) Danh sách giảng viên tùy theo formData.subject_id
   const lecturerOptions = () => {
     if (formData.subject_id) {
       const arr = assignments
@@ -108,9 +180,7 @@ export default function SchedulePage() {
     return lecturers;
   };
 
-  // 3) Danh sách lớp tùy theo (subject_id, lecturer_id)
   const classOptions = () => {
-    // Nếu chưa chọn môn & chưa chọn giáo viên → trả toàn bộ classes
     if (!formData.subject_id && !formData.lecturer_id) {
       return classes.map((c) => ({
         class_id: c.class_id,
@@ -139,12 +209,10 @@ export default function SchedulePage() {
     return uniq;
   };
 
-  // ─────────── Xử lý khi user thay đổi form ───────────
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "subject_id") {
-      // Chọn môn → reset giảng viên & lớp
       setFormData((prev) => ({
         ...prev,
         subject_id: value,
@@ -153,9 +221,7 @@ export default function SchedulePage() {
       }));
       return;
     }
-
     if (name === "lecturer_id") {
-      // Chọn giảng viên → chỉ reset môn nếu môn cũ không còn giảng viên này dạy
       const oldSub = formData.subject_id;
       const allowedSubs = assignments
         .filter((a) => String(a.lecturer_id) === value)
@@ -166,19 +232,17 @@ export default function SchedulePage() {
         ...prev,
         lecturer_id: value,
         subject_id: newSub,
-        class_id: "", // luôn reset lớp vì lớp phụ thuộc (GV+Môn)
+        class_id: "",
       }));
       return;
     }
 
-    // Các trường còn lại (class_id, room_id, study_date) update bình thường
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // ─────────── Khi bấm “Sửa” trên table ───────────
   const handleEditClick = (row) => {
     setFormData({
       schedule_id: row.schedule_id,
@@ -192,7 +256,6 @@ export default function SchedulePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // ─────────── Thêm / Cập nhật lịch ───────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -207,8 +270,6 @@ export default function SchedulePage() {
       alert("Vui lòng điền đầy đủ: Ngày, Phòng, Môn, Giáo viên và Lớp.");
       return;
     }
-
-    // Tìm assignment_id từ (subject, lecturer, class)
     const found = assignments.find(
       (a) =>
         String(a.subject_id) === subject_id &&
@@ -216,7 +277,7 @@ export default function SchedulePage() {
         String(a.class_id) === class_id
     );
     if (!found) {
-      alert("Cặp (Giảng viên–Môn–Lớp) này không tồn tại trong phân công.");
+      alert("Cặp (Giảng viên–Môn–Lớp) không tồn tại.");
       return;
     }
     const payload = {
@@ -225,7 +286,6 @@ export default function SchedulePage() {
       exSchedule_id: null,
       assignment_id: found.assignment_id,
     };
-
     try {
       if (isEditing && schedule_id) {
         await axios.put(
@@ -249,11 +309,10 @@ export default function SchedulePage() {
       setIsEditing(false);
     } catch (err) {
       console.error(err);
-      alert("Lỗi khi lưu dữ liệu. Vui lòng thử lại.");
+      alert("Lỗi khi lưu. Vui lòng thử lại.");
     }
   };
 
-  // ─────────── Xóa lịch ───────────
   const handleDeleteClick = async (schedule_id) => {
     if (!window.confirm("Bạn có chắc muốn xóa?")) return;
     try {
@@ -268,25 +327,25 @@ export default function SchedulePage() {
     }
   };
 
-  // ─────────── Render UI ───────────
+  // ─────────── Render ───────────
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="text-gray-500">Đang tải dữ liệu…</div>
+      <div className="flex items-center justify-center h-48">
+        <p className="text-gray-600">Đang tải dữ liệu…</p>
       </div>
     );
   }
   if (error) {
     return (
-      <div className="p-8">
+      <div className="p-4">
         <p className="text-red-600">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="p-8">
-      {/* FORM Thêm / Sửa */}
+    <div>
+      {/* FORM Thêm / Cập nhật Lịch học */}
       <div className="mb-8 bg-white shadow-md rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4 text-gray-800">
           {isEditing ? "Sửa lịch học" : "Thêm lịch học mới"}
@@ -308,7 +367,6 @@ export default function SchedulePage() {
               className="w-full border-gray-300 rounded px-3 py-2 focus:ring focus:border-blue-500"
             />
           </div>
-
           {/* Phòng học */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
@@ -328,7 +386,6 @@ export default function SchedulePage() {
               ))}
             </select>
           </div>
-
           {/* Môn học */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
@@ -348,7 +405,6 @@ export default function SchedulePage() {
               ))}
             </select>
           </div>
-
           {/* Giáo viên */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
@@ -368,7 +424,6 @@ export default function SchedulePage() {
               ))}
             </select>
           </div>
-
           {/* Lớp học */}
           <div>
             <label className="block text-gray-700 font-medium mb-1">
@@ -389,7 +444,7 @@ export default function SchedulePage() {
             </select>
           </div>
 
-          {/* Nút */}
+          {/* Nút Add/Update & Cancel */}
           <div className="col-span-2 flex space-x-4 mt-4">
             <button
               type="submit"
@@ -418,7 +473,7 @@ export default function SchedulePage() {
         </form>
       </div>
 
-      {/* Bảng lịch học */}
+      {/* BẢNG HIỂN THỊ SCHEDULE */}
       <div className="bg-white shadow-md rounded-lg overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead className="bg-blue-600 text-white">
@@ -435,7 +490,7 @@ export default function SchedulePage() {
           <tbody>
             {schedules.length === 0 ? (
               <tr>
-                <td className="px-4 py-2 text-center text-gray-600" colSpan="7">
+                <td colSpan="7" className="px-4 py-2 text-center text-gray-600">
                   Không có lịch nào.
                 </td>
               </tr>
@@ -475,6 +530,53 @@ export default function SchedulePage() {
             )}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+export default function SchedulePage() {
+  const [activeTab, setActiveTab] = useState("schedule");
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      {/* ─────────── Thanh tab ─────────── */}
+      <div className="flex justify-center mb-6">
+        <div className="flex bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full p-1 border-2 border-black max-w-2xl w-full">
+          {/*Tab 1: Phân công Giảng viên */}
+          <button
+            onClick={() => setActiveTab("assignment")}
+            className={`flex-1 flex items-center justify-center px-4 py-2 text-white font-semibold rounded-full transition-colors
+              ${
+                activeTab === "assignment"
+                  ? "bg-purple-700"
+                  : "bg-white bg-opacity-30 hover:bg-opacity-50"
+              }
+            `}
+          >
+            <span className="mr-2">👩‍🏫</span>
+            <span>Phân công Giảng viên</span>
+          </button>
+          {/* Tab 2: Sắp lịch Học */}
+          <button
+            onClick={() => setActiveTab("schedule")}
+            className={`flex-1 flex items-center justify-center px-4 py-2 text-white font-semibold rounded-full transition-colors
+              ${
+                activeTab === "schedule"
+                  ? "bg-purple-700"
+                  : "bg-white bg-opacity-30 hover:bg-opacity-50"
+              }
+            `}
+          >
+            <span className="mr-2">🗓️</span>
+            <span>Sắp lịch Học</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto">
+        {activeTab === "assignment" && <TeacherAssignmentTab />}
+        {activeTab === "schedule" && <ScheduleTab />}
       </div>
     </div>
   );

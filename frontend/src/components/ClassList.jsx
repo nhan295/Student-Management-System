@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/ClassList.css";
 
@@ -8,6 +8,21 @@ function ClassList() {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editedGrade, setEditedGrade] = useState("");
   const [classId, setClassId] = useState("");
+  const [classOptions, setClassOptions] = useState([]);
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/classes/all-classes", {
+          withCredentials: true,
+        });
+        setClassOptions(response.data);
+      } catch (error) {
+        console.error("Lỗi khi tải danh sách lớp:", error);
+      }
+    };
+    fetchClasses();
+  }, []);
 
   const handleSearch = async () => {
     try {
@@ -15,7 +30,7 @@ function ClassList() {
         params: {
           name: subjectName,
           classId: classId,
-        },        
+        },
         withCredentials: true,
       });
       setStudents(response.data);
@@ -29,14 +44,14 @@ function ClassList() {
       alert("Vui lòng nhập điểm trước khi lưu.");
       return;
     }
-  
+
     try {
       await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
         studentId: student.student_id,
         subjectName: student.subject_name,
         newGrade: editedGrade,
       }, { withCredentials: true });
-  
+
       const updatedStudents = [...students];
       updatedStudents[editingIndex].grade = editedGrade;
       setStudents(updatedStudents);
@@ -47,14 +62,7 @@ function ClassList() {
       console.error("Lỗi cập nhật điểm:", error);
       alert("Cập nhật thất bại.");
     }
-    console.log({
-      studentId: student.student_id,
-      subjectName: student.subject_name,
-      newGrade: editedGrade,
-    });
-    
   };
-  
 
   return (
     <div className="classlist-container">
@@ -67,12 +75,17 @@ function ClassList() {
           onChange={(e) => setSubjectName(e.target.value)}
           placeholder="Nhập tên môn học"
         />
-        <input
-          type="text"
+        <select
           value={classId}
           onChange={(e) => setClassId(e.target.value)}
-          placeholder="Nhập mã lớp"
-        />
+        >
+          <option value="">-- Chọn lớp --</option>
+          {classOptions.map((cls) => (
+            <option key={cls.class_id} value={cls.class_id}>
+              {cls.class_name} ({cls.course_name})
+            </option>
+          ))}
+        </select>
 
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
       </div>

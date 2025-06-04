@@ -23,3 +23,13 @@ exports.updateGrade = async (req, res) => {
     res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật điểm." });
   }
 };
+
+exports.getAllClasses = async (req, res) => {
+  try {
+    const classes = await classModel.getAllClasses();
+    res.json(classes);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách lớp:", error);
+    res.status(500).json({ error: "Không thể lấy danh sách lớp." });
+  }
+};

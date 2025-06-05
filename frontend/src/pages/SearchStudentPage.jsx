@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/SearchStudent.css";
 
 const SearchStudentPage = () => {
+  const navigate = useNavigate();
   const [student_name, setName] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,10 @@ const SearchStudentPage = () => {
       setLoading(false);
     }
   };
+
+  const getStudentId = (student_id)=>{
+    navigate(`/student/detail/${student_id}`);
+  }
 
   return (
     <div>
@@ -50,7 +56,7 @@ const SearchStudentPage = () => {
                 </p>
               </div>
               <div className="mt-4 sm:mt-0 flex gap-4">
-                <button>Xem chi tiết</button>
+                <button onClick={()=>getStudentId(student.student_id)}>Xem chi tiết</button>
               </div>
             </div>
           ))}

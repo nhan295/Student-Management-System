@@ -40,7 +40,7 @@ exports.exportToExcel = async (req, res) => {
   const { name, classId } = req.query;
 
   try {
-    const students = await classModel.getStudentsByFilters(name, classId);
+    const students = await ClassModel.getStudentsByFilters(name, classId);
 
     if (!students.length) {
       return res.status(404).json({ error: "Không tìm thấy dữ liệu phù hợp." });

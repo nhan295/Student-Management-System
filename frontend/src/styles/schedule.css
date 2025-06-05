@@ -236,6 +236,7 @@ dialog::backdrop {
   width: 100%;
   background-color: #f9fafb;
   font-family: sans-serif;
+  padding-bottom: 20px;
 }
 
 /* ========== Controls (Hôm nay, <<, >>, Dropdown) ========== */

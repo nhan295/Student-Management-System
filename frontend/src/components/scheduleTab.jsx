@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import WeeklyTimeline from "./WeeklyTimeline";
-import ConfirmDialog from "./formDialog";
 import "../styles/schedule.css";
 
 export default function ScheduleTab() {
@@ -38,12 +38,11 @@ export default function ScheduleTab() {
 
   // ─── Lookup cho dropdown ───
   const [rooms, setRooms] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [assignments, setAssignments] = useState([]);
 
-  // 1. Fetch mọi lookups khi component mount
+  // ─── 1. Fetch lookups khi mount ───
   useEffect(() => {
     async function fetchLookups() {
       try {
@@ -63,14 +62,13 @@ export default function ScheduleTab() {
         if (assignRes.data.success) setAssignments(assignRes.data.data);
       } catch (err) {
         console.error("Error fetching lookups:", err);
-        setError("Lỗi khi tải danh sách lookups.");
+        setError("Lỗi khi tải dữ liệu lookup.");
       }
     }
-
     fetchLookups();
   }, []);
 
-  // 2. Fetch lịch mỗi khi currentSunday hoặc selectedLecturer thay đổi
+  // ─── 2. Fetch schedules mỗi khi currentSunday hoặc selectedLecturer thay đổi ───
   useEffect(() => {
     async function fetchSchedules() {
       setLoading(true);
@@ -111,7 +109,7 @@ export default function ScheduleTab() {
     fetchSchedules();
   }, [currentSunday, selectedLecturer]);
 
-  // Các hàm chuyển tuần
+  // ─── 3. Chuyển tuần ───
   const prevWeek = () => {
     const prev = new Date(currentSunday);
     prev.setDate(prev.getDate() - 7);
@@ -132,9 +130,7 @@ export default function ScheduleTab() {
     setCurrentSunday(sunday);
   };
 
-  // ─── Các hàm hỗ trợ lọc dropdown theo subject và lecturer ───
-
-  // 1) Lọc giảng viên chỉ dạy môn đã chọn
+  // ─── 4. Hàm lọc dropdown theo subject → lecturer → class ───
   const lecturersForSubject = React.useMemo(() => {
     if (!formData.subject_id) return [];
     const filtered = assignments.filter(
@@ -154,7 +150,6 @@ export default function ScheduleTab() {
     return unique;
   }, [assignments, formData.subject_id]);
 
-  // 2) Lọc lớp chỉ hiển thị khi đã chọn môn + giảng viên
   const classesForSelection = React.useMemo(() => {
     if (!formData.subject_id || !formData.lecturer_id) return [];
     const filtered = assignments.filter(
@@ -176,7 +171,22 @@ export default function ScheduleTab() {
     return unique;
   }, [assignments, formData.subject_id, formData.lecturer_id]);
 
-  // ─── 3. Các hàm xử lý form ───
+  // ─── 5. Hàm chuyển đổi "HH:MM" → tổng số phút ───
+  const parseTimeToMinutes = (timeStr) => {
+    const [hh, mm] = timeStr.split(":").map((x) => parseInt(x, 10));
+    return hh * 60 + mm;
+  };
+
+  // ─── 6. Chuyển ISO string (UTC) → ngày "YYYY-MM-DD" theo múi giờ local ───
+  const toLocalDateString = (isoDateString) => {
+    const d = new Date(isoDateString);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // ─── 7. Xử lý thay đổi form ───
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -217,6 +227,24 @@ export default function ScheduleTab() {
     setIsEditing(false);
   };
 
+  // ─── 8. Tải lại schedules của một ngày (cho việc check xung đột) ───
+  const fetchSchedulesOfDay = async (dateString) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/api/v1/schedules?study_date=${dateString}`
+      );
+      if (res.data.success) {
+        return res.data.data;
+      } else {
+        return [];
+      }
+    } catch (err) {
+      console.error("Lỗi khi fetch schedules của ngày:", err);
+      return [];
+    }
+  };
+
+  // ─── 9. Xử lý lưu (thêm / cập nhật) kèm check xung đột ───
   const handleSave = async (e) => {
     e.preventDefault();
     const {
@@ -229,6 +257,8 @@ export default function ScheduleTab() {
       lecturer_id,
       class_id,
     } = formData;
+
+    // 9.1. Kiểm tra nhập đủ
     if (
       !study_date ||
       !start_time ||
@@ -242,24 +272,98 @@ export default function ScheduleTab() {
       return;
     }
 
-    // Tìm assignment tương ứng
-    const found = assignments.find(
+    // 9.2. Chuyển thời gian sang phút
+    const newStart = parseTimeToMinutes(start_time);
+    const newEnd = parseTimeToMinutes(end_time);
+    if (newEnd <= newStart) {
+      alert("Giờ kết thúc phải lớn hơn giờ bắt đầu.");
+      return;
+    }
+
+    // 9.3. Tìm assignment_id tương ứng (môn–giáo viên–lớp)
+    const foundAssignment = assignments.find(
       (a) =>
         String(a.subject_id) === subject_id &&
         String(a.lecturer_id) === lecturer_id &&
         String(a.class_id) === class_id
     );
-    if (!found) {
-      alert("Cặp (Giảng viên–Môn–Lớp) không tồn tại.");
+    if (!foundAssignment) {
+      alert("Cặp (Môn – Giáo viên – Lớp) không tồn tại.");
       return;
     }
+
+    // 9.4. Gọi API lấy lại danh sách schedules của ngày đó (cập nhật nhất)
+    const schedulesOfDay = await fetchSchedulesOfDay(study_date);
+
+    // 9.5. Kiểm tra xung đột (chỉ trong schedulesOfDay)
+    for (let row of schedulesOfDay) {
+      // 9.5.1. Nếu đang chỉnh sửa, bỏ qua chính bản ghi đó
+      if (isEditing && row.schedule_id === schedule_id) {
+        continue;
+      }
+
+      // 9.5.2. Lấy ngày của row theo local VN rồi so sánh với formData.study_date
+      const rowLocalDate = toLocalDateString(row.study_date);
+      if (rowLocalDate !== study_date) {
+        continue;
+      }
+
+      // 9.5.3. Ép kiểu để so sánh giáo viên và lớp
+      const exLecturerId = Number(row.lecturer_id);
+      const exClassId = Number(row.class_id);
+      const newLecturerId = Number(lecturer_id);
+      const newClassId = Number(class_id);
+
+      if (exLecturerId === newLecturerId || exClassId === newClassId) {
+        // row.start_time: "07:00:00" → slice(0, 5) = "07:00"
+        const existingStart = parseTimeToMinutes(row.start_time.slice(0, 5));
+        const existingEnd = parseTimeToMinutes(row.end_time.slice(0, 5));
+
+        // Debug (tùy chọn)
+        //         console.log(
+        //           "So sánh với lịch cũ:",
+        //           row.schedule_id,
+        //           "| DateLocal:",
+        //           rowLocalDate,
+        //           "| ClassId:",
+        //           exClassId,
+        //           "| LecId:",
+        //           exLecturerId,
+        //           "| TimeOld:",
+        //           row.start_time.slice(0, 5),
+        //           "-",
+        //           row.end_time.slice(0, 5),
+        //           "| TimeNew:",
+        //           start_time,
+        //           "-",
+        //           end_time
+        //         );
+
+        // 9.5.4. Kiểm tra overlap: [newStart, newEnd) giao với [existingStart, existingEnd)
+        if (newStart < existingEnd && newEnd > existingStart) {
+          const conflictReason =
+            exClassId === newClassId ? "Lớp này" : "Giáo viên này";
+          alert(
+            `Xung đột lịch: ${conflictReason} đã có lịch trùng khung giờ.\n` +
+              `Lịch cũ (ID: ${row.schedule_id}) → ${row.start_time.slice(
+                0,
+                5
+              )} - ${row.end_time.slice(0, 5)}\n\n` +
+              `Vui lòng đổi khung giờ khác.`
+          );
+          return; // Dừng luôn, không cho lưu
+        }
+      }
+    }
+
+    // 9.6. Nếu không xung đột → chuẩn bị payload và gọi API thêm/ cập nhật
     const payload = {
       study_date,
       start_time,
       end_time,
       room_id: parseInt(room_id, 10),
       exSchedule_id: null,
-      assignment_id: found.assignment_id,
+      assignment_id: foundAssignment.assignment_id,
     };
 
     try {
@@ -273,25 +377,29 @@ export default function ScheduleTab() {
         await axios.post("http://localhost:3000/api/v1/schedules", payload);
         alert("Thêm lịch học thành công.");
       }
-      // Reload lại lịch:
+
+      // 9.7. Sau khi lưu xong, gọi lại fetch tuần hiện tại để cập nhật state schedules
       const today = new Date();
-      const day = today.getDay();
-      const diff = day === 0 ? 0 : -day;
+      const dayOfWeek = today.getDay();
+      const diff = dayOfWeek === 0 ? 0 : -dayOfWeek;
       const sunday = new Date(today);
       sunday.setDate(today.getDate() + diff);
       sunday.setHours(0, 0, 0, 0);
-      setCurrentSunday(sunday); // sẽ trigger fetchSchedules
+      setCurrentSunday(sunday);
+
+      // 9.8. Reset form
       resetForm();
     } catch (err) {
-      console.error("Save error:", err);
-      alert("Lỗi khi lưu, vui lòng thử lại.");
+      console.error("Lỗi khi lưu lên server:", err);
+      alert("Có lỗi xảy ra, vui lòng thử lại.");
     }
   };
 
+  // ─── 10. Chỉnh sửa khi bấm "Sửa" ───
   const handleEditClick = (row) => {
     setFormData({
       schedule_id: row.schedule_id,
-      study_date: row.study_date.slice(0, 10),
+      study_date: row.study_date.slice(0, 10), // ISO → "YYYY-MM-DD"
       start_time: row.start_time ? row.start_time.slice(0, 5) : "",
       end_time: row.end_time ? row.end_time.slice(0, 5) : "",
       room_id: String(row.room_id),
@@ -303,16 +411,18 @@ export default function ScheduleTab() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleDeleteClick = async (schedule_id) => {
-    if (!window.confirm("Bạn chắc chắn muốn xóa?")) return;
+  // ─── 11. Xóa lịch ───
+  const handleDeleteClick = async (scheduleIdToDelete) => {
+    if (!window.confirm("Bạn có chắc chắn muốn xóa?")) return;
     try {
       await axios.delete(
-        `http://localhost:3000/api/v1/schedules/${schedule_id}`
+        `http://localhost:3000/api/v1/schedules/${scheduleIdToDelete}`
       );
       alert("Xóa thành công.");
+      // Reload lại tuần hiện tại
       const today = new Date();
-      const day = today.getDay();
-      const diff = day === 0 ? 0 : -day;
+      const dayOfWeek = today.getDay();
+      const diff = dayOfWeek === 0 ? 0 : -dayOfWeek;
       const sunday = new Date(today);
       sunday.setDate(today.getDate() + diff);
       sunday.setHours(0, 0, 0, 0);
@@ -323,7 +433,7 @@ export default function ScheduleTab() {
     }
   };
 
-  // ─── Render Loading / Error ───
+  // ─── Loading / Error ───
   if (loading) {
     return (
       <div className="loading-container">
@@ -420,7 +530,7 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* ----- Môn học ----- */}
+          {/* Môn học */}
           <div className="form-group">
             <label>Môn học</label>
             <select
@@ -439,7 +549,7 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* ----- Giáo viên (lọc theo môn) ----- */}
+          {/* Giáo viên (lọc theo môn) */}
           <div className="form-group">
             <label>Giáo viên</label>
             <select
@@ -459,7 +569,7 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* ----- Lớp học (lọc theo môn + giáo viên) ----- */}
+          {/* Lớp học (lọc theo môn + giáo viên) */}
           <div className="form-group">
             <label>Lớp học</label>
             <select

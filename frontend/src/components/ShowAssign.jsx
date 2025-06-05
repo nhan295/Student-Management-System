@@ -74,8 +74,10 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-                <button type="submit">Lưu</button>
-                <button onClick={CloseEdit}>Huỷ</button>
+                <div className='modal-buttons'>
+                  <button className="save-btn"type="submit">Lưu</button>
+                  <button className= "cancel-btn"onClick={CloseEdit}>Huỷ</button>
+                </div>
               </form>
             </div>
           </div>

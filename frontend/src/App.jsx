@@ -10,8 +10,8 @@ import LoginPage from "./pages/LoginPage";
 import SubjectPage from "./pages/subjectPage";
 import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
+import SearchStudentPage from "./pages/SearchStudentPage";
 
-import AssignmentPage from "./pages/AssignmentPage";
 
 function App() {
   return (
@@ -19,6 +19,8 @@ function App() {
       {/*Đường dẫn bình thường*/}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/homepage" element={<HomePage />} />
+      <Route path="/student/search" element={<SearchStudentPage />} />
+
       {/* <Route path="/assign" element={<AssignmentPage />} /> */}
 
       {/*Đường dẫn có layout và sidebar*/}

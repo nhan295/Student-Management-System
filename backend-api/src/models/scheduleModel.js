@@ -4,7 +4,9 @@ const scheduleModel = {
   getAllWithDetails: () => {
     return db("schedules as s")
       .join("assignment   as a", "s.assignment_id", "a.assignment_id")
-      .join("Class        as c", "a.class_id", "c.class_id")
+
+      .join("class        as c", "a.class_id", "c.class_id")
+
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")
       .join("room         as r", "s.room_id", "r.room_id")
@@ -33,8 +35,11 @@ const scheduleModel = {
   // ─────── lọc theo startDate, endDate, lecturer_id ───────
   getSchedulesByCriteria: ({ startDate, endDate, lecturer_id }) => {
     const query = db("schedules as s")
+
+      // Thay "a.id" thành "a.assignment_id"
       .join("assignment   as a", "s.assignment_id", "a.assignment_id")
-      .join("Class        as c", "a.class_id", "c.class_id")
+      .join("class        as c", "a.class_id", "c.class_id")
+
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")
       .join("room         as r", "s.room_id", "r.room_id")
@@ -57,6 +62,7 @@ const scheduleModel = {
         "s.assignment_id"
       )
       .whereBetween(db.raw("DATE(s.study_date)"), [startDate, endDate]);
+
     if (lecturer_id) {
       query.andWhere("a.lecturer_id", lecturer_id);
     }
@@ -73,7 +79,7 @@ const scheduleModel = {
         end_time: data.end_time,
         room_id: data.room_id,
         exSchedule_id: data.exSchedule_id || null,
-        assignment_id: data.assignment_id,
+        assignment_id: data.assignment_id, // giữ nguyên assignment_id
       },
       ["schedule_id"]
     );
@@ -89,7 +95,7 @@ const scheduleModel = {
         end_time: data.end_time,
         room_id: data.room_id,
         exSchedule_id: data.exSchedule_id || null,
-        assignment_id: data.assignment_id,
+        assignment_id: data.assignment_id, // giữ nguyên assignment_id
       });
   },
 

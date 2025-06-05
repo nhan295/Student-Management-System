@@ -18,7 +18,6 @@ const lookupModel = {
   // ────────────────────────────────────────────────
   // Thêm hàm này để lấy data "assignment"
   getAssignments: () => {
-    // Join bảng assignment với Class, subjects, và lecturers
     return db("assignment as a")
       .join("Class      as c", "a.class_id", "c.class_id")
       .join("subjects   as sub", "a.subject_id", "sub.subject_id")

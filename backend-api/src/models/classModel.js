@@ -11,7 +11,7 @@ module.exports = {
         "s.class_id",
         "sub.subject_name",
         "e.grade"
-      );
+      ); // <-- sửa dấu phẩy thành dấu chấm phẩy
 
     if (subjectName) {
       query.where("sub.subject_name", "like", `%${subjectName}%`);

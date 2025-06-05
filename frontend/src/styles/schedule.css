@@ -1,0 +1,368 @@
+/* -----------------------------------
+   1. Style cho Tab Bar
+   ----------------------------------- */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.tab-bar-inner {
+  display: flex;
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  border-radius: 9999px;
+  padding: 4px;
+  border: 2px solid #000;
+  max-width: 768px;
+  width: 100%;
+}
+.tab-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: 9999px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: background-color 0.2s;
+}
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.tab-button.active {
+  background-color: #7e22ce;
+}
+
+/* -----------------------------------
+     2. Style chung cho trang “Sắp lịch Học”
+     ----------------------------------- */
+.schedule-container {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Form và bảng bên dưới tab */
+.form-container {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.form-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #374151;
+}
+.form-input,
+.form-select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+}
+.form-input:focus,
+.form-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Nút */
+.button-group {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.button {
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.button-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+.button-primary:hover {
+  background-color: #1e40af;
+}
+.button-warning {
+  background-color: #facc15;
+  color: #ffffff;
+}
+.button-warning:hover {
+  background-color: #eab308;
+}
+.button-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+.button-danger:hover {
+  background-color: #b91c1c;
+}
+.button-secondary {
+  background-color: #d1d5db;
+  color: #1f2937;
+}
+.button-secondary:hover {
+  background-color: #9ca3af;
+}
+
+/* Bảng */
+.table-container {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.table th,
+.table td {
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+.table th {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+.table tr:hover {
+  background-color: #f3f4f6;
+}
+.text-center {
+  text-align: center;
+}
+.text-gray-600 {
+  color: #4b5563;
+}
+
+/* Loading & Error */
+.loading-container,
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+}
+.loading-text {
+  color: #4b5563;
+  font-size: 1rem;
+}
+.error-text {
+  color: #dc2626;
+  font-size: 1rem;
+}
+
+/* -----------------------------------
+     3. Style cho Dialog (sử dụng thẻ <dialog>)
+     ----------------------------------- */
+dialog {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Bên trong dialog: header, body, footer */
+.dialog-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+.dialog-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+.dialog-body {
+  padding: 16px;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+.dialog-footer .button {
+  margin-left: 8px;
+}
+
+/* =========================================
+   WeeklyCalendar.css
+   ========================================= */
+
+/* ========== Container chính ========== */
+.weekly-calendar-container {
+  width: 100%;
+  background-color: #f9fafb;
+  font-family: sans-serif;
+  padding-bottom: 20px;
+}
+
+/* ========== Controls (Hôm nay, <<, >>, Dropdown) ========== */
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.calendar-controls .left-group,
+.calendar-controls .right-group {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.calendar-controls button {
+  background-color: #4f46e5; /* xanh tím */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+.calendar-controls button:hover {
+  background-color: #4338ca;
+}
+.calendar-controls .today-button {
+  background-color: #10b981; /* xanh lá cho Hôm nay */
+}
+.calendar-controls .today-button:hover {
+  background-color: #059669;
+}
+
+.calendar-controls select {
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: white;
+  color: #374151;
+}
+
+/* ========== Header (dòng chứa Thứ/Ngày) ========== */
+.calendar-header {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr);
+  /* 100px chừa chỗ cho cột giờ bên trái, 7 cột tương ứng 7 ngày */
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.calendar-header .corner-cell {
+  /* góc trên cùng bên trái (ô trống chừa chỗ cột giờ) */
+  border-right: 1px solid #e5e7eb;
+  background-color: #f3f4f6;
+}
+.calendar-header .day-cell {
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  border-left: 1px solid #e5e7eb;
+  background-color: #f3f4f6;
+}
+.calendar-header .day-cell.current {
+  background-color: #edf2ff; /* highlight ngày hiện tại */
+}
+
+/* ========== Body (phần lịch thực tế) ========== */
+.calendar-body {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr);
+  /* 100px chừa ô cột giờ; 7 cột cho 7 ngày */
+}
+/* Cột giờ (left column) */
+.time-column {
+  border-right: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+.time-column .time-cell {
+  height: 60px; /* mỗi giờ cao 60px */
+  padding: 4px;
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: right;
+  padding-right: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+/* Các cột ngày */
+.day-column {
+  position: relative;
+  border-left: 1px solid #e5e7eb;
+}
+.day-column .hour-slot {
+  height: 60px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Khi hover trên cột ngày, highlight background */
+.day-column .hour-slot:hover {
+  background-color: #f3f4f6;
+}
+
+/* Sự kiện (lớp học) */
+.calendar-event {
+  position: absolute;
+  background-color: #10b981; /* xanh lá */
+  color: white;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  line-height: 1.1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-wrap: break-word;
+  cursor: default;
+}
+.calendar-event:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

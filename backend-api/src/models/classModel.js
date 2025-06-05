@@ -1,8 +1,8 @@
 const db = require("../config/db");
 
 module.exports = {
-  getStudentsBySubjectName: (subjectName) =>
-    db("students as s")
+  getStudentsByFilters: (subjectName, classId) => {
+    const query = db("students as s")
       .join("exams as e", "e.student_id", "s.student_id")
       .join("subjects as sub", "e.subject_id", "sub.subject_id")
       .select(
@@ -11,12 +11,67 @@ module.exports = {
         "s.class_id",
         "sub.subject_name",
         "e.grade"
+
       )
       .where("sub.subject_name", "like", `%${subjectName}%`),
 
-      getClassList: ()=>{
-        return db('class')
-        .select('class_name','class_id','course_name')
-        .join('courses','class.course_id','courses.course_id')
+     
+
+      );
+
+    if (subjectName) {
+      query.where("sub.subject_name", "like", `%${subjectName}%`);
+    }
+
+    if (classId) {
+      query.andWhere("s.class_id", classId);
+    }
+
+    return query;
+  },
+
+  updateGrade: async (studentId, subjectName, newGrade) => {
+    try {
+      const subject = await db("subjects")
+        .select("subject_id")
+        .where("subject_name", subjectName)
+        .first();
+
+      if (!subject) {
+        throw new Error("Không tìm thấy môn học với tên đã cho");
       }
+
+      const existingRecord = await db("exams")
+        .where({
+          student_id: studentId,
+          subject_id: subject.subject_id,
+        })
+        .first();
+
+      if (existingRecord) {
+        await db("exams")
+          .where({
+            student_id: studentId,
+            subject_id: subject.subject_id,
+          })
+          .update({ grade: newGrade });
+      } else {
+        await db("exams").insert({
+          student_id: studentId,
+          subject_id: subject.subject_id,
+          grade: newGrade,
+        });
+      }
+    } catch (error) {
+      console.error("Lỗi trong updateGrade:", error);
+      throw error;
+    }
+  },
+
+  getAllClasses: async () => {
+    return await db("Class as c")
+      .join("courses as co", "c.course_id", "co.course_id")
+      .select("c.class_id", "c.class_name", "co.course_name");
+  },
+
 };

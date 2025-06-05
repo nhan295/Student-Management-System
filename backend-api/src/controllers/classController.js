@@ -1,35 +1,43 @@
-const classModel = require("../models/classModel");
+
 const ClassModel = require("../models/classModel");
 
-const getStudentsBySubject = async (req, res) => {
+exports.getStudentsBySubject = async (req, res) => {
+  const { name, classId } = req.query;
   try {
-    const { name } = req.query;
-    if (!name) return res.status(400).json({ message: "Thiếu tên môn học." });
-
-    const students = await ClassModel.getStudentsBySubjectName(name);
+    const students = await classModel.getStudentsByFilters(name, classId);
     res.json(students);
-  } catch (err) {
-    console.error("Lỗi:", err);
-    res.status(500).json({ message: "Lỗi server." });
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách sinh viên:", error);
+    res
+      .status(500)
+      .json({ error: "Đã xảy ra lỗi khi lấy danh sách sinh viên." });
   }
 };
 
-const getClassList = async(req,res) =>{
-  try{
-    const data = await classModel.getClassList();
-    if(data){
-      res.json(data);
-    }else{
-      return res.status(400).json({message: 'Không tìm thấy lớp'})
 
-    }
-  }catch(err){
-    console.error(err);
-    res.status(500).json({message: 'Lỗi server'})
-  }
-}
 
 module.exports = {
   getStudentsBySubject,
   getClassList
+
+exports.updateGrade = async (req, res) => {
+  const { studentId, subjectName, newGrade } = req.body;
+  try {
+    await classModel.updateGrade(studentId, subjectName, newGrade);
+    res.json({ message: "Cập nhật điểm thành công!" });
+  } catch (error) {
+    console.error("Lỗi cập nhật điểm:", error);
+    res.status(500).json({ error: "Đã xảy ra lỗi khi cập nhật điểm." });
+  }
+};
+
+exports.getAllClasses = async (req, res) => {
+  try {
+    const classes = await classModel.getAllClasses();
+    res.json(classes);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách lớp:", error);
+    res.status(500).json({ error: "Không thể lấy danh sách lớp." });
+  }
+
 };

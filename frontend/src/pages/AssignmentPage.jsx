@@ -104,8 +104,8 @@ function Assignment(){
         });
     };
 
-    const delAssign = (id) =>{
-        api.delete(`/api/v1/assignment/delete/${id}`)
+    const delAssign = (assignment_id) =>{
+        api.delete(`/api/v1/assignment/delete/${assignment_id}`)
         .then((res)=>{
             if (res.status ===200){
                 alert('Đã xoá phân công');
@@ -115,8 +115,8 @@ function Assignment(){
     };
 
     // Sửa lại hàm editAssign để nhận đủ tham số
-    const editAssign = (id, { lecturer_id, subject_id, class_id }) => {
-        api.put(`/api/v1/assignment/edit/${id}`, { lecturer_id, subject_id, class_id })
+    const editAssign = (assignment_id, { lecturer_id, subject_id, class_id }) => {
+        api.put(`/api/v1/assignment/edit/${assignment_id}`, { lecturer_id, subject_id, class_id })
         .then((res) => {
             if(res.status === 200){
                 alert('Đã cập nhật phân công');
@@ -135,7 +135,7 @@ function Assignment(){
         <div>
             <div>
                 {assignedList.map((assignment) => ( 
-                <ShowAssign key={assignment.id}
+                <ShowAssign key={assignment.assignment_id}
                 assignment={assignment}
                 onDelete={delAssign}
                 onEdit={editAssign}

@@ -21,7 +21,7 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
   const handleEdit = (e) => {
     e.preventDefault();  // ngăn chặn hành động mặc định của form
     if(onEdit) {   // nếu có hàm onEdit được truyền từ cha thì gọi hàm onEdit với id của assignment và các giá trị đã chỉnh sửa
-      onEdit(assignment.id,{  // gửi dữ liệu chỉnh sửa lên cha là AssignmentPage
+      onEdit(assignment.assignment_id,{  // gửi dữ liệu chỉnh sửa lên cha là AssignmentPage
         lecturer_id: editLecturer,
         subject_id: editSubject,
         class_id: editClass
@@ -40,7 +40,7 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
             <p><strong>Khoá:</strong>{assignment.course_name}</p>
             <div style={{marginTop: '10px'}}>
                 <button className="edit-btn" onClick={OpenEdit}>Sửa</button>
-                <button className="delete-btn" onClick={() => onDelete && onDelete(assignment.id)}>Xoá</button>
+                <button className="delete-btn" onClick={() => onDelete && onDelete(assignment.assignment_id)}>Xoá</button>
             </div>
         </div>
 

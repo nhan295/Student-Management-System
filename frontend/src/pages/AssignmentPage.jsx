@@ -55,7 +55,7 @@ function Assignment(){
         })
     };
     const getClassList = ()=>{
-        api.get("/api/v1/classes/classlist")  // lấy danh sách lớp-khoá
+        api.get("/api/v1/classes/all-classes")  // lấy danh sách lớp-khoá
         .then((res)=>{
            
             const classOptions = res.data.map(c=>({

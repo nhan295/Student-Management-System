@@ -20,7 +20,8 @@ function App() {
 
       {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>
-        <Route index element={<Navigate to="subjects/add" replace />} />
+    
+        <Route index element={<Navigate to="/homepage" replace />} />  
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
         <Route path="subjects/edit/:id" element={<EditSubject />} />
@@ -28,7 +29,7 @@ function App() {
         <Route path="schedules" element={<SchedulePage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );
 }

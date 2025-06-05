@@ -2,8 +2,7 @@ const db = require('../config/db');
 const StudentModel = require('../models/studentModel');
 
 exports.getStudentById = async(req, res) => {
-    const { student_id } = req.params;
-    console.log("Searching for:", student_name); 
+    const { student_id } = req.params; 
     try{
         const result = await StudentModel.getStudentById(student_id);
         if(result){

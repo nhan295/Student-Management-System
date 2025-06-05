@@ -23,7 +23,20 @@ const StudentModel = {
   // 📄 Lấy thông tin chi tiết của học viên theo ID
   getStudentById: async (student_id) => {
     return await db('students')
-      .select("*")
+      .select("student_id", 
+        "student_name", 
+        "birthday",
+        "class.class_name",
+        "courses.course_name",
+        "gender", 
+        "agencies.agency_name",
+        "party_join_date",
+        "professional_level",
+        "plan_title",
+        "barcode")
+      .join('class', 'students.class_id','class.class_id')
+      .join('courses', 'students.course_id', 'courses.course_id')
+      .join('agencies', 'students.agency_id', 'agencies.agency_id')
       .where({ student_id: student_id })
       .first();
   }

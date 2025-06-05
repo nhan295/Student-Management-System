@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const subjectRoutes = require("./routes/subjectRoute");
 const userRoute = require("./routes/userRoute");
 const classRoutes = require("./routes/classRoute");
+const lectureRoute = require("./routes/lectureRoute");
+const assignmentRoute = require("./routes/assignmentRoute")
 
 const app = express();
 
@@ -24,5 +26,8 @@ app.use("/api/v1/subjects", subjectRoutes);
 app.use("/api/v1/classes", classRoutes);
 
 userRoute.setup(app);
+lectureRoute.setup(app);
+assignmentRoute.setup(app);
+
 
 module.exports = app;

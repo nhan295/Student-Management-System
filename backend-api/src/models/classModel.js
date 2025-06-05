@@ -11,6 +11,12 @@ module.exports = {
         "s.class_id",
         "sub.subject_name",
         "e.grade"
+
+      )
+      .where("sub.subject_name", "like", `%${subjectName}%`),
+
+     
+
       );
 
     if (subjectName) {
@@ -67,4 +73,5 @@ module.exports = {
       .join("courses as co", "c.course_id", "co.course_id")
       .select("c.class_id", "c.class_name", "co.course_name");
   },
+
 };

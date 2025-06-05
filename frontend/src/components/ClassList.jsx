@@ -64,6 +64,12 @@ function ClassList() {
     }
   };
 
+  const handleExport = () => {
+    const url = `http://localhost:3000/api/v1/classes/export-to-excel?name=${subjectName}&classId=${classId}`;
+    window.open(url, "_blank");
+  };
+  
+
   return (
     <div className="classlist-container">
       <h2 className="classlist-title">📘 Danh sách điểm theo môn học</h2>
@@ -88,6 +94,8 @@ function ClassList() {
         </select>
 
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
+        <button onClick={handleExport}>📁 Xuất Excel</button>
+
       </div>
 
       <table>

@@ -39,7 +39,8 @@ const delAssign = async(req,res) =>{
             return res.status(200).json({message:'Đã xóa phân công'})
     }
     }catch(err){
-        return res.status(500).json({})
+        console.error('Lỗi khi xoá phân công',err);
+        return res.status(500).json({message: 'Giảng viên đã có lịch học, không thể xoá phân công'})
     }
 }
 

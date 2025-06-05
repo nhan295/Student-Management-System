@@ -3,7 +3,7 @@ const db = require("../config/db");
 const scheduleModel = {
   getAllWithDetails: () => {
     return db("schedules as s")
-      .join("assignment   as a", "s.assignment_id", "a.id")
+      .join("assignment   as a", "s.assignment_id", "a.assignment_id")
       .join("Class        as c", "a.class_id", "c.class_id")
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")
@@ -33,7 +33,7 @@ const scheduleModel = {
   // ─────── lọc theo startDate, endDate, lecturer_id ───────
   getSchedulesByCriteria: ({ startDate, endDate, lecturer_id }) => {
     const query = db("schedules as s")
-      .join("assignment   as a", "s.assignment_id", "a.id")
+      .join("assignment   as a", "s.assignment_id", "a.assignment_id")
       .join("Class        as c", "a.class_id", "c.class_id")
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")

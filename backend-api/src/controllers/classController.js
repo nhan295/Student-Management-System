@@ -1,4 +1,5 @@
-const classModel = require("../models/classModel");
+
+const ClassModel = require("../models/classModel");
 
 exports.getStudentsBySubject = async (req, res) => {
   const { name, classId } = req.query;
@@ -12,6 +13,12 @@ exports.getStudentsBySubject = async (req, res) => {
       .json({ error: "Đã xảy ra lỗi khi lấy danh sách sinh viên." });
   }
 };
+
+
+
+module.exports = {
+  getStudentsBySubject,
+  getClassList
 
 exports.updateGrade = async (req, res) => {
   const { studentId, subjectName, newGrade } = req.body;
@@ -32,4 +39,5 @@ exports.getAllClasses = async (req, res) => {
     console.error("Lỗi khi lấy danh sách lớp:", error);
     res.status(500).json({ error: "Không thể lấy danh sách lớp." });
   }
+
 };

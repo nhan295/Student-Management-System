@@ -15,10 +15,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post(
-        "http://localhost:3000/api/v1/user_auth/login",
-        { username, password }
-      );
+      const response = await api.post("/api/v1/user_auth/login",{ username, password });
+      
       localStorage.setItem(ACCESS_TOKEN, response.data.access);
       localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
       navigate("/homepage");

@@ -19,7 +19,7 @@ function App() {
       {/*Đường dẫn bình thường*/}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/homepage" element={<HomePage />} />
-      <Route path="/assign" element={<AssignmentPage />} />
+      {/* <Route path="/assign" element={<AssignmentPage />} /> */}
 
       {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>

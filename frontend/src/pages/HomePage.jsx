@@ -17,14 +17,13 @@ function HomePage() {
     },
     {
       icon: "📅",
-      label: "Phân công",
+      label: "Lịch giảng dạy và phân công",
       path: "/schedules",
     },
     { icon: "📖", label: "Tuyển sinh" },
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp" },
     { icon: "⚠️", label: "Cảnh báo" },
-    { icon: "📅", label: "Lịch giảng dạy và phân công" }
   ];
 
   return (

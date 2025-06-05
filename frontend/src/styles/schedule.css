@@ -8,7 +8,7 @@
 }
 .tab-bar-inner {
   display: flex;
-  background: linear-gradient(to right, #6366f1, #a855f7);
+  background: linear-gradient(to right, #6366f1, #330be2);
   border-radius: 9999px;
   padding: 4px;
   border: 2px solid #000;
@@ -33,7 +33,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 .tab-button.active {
-  background-color: #7e22ce;
+  background-color: #3204fd;
 }
 
 /* -----------------------------------
@@ -272,7 +272,7 @@ dialog::backdrop {
   background-color: #4338ca;
 }
 .calendar-controls .today-button {
-  background-color: #10b981; /* xanh lá cho Hôm nay */
+  background-color: #10b981;
 }
 .calendar-controls .today-button:hover {
   background-color: #059669;
@@ -291,12 +291,10 @@ dialog::backdrop {
 .calendar-header {
   display: grid;
   grid-template-columns: 100px repeat(7, 1fr);
-  /* 100px chừa chỗ cho cột giờ bên trái, 7 cột tương ứng 7 ngày */
   background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
 .calendar-header .corner-cell {
-  /* góc trên cùng bên trái (ô trống chừa chỗ cột giờ) */
   border-right: 1px solid #e5e7eb;
   background-color: #f3f4f6;
 }
@@ -310,14 +308,13 @@ dialog::backdrop {
   background-color: #f3f4f6;
 }
 .calendar-header .day-cell.current {
-  background-color: #edf2ff; /* highlight ngày hiện tại */
+  background-color: #edf2ff;
 }
 
 /* ========== Body (phần lịch thực tế) ========== */
 .calendar-body {
   display: grid;
   grid-template-columns: 100px repeat(7, 1fr);
-  /* 100px chừa ô cột giờ; 7 cột cho 7 ngày */
 }
 /* Cột giờ (left column) */
 .time-column {

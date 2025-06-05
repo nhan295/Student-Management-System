@@ -38,7 +38,4 @@ const assignmentModel = {
   },
 };
 
-
-
-
 module.exports = assignmentModel;

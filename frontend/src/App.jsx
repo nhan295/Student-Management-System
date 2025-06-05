@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import SubjectPage from "./pages/subjectPage";
 import ClassList from "./components/ClassList";
 import AssignmentPage from "./pages/AssignmentPage";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/homepage" element={<HomePage />} /> 
       <Route path="/assign" element={<AssignmentPage />} /> 
+      <Route path="/test" element={< Test />} />
 
       {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>

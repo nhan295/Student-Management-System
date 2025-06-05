@@ -32,9 +32,9 @@ const showAssigned = async(req,res) =>{
 }
 
 const delAssign = async(req,res) =>{
-    const {id} = req.params
+    const {assignment_id} = req.params
     try{
-        const result = await assignmentModel.delAssign(id);
+        const result = await assignmentModel.delAssign(assignment_id);
         if(result){
             return res.status(200).json({message:'Đã xóa phân công'})
     }
@@ -44,13 +44,13 @@ const delAssign = async(req,res) =>{
 }
 
 const editAssign = async(req,res) =>{
-    const {id} = req.params;
+    const {assignment_id} = req.params;
     const {lecturer_id,subject_id,class_id} = req.body;
     try{
         if(!lecturer_id || !subject_id || !class_id){
             return res.status(400).json({message: 'Bạn nhập thiếu trường'})
         }
-        const result = await assignmentModel.editAssign(id,lecturer_id,subject_id,class_id);
+        const result = await assignmentModel.editAssign(assignment_id,lecturer_id,subject_id,class_id);
         if(result){
             return res.status(200).json({message: 'Đã cập nhật phân công'})
         }

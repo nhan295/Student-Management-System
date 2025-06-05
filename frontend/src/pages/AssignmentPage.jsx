@@ -112,6 +112,10 @@ function Assignment(){
                 showAssigned(); // gọi lại hàm để cập nhật danh sách phân công sau khi xoá
             }
         })
+        .catch((error) => {
+            console.error('Lỗi khi xoá phân công', error);
+            alert('Giảng viên đã có lịch học, không thể xoá phân công');
+        });
     };
 
     // Sửa lại hàm editAssign để nhận đủ tham số

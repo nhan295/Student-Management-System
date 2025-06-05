@@ -7,4 +7,6 @@ module.exports.setup = (app) =>{
 
     router.post('/add',assignmentController.assignLecturer)
     router.get('/',assignmentController.showAssigned)
+    router.delete('/delete/:id',assignmentController.delAssign)
+    router.put('/edit/:id',assignmentController.editAssign)
 }

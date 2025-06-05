@@ -11,13 +11,7 @@ module.exports = {
         "s.class_id",
         "sub.subject_name",
         "e.grade"
-
-      )
-      .where("sub.subject_name", "like", `%${subjectName}%`),
-
-     
-
-      );
+      ); // <-- sửa dấu phẩy thành dấu chấm phẩy
 
     if (subjectName) {
       query.where("sub.subject_name", "like", `%${subjectName}%`);
@@ -73,5 +67,4 @@ module.exports = {
       .join("courses as co", "c.course_id", "co.course_id")
       .select("c.class_id", "c.class_name", "co.course_name");
   },
-
 };

@@ -24,7 +24,6 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-
 // Mount các route
 app.use("/api/v1/lookups", lookupRoutes);
 app.use("/api/v1/subjects", subjectRoutes);

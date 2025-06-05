@@ -315,30 +315,8 @@ export default function ScheduleTab() {
       const newClassId = Number(class_id);
 
       if (exLecturerId === newLecturerId || exClassId === newClassId) {
-        // row.start_time: "07:00:00" → slice(0, 5) = "07:00"
         const existingStart = parseTimeToMinutes(row.start_time.slice(0, 5));
         const existingEnd = parseTimeToMinutes(row.end_time.slice(0, 5));
-
-        // Debug (tùy chọn)
-        //         console.log(
-        //           "So sánh với lịch cũ:",
-        //           row.schedule_id,
-        //           "| DateLocal:",
-        //           rowLocalDate,
-        //           "| ClassId:",
-        //           exClassId,
-        //           "| LecId:",
-        //           exLecturerId,
-        //           "| TimeOld:",
-        //           row.start_time.slice(0, 5),
-        //           "-",
-        //           row.end_time.slice(0, 5),
-        //           "| TimeNew:",
-        //           start_time,
-        //           "-",
-        //           end_time
-        //         );
-
         // 9.5.4. Kiểm tra overlap: [newStart, newEnd) giao với [existingStart, existingEnd)
         if (newStart < existingEnd && newEnd > existingStart) {
           const conflictReason =

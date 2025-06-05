@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-// import AssignmentTab from "../components/AssignmentTab";
+import AssignmentTab from "../components/AssignmentTab";
 import ScheduleTab from "../components/scheduleTab";
 import "../styles/schedule.css";
+import "../styles/AssignmentPage.css";
+import "../styles/ShowAssign.css";
 
 export default function SchedulePage() {
   const [activeTab, setActiveTab] = useState("schedule");

@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add any global CSS overrides here if you like */
+
 * {
   box-sizing: border-box;
   margin: 0;

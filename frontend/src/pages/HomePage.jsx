@@ -11,9 +11,14 @@ function HomePage() {
       label: "Chương trình đào tạo",
       path: "/subjects/list",
     },
+    {
+      icon: "📅",
+      label: "Phân công",
+      path: "/schedules",
+    },
     { icon: "📖", label: "Tuyển sinh" },
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
-    { icon: "🎓", label: "Kết quả tốt nghiệp"},
+    { icon: "🎓", label: "Kết quả tốt nghiệp" },
     { icon: "⚠️", label: "Cảnh báo" },
     { icon: "📅", label: "Lịch giảng dạy và phân công" }
   ];

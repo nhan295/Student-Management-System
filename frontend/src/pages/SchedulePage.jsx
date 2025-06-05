@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AssignmentTab from "../components/AssignmentTab";
+import Assignment from "./AssignmentPage";
 import ScheduleTab from "../components/scheduleTab";
 import "../styles/schedule.css";
 import "../styles/AssignmentPage.css";
@@ -40,7 +40,7 @@ export default function SchedulePage() {
 
       {/* Nội dung tab */}
       <div className="tab-content">
-        {activeTab === "assignment" && <AssignmentTab />}
+        {activeTab === "assignment" && <Assignment />}
         {activeTab === "schedule" && <ScheduleTab />}
       </div>
     </div>

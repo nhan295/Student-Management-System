@@ -27,6 +27,7 @@ const assignmentModel = {
   },
 
   delAssign: (assignment_id) => {
+    
     return db("assignment").where({ assignment_id: assignment_id }).del();
   },
 

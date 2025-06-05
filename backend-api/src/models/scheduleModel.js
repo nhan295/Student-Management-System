@@ -4,7 +4,9 @@ const scheduleModel = {
   getAllWithDetails: () => {
     return db("schedules as s")
       .join("assignment   as a", "s.assignment_id", "a.assignment_id")
+
       .join("class        as c", "a.class_id", "c.class_id")
+
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")
       .join("room         as r", "s.room_id", "r.room_id")
@@ -33,9 +35,11 @@ const scheduleModel = {
   // ─────── lọc theo startDate, endDate, lecturer_id ───────
   getSchedulesByCriteria: ({ startDate, endDate, lecturer_id }) => {
     const query = db("schedules as s")
+
       // Thay "a.id" thành "a.assignment_id"
       .join("assignment   as a", "s.assignment_id", "a.assignment_id")
       .join("class        as c", "a.class_id", "c.class_id")
+
       .join("subjects     as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers    as lec", "a.lecturer_id", "lec.lecturer_id")
       .join("room         as r", "s.room_id", "r.room_id")

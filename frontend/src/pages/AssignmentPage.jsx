@@ -2,6 +2,7 @@ import api from '../api';
 import { useEffect, useState } from 'react';
 import Select from "react-select";
 import '../styles/AssignmentPage.css'; 
+import ShowAssign from '../components/ShowAssign'; 
 
 function Assignment(){
     //thêm vào hàm handleAssign
@@ -14,11 +15,14 @@ function Assignment(){
     const [lecturerOptions, setLecturerOptions] = useState([]);
     const [subjectOptions, setSubjectOptions] = useState([]);
     const [classOptions, setClassOptions] = useState([]);
+
+    const [assignedList, setAssignedList] = useState([]); // state để lưu danh sách phân công
     
     useEffect(()=>{ // khi component mount, gọi các hàm để lấy dữ liệu
         getLecturer();
         getSubject();
         getClassList();
+        showAssigned(); 
     } ,[]);
 
     const getLecturer = ()=>{
@@ -69,56 +73,112 @@ function Assignment(){
             alert('Vui lòng chọn đầy đủ thông tin');
             return;
         }
-        try{
             api.post("/api/v1/assignment/add",{lecturer_id,subject_id,class_id})
             .then((res)=>{
-                if(res.status===200)alert('Assignment created!')
-                    else alert('Assignment not create')
+                if(res.status===200 || res.status===201) {
+                    alert('Assignment created!');
+                    showAssigned(); // gọi hàm để hiển thị danh sách phân công sau khi thêm mới
+                } else {
+                    alert('Assignment not created');
+                }
             })
-        }catch(error){
-            console.log(error)
-        }
+            .catch((error) => {
+                if (error.response && (error.response.status === 500 || error.response.status === 409)) {
+                    alert('Phân công này đã tồn tại!');
+                } else {
+                    alert('Đã xảy ra lỗi khi thêm phân công!');
+                }
+                console.log(error);
+            });
     };
+
+    const showAssigned = ()=>{
+        api.get("/api/v1/assignment/")
+        .then((res)=> res.data)  // lấy danh sách phân công
+        .then((data)=>{
+            setAssignedList(data);  // cập nhật state assignedList
+            console.log(data);
+        })
+        .catch((err)=>{
+            console.error('Lỗi khi lấy danh sách phân công',err);
+        });
+    };
+
+    const delAssign = (id) =>{
+        api.delete(`/api/v1/assignment/delete/${id}`)
+        .then((res)=>{
+            if (res.status ===200){
+                alert('Đã xoá phân công');
+                showAssigned(); // gọi lại hàm để cập nhật danh sách phân công sau khi xoá
+            }
+        })
+    };
+
+    // Sửa lại hàm editAssign để nhận đủ tham số
+    const editAssign = (id, { lecturer_id, subject_id, class_id }) => {
+        api.put(`/api/v1/assignment/edit/${id}`, { lecturer_id, subject_id, class_id })
+        .then((res) => {
+            if(res.status === 200){
+                alert('Đã cập nhật phân công');
+                showAssigned(); // gọi lại hàm để cập nhật danh sách phân công sau khi sửa
+            } else {
+                alert('Không thể cập nhật phân công');
+            }
+        })
+        .catch((error) => {
+            console.error('Lỗi khi cập nhật phân công', error);
+            alert('Đã xảy ra lỗi khi cập nhật phân công!');
+        });
+    }
+
     return(
-        <div className='assignment-form-container'>
-            <form onSubmit={handleAssign}>
-                <h1>➕ Thêm phân công mới</h1>
-                <label htmlFor=""> Tên giảng viên</label>
-                <Select
-                    options={lecturerOptions}
-                    // khi chọn giảng viên, cập nhật state lecturer_id
-                    onChange={option =>setLecturer(option ? option.value : "")}
-                    placeholder="Chọn giảng viên..."
-                    isSearchable
-                />
-
-                <label htmlFor="">Mã giảng viên</label>
-                <input type="text" 
-                    readOnly
-                    value={lecturer_id}
-                    placeholder='Tự động điền khi chọn giảng viên'
-                    
-                />
-
-                <label htmlFor="">Môn học</label>
-                <Select
-                    options={subjectOptions}
-                    onChange={option => setSubject(option ? option.value : "")}
-                    placeholder='Chọn môn học'
-                
-                />
-
-                <label htmlFor="">Lớp học</label>
-                <Select
-                    options={classOptions}
-                    onChange={option => setClass(option ? option.value : "")}
-                    placeholder='Chọn lớp học'
-                />
-
-                <button type="submit">Tạo phân công</button>
-
-
-            </form>
+        <div>
+            <div>
+                {assignedList.map((assignment) => ( 
+                <ShowAssign key={assignment.id}
+                assignment={assignment}
+                onDelete={delAssign}
+                onEdit={editAssign}
+                lecturerOptions={lecturerOptions}
+                subjectOptions={subjectOptions}
+                classOptions={classOptions}
+                />  // hiển thị từng phân công truyền qua component ShowAssign
+))}
+            </div>
+            <div className='assignment-form-container'>
+                <form onSubmit={handleAssign}>
+                    <h1>➕ Thêm phân công mới</h1>
+                    <label htmlFor=""> Tên giảng viên</label>
+                    <Select
+                        options={lecturerOptions}
+                        // khi chọn giảng viên, cập nhật state lecturer_id
+                        onChange={option =>setLecturer(option ? option.value : "")}
+                        placeholder="Chọn giảng viên..."
+                        isSearchable
+                    />
+                    <label htmlFor="">Mã giảng viên</label>
+                    <input type="text"
+                        readOnly
+                        value={lecturer_id}
+                        placeholder='Tự động điền khi chọn giảng viên'
+            
+                    />
+                    <label htmlFor="">Môn học</label>
+                    <Select
+                        options={subjectOptions}
+                        onChange={option => setSubject(option ? option.value : "")}
+                        placeholder='Chọn môn học'
+            
+                    />
+                    <label htmlFor="">Lớp học</label>
+                    <Select
+                        options={classOptions}
+                        onChange={option => setClass(option ? option.value : "")}
+                        placeholder='Chọn lớp học'
+                    />
+                    <button type="submit">Thêm phân công</button>
+                </form>
+            </div>
         </div>
     );
 }

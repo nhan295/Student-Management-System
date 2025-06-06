@@ -7,7 +7,7 @@ const login = async(req,res) =>{
         const adminUserName = process.env.ADMIN_USERNAME;
         const adminPassWord = process.env.ADMIN_HASH_PASSWORD;
         const jwtSecret = process.env.JWT_SECRET;
-        const jwtRefesh = process.env.JWT_REFESH_SECRET;
+        const jwtRefesh = process.env.JWT_REFRESH_SECRET;
 
         if(username !== adminUserName){
             return res.status(400).json({message: 'Wrong username or password'});
@@ -39,7 +39,7 @@ const login = async(req,res) =>{
 const refeshToken = (req,res) =>{
     const token = req.cookies.refesh_token;
     if(token){
-        jwt.verify(token, process.env.JWT_REFESH_SECRET,(err, user)=>{
+        jwt.verify(token, process.env.JWT_REFRESH_SECRET,(err, user)=>{
            if(err) return res.sendStatus(403); // token sai hoặc hết hạn
            const newAccessToken = jwt.sign({username: user.username},
             process.env.JWT_SECRET, {expiresIn:'1h'}

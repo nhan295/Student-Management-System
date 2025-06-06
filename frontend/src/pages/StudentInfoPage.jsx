@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api.js";
 import { useParams } from "react-router-dom";
-
+import "../styles/StudentInfoPage.css"; // Thêm CSS cho trang thông tin học viên
 import ProgressTable from "../components/ProgressTable.jsx";
 
 function StudentInfoPage() {
@@ -9,21 +9,16 @@ function StudentInfoPage() {
   const { student_id } = useParams();
   const [showEdit, setShowEdit] = useState(false);
   const [showProgress, setShowProgress] = useState(false); // Thêm state để điều khiển hiển thị bảng tiến độ
-
-  const [studentName, setStudentName] = useState(
-    studentInfo?.student_name || ""
-  );
-  const [professionalLevel, setProfessionalLevel] = useState(
-    studentInfo?.professional_level || ""
-  );
-  const [partyJoinDate, setPartyJoinDate] = useState(
-    studentInfo?.party_join_date || ""
-  );
+  const [agencyName,setAgencyName] = useState("");
+  const [studentName, setStudentName] = useState(studentInfo?.student_name || "");
+  const [professionalLevel, setProfessionalLevel] = useState(studentInfo?.professional_level || "");
+  const [partyJoinDate, setPartyJoinDate] = useState(studentInfo?.party_join_date || "");
   const [planTitle, setPlanTitle] = useState(studentInfo?.plan_title || "");
 
   const OpenEdit = () => {
     setStudentName(studentInfo?.student_name || ""); // Lấy tên học viên từ thông tin hiện tại
     //setBirthday(studentInfo?.birthday || ''); // Lấy ngày sinh từ thông tin hiện tại
+    setAgencyName(studentInfo?.agency_name || ""); // Lấy tên đơn vị từ thông tin hiện tại
     setProfessionalLevel(studentInfo?.professional_level || ""); // Lấy chức vị từ thông tin hiện tại
     setPartyJoinDate(studentInfo?.party_join_date || ""); // Lấy ngày kết nạp từ thông tin hiện tại
     setPlanTitle(studentInfo?.plan_title || ""); // Lấy tiêu đề kế hoạch từ thông tin hiện tại
@@ -42,7 +37,7 @@ function StudentInfoPage() {
       .put(`/api/v1/student/edit/${student_id}`, {
         student_name: studentName,
         // birthday: birthday,
-
+        agency_name: agencyName,
         professional_level: professionalLevel,
         party_join_date: partyJoinDate,
         plan_title: planTitle,
@@ -54,8 +49,6 @@ function StudentInfoPage() {
         // Cập nhật lại các state form để đồng bộ với dữ liệu mới
 
         setStudentName(data.student_name || "");
-        //setBirthday(data.birthday || '');
-
         setProfessionalLevel(data.professional_level || "");
         setPartyJoinDate(data.party_join_date || "");
         setPlanTitle(data.plan_title || "");
@@ -143,40 +136,44 @@ function StudentInfoPage() {
       </div>
       {showEdit && (
         <div className="edit-card">
-          <form onSubmit={handleEdit}>
-            <label htmlFor="student_name">Họ tên:</label>
-            <input
-              type="text"
-              id="student_name"
-              defaultValue={studentInfo?.student_name}
-              onChange={(e) => setStudentName(e.target.value)}
-              value={studentName}
-            />
-
-            <label htmlFor="">Chức vị</label>
-            <input
-              type="text"
-              onChange={(e) => setProfessionalLevel(e.target.value)}
-              value={professionalLevel}
-            />
-
-            <label htmlFor="">Ngày kết nạp</label>
-            <input
-              type="text"
-              onChange={(e) => setPartyJoinDate(e.target.value)}
-              value={partyJoinDate}
-            />
-
-            <label htmlFor="">Tiêu đề kế hoạch</label>
-            <input
-              type="text"
-              onChange={(e) => setPlanTitle(e.target.value)}
-              value={planTitle}
-            />
-
-            <button type="submit">Lưu</button>
-            <button onClick={CloseEdit}>Huỷ</button>
-          </form>
+          <div className="edit-modal-overlay">
+            <div className="edit-modal-content">
+              <form onSubmit={handleEdit}>
+                <label htmlFor="student_name">Họ tên:</label>
+                <input
+                  type="text"
+                  id="student_name"
+                  defaultValue={studentInfo?.student_name}
+                  onChange={(e) => setStudentName(e.target.value)}
+                  value={studentName}
+                />
+                <label htmlFor="">Chức vị</label>
+                <input
+                  type="text"
+                  onChange={(e) => setProfessionalLevel(e.target.value)}
+                  value={professionalLevel}
+                />
+                <label htmlFor="">Đơn vị</label>
+                <input type="text"
+                onChange={(e)=>setAgencyName(e.target.value)}
+                value={agencyName} />
+                <label htmlFor="">Ngày kết nạp</label>
+                <input
+                  type="text"
+                  onChange={(e) => setPartyJoinDate(e.target.value)}
+                  value={partyJoinDate}
+                />
+                <label htmlFor="">Tiêu đề kế hoạch</label>
+                <input
+                  type="text"
+                  onChange={(e) => setPlanTitle(e.target.value)}
+                  value={planTitle}
+                />
+                <button type="submit">Lưu</button>
+                <button onClick={CloseEdit}>Huỷ</button>
+              </form>
+            </div>
+          </div>
         </div>
       )}
       {showProgress && <ProgressTable studentId={student_id} />}

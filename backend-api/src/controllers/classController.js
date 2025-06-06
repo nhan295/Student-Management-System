@@ -90,9 +90,11 @@ exports.exportToExcel = async (req, res) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
+    const safeName = String(name || '').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeClassId = String(classId || '').replace(/[^a-zA-Z0-9_-]/g, '_');
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename=Diem_${name}_${classId}.xlsx`
+      `attachment; filename=Diem_${safeName}_${safeClassId}.xlsx`
     );
 
     await workbook.xlsx.write(res);

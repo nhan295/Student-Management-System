@@ -31,12 +31,12 @@ function Login() {
   };
 
   return (
-    <div className="page-background">
+    <div className="login-page-background">
       <div className="login-wrapper">
         <form onSubmit={handleSubmit} className="login-form">
           <h2>Hệ thống quản lí học viên</h2>
 
-          <div className="input-group">
+          <div className="login-input-group">
             <div className="input-icon-box">
               <FontAwesomeIcon icon={faUser} />
             </div>
@@ -48,7 +48,7 @@ function Login() {
             />
           </div>
 
-          <div className="input-group">
+          <div className="login-input-group">
             <div className="input-icon-box">
               <FontAwesomeIcon icon={faLock} />
             </div>
@@ -67,7 +67,7 @@ function Login() {
             <span>Forgot Password</span>
           </div>
 
-          <button className="btn-form" type="submit">
+          <button className="login-btn-form" type="submit">
             Login
           </button>
         </form>

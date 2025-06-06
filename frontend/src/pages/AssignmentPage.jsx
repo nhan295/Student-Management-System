@@ -136,54 +136,52 @@ function Assignment(){
     }
 
     return(
-        <div>
-            <div>
-                {assignedList.map((assignment) => ( 
+      <div className="assignment-page-root">
+        <div className="assignment-main-grid">
+          <div className="assignment-list-panel">
+            <h2 className="assignment-list-title">Danh sách phân công</h2>
+            <div className="assignment-list-container">
+              {assignedList.map((assignment) => (
                 <ShowAssign key={assignment.assignment_id}
-                assignment={assignment}
-                onDelete={delAssign}
-                onEdit={editAssign}
-                lecturerOptions={lecturerOptions}
-                subjectOptions={subjectOptions}
-                classOptions={classOptions}
-                />  // hiển thị từng phân công truyền qua component ShowAssign
-))}
+                  assignment={assignment}
+                  onDelete={delAssign}
+                  onEdit={editAssign}
+                  lecturerOptions={lecturerOptions}
+                  subjectOptions={subjectOptions}
+                  classOptions={classOptions}
+                />
+              ))}
             </div>
-            <div className='assignment-form-container'>
-                <form onSubmit={handleAssign}>
-                    <h1>➕ Thêm phân công mới</h1>
-                    <label htmlFor=""> Tên giảng viên</label>
-                    <Select
-                        options={lecturerOptions}
-                        // khi chọn giảng viên, cập nhật state lecturer_id
-                        onChange={option =>setLecturer(option ? option.value : "")}
-                        placeholder="Chọn giảng viên..."
-                        isSearchable
-                    />
-                    <label htmlFor="">Mã giảng viên</label>
-                    <input type="text"
-                        readOnly
-                        value={lecturer_id}
-                        placeholder='Tự động điền khi chọn giảng viên'
-            
-                    />
-                    <label htmlFor="">Môn học</label>
-                    <Select
-                        options={subjectOptions}
-                        onChange={option => setSubject(option ? option.value : "")}
-                        placeholder='Chọn môn học'
-            
-                    />
-                    <label htmlFor="">Lớp học</label>
-                    <Select
-                        options={classOptions}
-                        onChange={option => setClass(option ? option.value : "")}
-                        placeholder='Chọn lớp học'
-                    />
-                    <button type="submit">Thêm phân công</button>
-                </form>
-            </div>
+          </div>
+          <div className="assignment-form-panel">
+            <form className="assignment-form-container" onSubmit={handleAssign}>
+              <h1> Thêm phân công mới</h1>
+              <label> Tên giảng viên</label>
+              <Select
+                options={lecturerOptions}
+                onChange={option => setLecturer(option ? option.value : "")}
+                placeholder="Chọn giảng viên..."
+                isSearchable
+              />
+              <label>Mã giảng viên</label>
+              <input type="text" readOnly value={lecturer_id} placeholder='Tự động điền khi chọn giảng viên' />
+              <label>Môn học</label>
+              <Select
+                options={subjectOptions}
+                onChange={option => setSubject(option ? option.value : "")}
+                placeholder='Chọn môn học'
+              />
+              <label>Lớp học</label>
+              <Select
+                options={classOptions}
+                onChange={option => setClass(option ? option.value : "")}
+                placeholder='Chọn lớp học'
+              />
+              <button type="submit">Thêm phân công</button>
+            </form>
+          </div>
         </div>
+      </div>
     );
 }
 

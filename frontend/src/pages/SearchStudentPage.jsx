@@ -29,9 +29,9 @@ const SearchStudentPage = () => {
   }
 
   return (
-    <div>
+    <div className="search-student-container">
       <h2>Tìm kiếm học viên</h2>
-      <div className="flex gap-2 mb-6">
+      <div className="search-student-input">
         <input
           type="text"
           value={student_name}
@@ -47,7 +47,7 @@ const SearchStudentPage = () => {
         <div>
           {results.map((student) => (
             <div key={student.student_id}>
-              <div className="space-y-1 text-sm">
+              <div className="result-student-info">
                 <p>
                   <strong>Họ và tên:</strong> {student.student_name}
                 </p>
@@ -55,15 +55,15 @@ const SearchStudentPage = () => {
                   <strong>Mã học viên:</strong> {student.student_id}
                 </p>
               </div>
-              <div className="mt-4 sm:mt-0 flex gap-4">
+              <div className="student-view-button">
                 <button onClick={()=>getStudentId(student.student_id)}>Xem chi tiết</button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>
-          Không có kết quả phù hợp với từ khóa "<strong>{name}</strong>"
+        <p className="result-alert">
+         
         </p>
       )}
     </div>

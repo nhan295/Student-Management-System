@@ -49,7 +49,7 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
           <div className='modal-overlay'>
             <div className='modal-content'>
               <form onSubmit={handleEdit}>
-                <label htmlFor="">Sửa</label>
+                <label htmlFor="">Sửa phân công</label>
                 <label htmlFor="">Giảng viên</label>
                 <select value={editLecturer}
                   onChange={(e)=>setEditLecturer(e.target.value)}>

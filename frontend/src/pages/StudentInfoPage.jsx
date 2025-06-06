@@ -31,7 +31,6 @@ function StudentInfoPage() {
     setShowEdit(true);
   };
 
-
   const CloseEdit = () => {
     setShowEdit(false);
   };
@@ -83,79 +82,141 @@ function StudentInfoPage() {
   };
 
   return (
-    <>
+    
       <div className="student-container">
-        <div className="student-detail-card">
-          <h2>Thông tin sinh viên</h2>
-          <p>Họ tên: {studentInfo?.student_name}</p>
-          <p>Mã học viên: {studentInfo?.student_id}</p>
-          <p>
-            Ngày sinh:{" "}
-            {studentInfo?.birthday
-              ? new Date(studentInfo.birthday).toISOString().slice(0, 10)
-              : ""}
-          </p>
-          <p>Giới tính: {studentInfo?.gender}</p>
-          <p>Lớp: {studentInfo?.class_name}</p>
-          <p>Khoá học: {studentInfo?.course_name}</p>
-          <p>Đơn vị: {studentInfo?.agency_name}</p>
-          <p>Chức vị: {studentInfo?.professional_level}</p>
-          <p>Ngày kết nạp: {studentInfo?.party_join_date}</p>
-          <p>Tiêu đề kế hoạch: {studentInfo?.plan_title}</p>
-          <p>Barcode: {studentInfo?.barcode}</p>
-          <button onClick={OpenEdit}>Sửa</button>
-          <button onClick={handleShowProgress}>Kết quả học tập</button>
+        <div className="student-info-card">
+          <div className="student-info-header">
+            <h2>Thông tin sinh viên</h2>
+          </div>
+
+          <div className="student-info-content">
+            <div className="student-info-row">
+              <span className="info-label">Họ tên:</span>
+              <span className="info-value">{studentInfo?.student_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Mã học viên:</span>
+              <span className="info-value">{studentInfo?.student_id}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Ngày sinh:</span>
+              <span className="info-value">
+                {studentInfo?.birthday
+                  ? new Date(studentInfo.birthday).toISOString().slice(0, 10)
+                  : ""}
+              </span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Giới tính:</span>
+              <span className="info-value">{studentInfo?.gender}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Lớp:</span>
+              <span className="info-value">{studentInfo?.class_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Khoá học:</span>
+              <span className="info-value">{studentInfo?.course_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Đơn vị:</span>
+              <span className="info-value">{studentInfo?.agency_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Chức vị:</span>
+              <span className="info-value">
+                {studentInfo?.professional_level}
+              </span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Ngày kết nạp:</span>
+              <span className="info-value">{studentInfo?.party_join_date}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Tiêu đề kế hoạch:</span>
+              <span className="info-value">{studentInfo?.plan_title}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Barcode:</span>
+              <span className="info-value">{studentInfo?.barcode}</span>
+            </div>
+          </div>
+
+          <div className="student-info-actions">
+            <button className="btn-info-edit" onClick={OpenEdit}>
+              Sửa
+            </button>
+            <button className="btn-progress" onClick={handleShowProgress}>
+              Kết quả học tập
+            </button>
+          </div>
         </div>
 
         {showEdit && (
-    <div className="student-edit-modal">
-      <div className="student-edit-overlay">
-        <div className="student-edit-content">
-          <form onSubmit={handleEdit}>
-            <label htmlFor="student_name">Họ tên:</label>
-            <input
-              type="text"
-              id="student_name"
-              onChange={(e) => setStudentName(e.target.value)}
-              value={studentName}
-            />
-            <label>Chức vị</label>
-            <input
-              type="text"
-              onChange={(e) => setProfessionalLevel(e.target.value)}
-              value={professionalLevel}
-            />
-            <label>Đơn vị</label>
-            <input
-              type="text"
-              onChange={(e) => setAgencyName(e.target.value)}
-              value={agencyName}
-            />
-            <label>Ngày kết nạp</label>
-            <input
-              type="text"
-              onChange={(e) => setPartyJoinDate(e.target.value)}
-              value={partyJoinDate}
-            />
-            <label>Tiêu đề kế hoạch</label>
-            <input
-              type="text"
-              onChange={(e) => setPlanTitle(e.target.value)}
-              value={planTitle}
-            />
-            <button type="submit" className="student-btn-save">Lưu</button>
-            <button onClick={CloseEdit} className="student-btn-cancel">Huỷ</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  )}
-      </div>
+          <div className="student-edit-modal">
+            <div className="student-edit-overlay">
+              <div className="student-edit-content">
+                <form onSubmit={handleEdit}>
+                  <label htmlFor="student_name">Họ tên:</label>
+                  <input
+                    type="text"
+                    id="student_name"
+                    onChange={(e) => setStudentName(e.target.value)}
+                    value={studentName}
+                  />
+                  <label>Chức vị</label>
+                  <input
+                    type="text"
+                    onChange={(e) => setProfessionalLevel(e.target.value)}
+                    value={professionalLevel}
+                  />
+                  <label>Đơn vị</label>
+                  <input
+                    type="text"
+                    onChange={(e) => setAgencyName(e.target.value)}
+                    value={agencyName}
+                  />
+                  <label>Ngày kết nạp</label>
+                  <input
+                    type="text"
+                    onChange={(e) => setPartyJoinDate(e.target.value)}
+                    value={partyJoinDate}
+                  />
+                  <label>Tiêu đề kế hoạch</label>
+                  <input
+                    type="text"
+                    onChange={(e) => setPlanTitle(e.target.value)}
+                    value={planTitle}
+                  />
+                  <div className="student-edit-action">
+                    <button type="submit" className="student-btn-save">
+                      Lưu
+                    </button>
+                    <button onClick={CloseEdit} className="student-btn-cancel">
+                      Huỷ
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+      
 
       {showProgress && (
         <ProgressTable studentId={student_id} onClose={handleCloseProgress} />
       )}
-    </>
+    </div>
   );
 }
 

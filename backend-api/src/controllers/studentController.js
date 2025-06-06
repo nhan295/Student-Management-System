@@ -34,24 +34,23 @@ exports.searchStudents = async(req, res) => {
 };
 
 
-exports.updateStudent = (req, res) => {
-    const {student_id } = req.params;
-    const { student_name, birthday } = req.body;
-    try{
-        if(!student_name || !birthday) {
-            return res.status(400).json({ message: 'Thiếu thông tin cần cập nhật' });
-        }
-        const data = StudentModel.updateStudent(student_id, { student_name, birthday });
-        if(data){
-            res.json({ message: 'Cập nhật học viên thành công' });
-        }else{
+exports.updateStudent = async (req, res) => {
+    const { student_id } = req.params;
+    const { student_name, birthday, class_id, course_id, professional_level, party_join_date, plan_title } = req.body;
+    try {
+        // Gọi model update và chờ kết quả
+        const count = await StudentModel.updateStudent(student_id, { student_name, birthday, class_id, course_id, professional_level, party_join_date, plan_title });
+        if (count > 0) {
+            // Lấy lại thông tin mới nhất để trả về cho FE
+            const updated = await StudentModel.getStudentById(student_id);
+            res.json(updated);
+        } else {
             res.status(404).json({ message: 'Không tìm thấy học viên để cập nhật' });
         }
-    }catch(err){
+    } catch (err) {
         console.error('Lỗi cập nhật học viên:', err);
         res.status(500).json({ error: 'Lỗi máy chủ' });
     }
-
 };
 
 // exports.getStudentProgress = (req, res) => {
@@ -77,4 +76,3 @@ exports.updateStudent = (req, res) => {
 //       res.json(results);
 //     });
 //   };
-  

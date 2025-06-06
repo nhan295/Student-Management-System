@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import "../styles/SearchStudent.css";
+import "../styles/SearchStudentPage.css";
 
 const SearchStudentPage = () => {
   const navigate = useNavigate();

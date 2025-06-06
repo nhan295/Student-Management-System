@@ -110,6 +110,9 @@ function StudentInfoPage() {
   const handleShowProgress = () => {
     setShowProgress(true);
   };
+  const handleCloseProgress = () => {
+    setShowProgress(false);
+  };
 
   return (
     <div className="student-info-card">
@@ -176,7 +179,9 @@ function StudentInfoPage() {
           </div>
         </div>
       )}
-      {showProgress && <ProgressTable studentId={student_id} />}
+      {showProgress && (
+        <ProgressTable studentId={student_id} onClose={handleCloseProgress} />
+      )}
     </div>
   );
 }

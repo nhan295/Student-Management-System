@@ -1,23 +1,169 @@
+// // src/pages/ProgressTable.jsx
+// import React, { useState, useEffect } from "react";
+// import PropTypes from "prop-types";
+// import "../styles/ProgressTable.css";
+// import api from "../api.js";
+
+// export default function ProgressTable({ studentId, onClose }) {
+//   const [progressData, setProgressData] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     setLoading(true);
+//     setError(null);
+
+//     api
+//       .get(`/api/v1/progress/${studentId}`)
+//       .then((res) => {
+//         setProgressData(res.data.progress || []);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         console.error("Lỗi khi tải tiến độ học tập:", err);
+//         setError("Không tải được tiến độ học tập");
+//         setLoading(false);
+//       });
+//   }, [studentId]);
+
+//   if (loading) {
+//     return (
+//       <div className="progress-container">
+//         <p>Đang tải tiến độ học tập…</p>
+//       </div>
+//     );
+//   }
+
+//   if (error) {
+//     return (
+//       <div className="progress-container">
+//         <p className="error">{error}</p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="progress-container">
+//       <table className="progress-table">
+//         <thead>
+//           <tr>
+//             <th colSpan="4" className="table-header">
+//               {/* Nút “Back” dùng inline-SVG, nằm sát bên trái tiêu đề */}
+//               <button
+//                 className="close-btn"
+//                 onClick={onClose}
+//                 aria-label="Quay lại"
+//               >
+//                 {/*
+//                   Inline SVG:
+//                   – Một hình vuông nền xanh (đúng tông #3182ce),
+//                   – Mũi tên trắng chỉ sang trái,
+//                   – Chữ “BACK” ở phía dưới mũi tên.
+//                 */}
+//                 <svg
+//                   className="close-icon"
+//                   xmlns="http://www.w3.org/2000/svg"
+//                   width="32"
+//                   height="32"
+//                   viewBox="0 0 64 64"
+//                   role="img"
+//                   aria-labelledby="title-back-icon"
+//                 >
+//                   <title id="title-back-icon">Back</title>
+//                   {/* Hình chữ nhật nền xanh */}
+//                   <rect width="64" height="64" fill="#3182ce" rx="4" />
+//                   {/* Mũi tên trắng: một đường path vẽ mũi tên trái */}
+//                   <path
+//                     d="M40 16 L24 32 L40 48"
+//                     fill="none"
+//                     stroke="#fff"
+//                     strokeWidth="6"
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                   />
+//                 </svg>
+//               </button>
+//               Kết quả học tập
+//             </th>
+//           </tr>
+//           <tr className="column-headers">
+//             <th className="col-stt">STT</th>
+//             <th className="col-code">Mã HP</th>
+//             <th className="col-name">Tên học phần</th>
+//             <th className="col-grade">Điểm</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {progressData.length === 0 ? (
+//             <tr>
+//               <td colSpan="4" className="no-data">
+//                 Không có dữ liệu
+//               </td>
+//             </tr>
+//           ) : (
+//             progressData.map((row, idx) => (
+//               <tr
+//                 key={row.subject_id}
+//                 className={idx % 2 === 0 ? "row-light" : "row-dark"}
+//               >
+//                 <td className="col-stt">{idx + 1}</td>
+//                 <td className="col-code">{row.subject_code}</td>
+//                 <td className="col-name">{row.subject_name}</td>
+//                 <td className="col-grade">
+//                   {row.grade !== null ? row.grade : "-"}
+//                 </td>
+//               </tr>
+//             ))
+//           )}
+//         </tbody>
+//         <tfoot>
+//           <tr>
+//             <td colSpan="4" className="footer-cell">
+//               {/* Nếu cần thêm nút hoặc ghi chú, đặt ở đây */}
+//             </td>
+//           </tr>
+//         </tfoot>
+//       </table>
+//     </div>
+//   );
+// }
+
+// ProgressTable.propTypes = {
+//   studentId: PropTypes.string.isRequired,
+//   onClose: PropTypes.func.isRequired,
+// };
+
 // src/pages/ProgressTable.jsx
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../styles/ProgressTable.css";
-import api from "../api.js"; // sử dụng axios instance
+import api from "../api.js";
 
-export default function ProgressTable({ studentId }) {
+export default function ProgressTable({ studentId, onClose }) {
   const [progressData, setProgressData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // state để bật hiệu ứng khi mount
+  const [isVisible, setIsVisible] = useState(false);
+  // state để kích hoạt hiệu ứng khi unmount
+  const [isClosing, setIsClosing] = useState(false);
+
+  // Khi component mount, set isVisible = true để slide‐in
+  useEffect(() => {
+    // một chút delay để CSS transition nhận diện
+    const t = setTimeout(() => setIsVisible(true), 10);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Lấy dữ liệu tiến độ
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    // Gọi đúng endpoint backend: /api/v1/progress/{studentId}
     api
       .get(`/api/v1/progress/${studentId}`)
       .then((res) => {
-        // res.data = { student_id, progress: [...] }
         setProgressData(res.data.progress || []);
         setLoading(false);
       })
@@ -28,28 +174,68 @@ export default function ProgressTable({ studentId }) {
       });
   }, [studentId]);
 
+  // Khi click vào nút “<-” (close), bật isClosing và sau 300ms mới gọi onClose
+  const handleClose = () => {
+    setIsClosing(true);
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 300); // 300ms trùng với transition-duration trong CSS
+  };
+
   if (loading) {
     return (
-      <div className="progress-container">
-        <p>Đang tải tiến độ học tập…</p>
+      <div className="progress-container loading">
+        Đang tải tiến độ học tập…
       </div>
     );
   }
 
   if (error) {
-    return (
-      <div className="progress-container">
-        <p className="error">{error}</p>
-      </div>
-    );
+    return <div className="progress-container error">{error}</div>;
   }
 
+  // Ghép className: mặc định "progress-container", khi isVisible → thêm "enter", khi isClosing → thêm "exit"
+  const containerClass = [
+    "progress-container",
+    isVisible ? "enter" : "",
+    isClosing ? "exit" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="progress-container">
+    <div className={containerClass}>
       <table className="progress-table">
         <thead>
           <tr>
             <th colSpan="4" className="table-header">
+              <button
+                className="close-btn"
+                onClick={handleClose}
+                aria-label="Quay lại"
+              >
+                <svg
+                  className="close-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 64 64"
+                  role="img"
+                  aria-labelledby="title-back-icon"
+                >
+                  <title id="title-back-icon">Back</title>
+                  <rect width="64" height="64" fill="#3182ce" rx="4" />
+                  <path
+                    d="M40 16 L24 32 L40 48"
+                    fill="none"
+                    stroke="#fff"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
               Kết quả học tập
             </th>
           </tr>
@@ -86,7 +272,7 @@ export default function ProgressTable({ studentId }) {
         <tfoot>
           <tr>
             <td colSpan="4" className="footer-cell">
-              {/* Bạn có thể thêm nút QUAY LẠI hoặc thông tin tổng nếu cần */}
+              {/* Nếu cần thêm nút hoặc ghi chú, đặt ở đây */}
             </td>
           </tr>
         </tfoot>
@@ -97,4 +283,5 @@ export default function ProgressTable({ studentId }) {
 
 ProgressTable.propTypes = {
   studentId: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

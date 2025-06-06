@@ -31,33 +31,6 @@ function StudentInfoPage() {
     setShowEdit(true);
   };
 
-  //  const getClassList = () => {
-  //     api.get("/api/v1/classes/all-classes")
-  //       .then((res) => {
-  //         const classOptions = res.data.map((c) => ({
-  //           value: c.class_id,
-  //           label: `${c.class_name}`,
-  //           course_id: c.course_id, // Lưu cả course_id vào option
-  //           course_name: c.course_name // Lưu cả tên khoá
-  //         }));
-  //         setClassOptions(classOptions);
-  //         // Tạo danh sách khoá học duy nhất từ dữ liệu lớp
-  //         const uniqueCourses = Array.from(
-  //           new Map(res.data.map((c) => [c.course_id, { value: c.course_id, label: c.course_name }])).values()
-  //         );
-  //         setCourseOptions(uniqueCourses);
-  //       });
-  //   };
-
-  // // Khi chọn lớp, tự động nhảy khoá
-  // const handleClassChange = (e) => {
-  //     const selectedClassId = e.target.value;
-  //     setClassId(selectedClassId);
-  //     // Tìm class option tương ứng để lấy course_id
-  //     const selectedClass = classOptions.find((c) => c.value === selectedClassId);
-  //     if (selectedClass) {
-  //       setCourseId(selectedClass.course_id);
-  //     }
 
   const CloseEdit = () => {
     setShowEdit(false);
@@ -111,8 +84,8 @@ function StudentInfoPage() {
 
   return (
     <>
-      <div className="student-info-card">
-        <div className="detail-card">
+      <div className="student-container">
+        <div className="student-detail-card">
           <h2>Thông tin sinh viên</h2>
           <p>Họ tên: {studentInfo?.student_name}</p>
           <p>Mã học viên: {studentInfo?.student_id}</p>
@@ -135,49 +108,48 @@ function StudentInfoPage() {
         </div>
 
         {showEdit && (
-          <div className="edit-card">
-            <div className="edit-modal-overlay">
-              <div className="edit-modal-content">
-                <form onSubmit={handleEdit}>
-                  <label htmlFor="student_name">Họ tên:</label>
-                  <input
-                    type="text"
-                    id="student_name"
-                    defaultValue={studentInfo?.student_name}
-                    onChange={(e) => setStudentName(e.target.value)}
-                    value={studentName}
-                  />
-                  <label>Chức vị</label>
-                  <input
-                    type="text"
-                    onChange={(e) => setProfessionalLevel(e.target.value)}
-                    value={professionalLevel}
-                  />
-                  <label>Đơn vị</label>
-                  <input
-                    type="text"
-                    onChange={(e) => setAgencyName(e.target.value)}
-                    value={agencyName}
-                  />
-                  <label>Ngày kết nạp</label>
-                  <input
-                    type="text"
-                    onChange={(e) => setPartyJoinDate(e.target.value)}
-                    value={partyJoinDate}
-                  />
-                  <label>Tiêu đề kế hoạch</label>
-                  <input
-                    type="text"
-                    onChange={(e) => setPlanTitle(e.target.value)}
-                    value={planTitle}
-                  />
-                  <button type="submit">Lưu</button>
-                  <button onClick={CloseEdit}>Huỷ</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        )}
+    <div className="student-edit-modal">
+      <div className="student-edit-overlay">
+        <div className="student-edit-content">
+          <form onSubmit={handleEdit}>
+            <label htmlFor="student_name">Họ tên:</label>
+            <input
+              type="text"
+              id="student_name"
+              onChange={(e) => setStudentName(e.target.value)}
+              value={studentName}
+            />
+            <label>Chức vị</label>
+            <input
+              type="text"
+              onChange={(e) => setProfessionalLevel(e.target.value)}
+              value={professionalLevel}
+            />
+            <label>Đơn vị</label>
+            <input
+              type="text"
+              onChange={(e) => setAgencyName(e.target.value)}
+              value={agencyName}
+            />
+            <label>Ngày kết nạp</label>
+            <input
+              type="text"
+              onChange={(e) => setPartyJoinDate(e.target.value)}
+              value={partyJoinDate}
+            />
+            <label>Tiêu đề kế hoạch</label>
+            <input
+              type="text"
+              onChange={(e) => setPlanTitle(e.target.value)}
+              value={planTitle}
+            />
+            <button type="submit" className="student-btn-save">Lưu</button>
+            <button onClick={CloseEdit} className="student-btn-cancel">Huỷ</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  )}
       </div>
 
       {showProgress && (

@@ -9,7 +9,6 @@ const assignmentModel = {
     });
   },
 
-  
   showAssigned: () => {
     return db("assignment")
       .select(
@@ -38,10 +37,6 @@ const assignmentModel = {
       class_id: class_id,
     });
   },
-
-  
-  
 };
-
 
 module.exports = assignmentModel;

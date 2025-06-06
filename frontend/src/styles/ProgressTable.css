@@ -1,0 +1,119 @@
+/* ========== Container chung ========== */
+.progress-container {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+
+  /* Ban đầu đặt cho exit state : dịch xuống dưới 20px, opacity 0 */
+  transform: translatex(-20px);
+  opacity: 0;
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+
+/* Khi xuất hiện: dịch lên vị trí gốc, opacity=1 */
+.progress-container.enter {
+  transform: translatex(0);
+  opacity: 1;
+}
+
+/* Khi ẩn (unmount): dịch xuống 20px, opacity=0 */
+.progress-container.exit {
+  transform: translatex(-20px);
+  opacity: 0;
+}
+
+/* ========== Bảng ========== */
+.progress-table {
+  width: 800px;
+  border-collapse: collapse;
+  margin: 0 auto; /* Căn giữa bảng */
+}
+
+/* Tiêu đề chính (có nút đóng) */
+.progress-table th.table-header {
+  position: relative; /* Để nút đóng được đặt tuyệt đối bên trong */
+  background-color: #3182ce; /* blue-600 */
+  color: white;
+  text-align: center;
+  padding: 1rem 1rem; /* Tăng padding top/bottom tạo không gian cho icon (32px) */
+  font-size: 1.1rem;
+  border-bottom: none;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Hàng chứa tên cột */
+.progress-table tr.column-headers {
+  background-color: #e2e8f0; /* gray-200 */
+  font-weight: 500;
+}
+.progress-table th,
+.progress-table td {
+  border: 1px solid #cbd5e0; /* gray-300 */
+  padding: 0.75rem;
+  text-align: center;
+}
+
+/* Căn trái cho cột tên học phần */
+.progress-table td.col-name {
+  text-align: left;
+}
+
+/* Chiều rộng cột */
+.progress-table th.col-stt,
+.progress-table td.col-stt {
+  width: 60px;
+}
+.progress-table th.col-code,
+.progress-table td.col-code {
+  width: 120px;
+}
+.progress-table th.col-grade,
+.progress-table td.col-grade {
+  width: 100px;
+}
+
+/* Zebra rows */
+.progress-table tr.row-light {
+  background-color: #ffffff;
+}
+.progress-table tr.row-dark {
+  background-color: #f7fafc; /* gray-50 */
+}
+
+/* Dòng không có dữ liệu */
+.progress-table td.no-data {
+  padding: 1rem;
+  color: #718096; /* gray-600 */
+  text-align: center;
+}
+
+/* Footer (nếu cần bo góc) */
+.progress-table td.footer-cell {
+  background-color: #3182ce;
+  height: 0.5rem;
+}
+
+/* ========== Nút đóng ========== */
+.close-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Style cho SVG bên trong nút */
+.close-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+/* Khi hover, có thể đổi opacity nhẹ */
+.close-btn:hover .close-icon {
+  opacity: 0.8;
+}

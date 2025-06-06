@@ -1,0 +1,206 @@
+/* Container chính */
+.student-info-card {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Card thông tin chi tiết */
+.detail-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.detail-card h2 {
+  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #0ea5e9;
+  padding-bottom: 0.5rem;
+}
+
+.detail-card p {
+  margin: 0.75rem 0;
+  color: #475569;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.detail-card p::before {
+  content: "•";
+  color: #0ea5e9;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Buttons trong detail card */
+.detail-card button {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.5rem 0.5rem 0 0;
+  font-size: 0.9rem;
+}
+
+.detail-card button:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.detail-card button:active {
+  transform: translateY(0);
+}
+
+/* Modal overlay */
+.edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal content */
+.edit-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  min-width: 400px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Form styling */
+.edit-modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.edit-modal-content label {
+  color: #334155;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.edit-modal-content input {
+  border: 2px solid #e2e8f0;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+.edit-modal-content input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* Form buttons */
+.edit-modal-content button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.edit-modal-content button[type="submit"] {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  margin-right: 0.75rem;
+}
+
+.edit-modal-content button[type="submit"]:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.edit-modal-content button:not([type="submit"]) {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.edit-modal-content button:not([type="submit"]):hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .student-info-card {
+    margin: 1rem;
+    padding: 1.25rem;
+  }
+
+  .detail-card {
+    padding: 1.25rem;
+  }
+
+  .edit-modal-content {
+    min-width: 320px;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .detail-card button {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+}
+
+/* Loading animation cho các button */
+.detail-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}

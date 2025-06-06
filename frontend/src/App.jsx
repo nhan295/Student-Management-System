@@ -10,6 +10,8 @@ import LoginPage from "./pages/LoginPage";
 import SubjectPage from "./pages/SubjectPage";
 import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
+import SearchStudentPage from "./pages/SearchStudentPage";
+import StudentInfoPage from "./pages/StudentInfoPage";
 
 function App() {
   return (
@@ -18,15 +20,18 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/homepage" element={<HomePage />} />
 
-      {/*Đường dẫn có layout và sidebar*/}
       <Route element={<Layout />}>
-    
-        <Route index element={<Navigate to="/homepage" replace />} />  
+        <Route index element={<Navigate to="/homepage" replace />} />
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
         <Route path="subjects/edit/:id" element={<EditSubject />} />
         <Route path="classes/search" element={<ClassList />} />
         <Route path="schedules" element={<SchedulePage />} />
+        <Route path="/student/search" element={<SearchStudentPage />} />
+        <Route
+          path="/student/detail/:student_id"
+          element={<StudentInfoPage />}
+        />
       </Route>
 
       <Route path="*" element={<Navigate to="/homepage" replace />} />
@@ -35,4 +40,3 @@ function App() {
 }
 
 export default App;
-App;

@@ -10,16 +10,19 @@ const userRoute = require("./routes/userRoute");
 const classRoutes = require("./routes/classRoute");
 
 const lectureRoute = require("./routes/lectureRoute");
-const assignmentRoute = require("./routes/assignmentRoute")
+const assignmentRoute = require("./routes/assignmentRoute");
 const studentRoute = require("./routes/studentRoute");
+const progressRoute = require("./routes/ProgressRoute");
 
 const app = express();
 
 // CORS trước mọi routes
-app.use(cors({
-  origin: ['http://localhost:5173'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -29,6 +32,7 @@ app.use("/api/v1/lookups", lookupRoutes);
 app.use("/api/v1/subjects", subjectRoutes);
 app.use("/api/v1/classes", classRoutes);
 app.use("/api/v1/schedules", scheduleRoutes);
+progressRoute.setup(app);
 userRoute.setup(app);
 lectureRoute.setup(app);
 assignmentRoute.setup(app);

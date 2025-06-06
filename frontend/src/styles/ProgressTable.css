@@ -1,0 +1,75 @@
+/* src/styles/ProgressTable.css */
+
+.progress-container {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Tiêu đề chính (colspan = 4) */
+.progress-table th.table-header {
+  background-color: #3182ce; /* blue-600 */
+  color: #fff;
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border-bottom: none;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Dòng chứa tên cột */
+.progress-table tr.column-headers {
+  background-color: #e2e8f0; /* gray-200 */
+  font-weight: 500;
+}
+.progress-table th,
+.progress-table td {
+  border: 1px solid #cbd5e0; /* gray-300 */
+  padding: 0.75rem;
+  text-align: center;
+}
+
+/* Căn trái cho cột tên học phần */
+.progress-table td.col-name {
+  text-align: left;
+}
+
+/* Định kích thước cột */
+.progress-table th.col-stt,
+.progress-table td.col-stt {
+  width: 60px;
+}
+.progress-table th.col-code,
+.progress-table td.col-code {
+  width: 120px;
+}
+.progress-table th.col-grade,
+.progress-table td.col-grade {
+  width: 100px;
+}
+
+/* Zebra rows */
+.progress-table tr.row-light {
+  background-color: #ffffff;
+}
+.progress-table tr.row-dark {
+  background-color: #f7fafc; /* gray-50 */
+}
+
+/* Dòng không có dữ liệu */
+.progress-table td.no-data {
+  padding: 1rem;
+  color: #718096; /* gray-600 */
+  text-align: center;
+}
+
+/* Footer cell (nếu cần bo tròn) */
+.progress-table td.footer-cell {
+  background-color: #3182ce;
+  height: 0.5rem;
+}

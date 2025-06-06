@@ -23,8 +23,9 @@
 
 /* ========== Bảng ========== */
 .progress-table {
-  width: 100%;
+  width: 800px;
   border-collapse: collapse;
+  margin: 0 auto; /* Căn giữa bảng */
 }
 
 /* Tiêu đề chính (có nút đóng) */

@@ -1,6 +1,6 @@
 /* Container chính */
 .student-info-card {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 2rem;
   background: #ffffff;
@@ -176,17 +176,17 @@
     margin: 1rem;
     padding: 1.25rem;
   }
-  
+
   .detail-card {
     padding: 1.25rem;
   }
-  
+
   .edit-modal-content {
     min-width: 320px;
     padding: 1.5rem;
     margin: 1rem;
   }
-  
+
   .detail-card button {
     width: 100%;
     margin: 0.25rem 0;

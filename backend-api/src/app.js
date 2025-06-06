@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config();  //thư viện này sẽ đọc file .env và gán các biến môi trường vào process.env
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");

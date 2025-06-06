@@ -36,10 +36,10 @@ exports.searchStudents = async(req, res) => {
 
 exports.updateStudent = async (req, res) => {
     const { student_id } = req.params;
-    const { student_name, birthday, class_id, course_id, professional_level, party_join_date, plan_title } = req.body;
+    const { student_name, birthday, agency_name,class_id, course_id, professional_level, party_join_date, plan_title } = req.body;
     try {
         // Gọi model update và chờ kết quả
-        const count = await StudentModel.updateStudent(student_id, { student_name, birthday, class_id, course_id, professional_level, party_join_date, plan_title });
+        const count = await StudentModel.updateStudent(student_id, { student_name, birthday,agency_name, class_id, course_id, professional_level, party_join_date, plan_title });
         if (count > 0) {
             // Lấy lại thông tin mới nhất để trả về cho FE
             const updated = await StudentModel.getStudentById(student_id);

@@ -7,7 +7,7 @@ import ProgressTable from "../components/ProgressTable.jsx";
 
 function StudentInfoPage() {
   const [studentInfo, setStudentInfo] = useState(null);
-  const { student_id } = useParams();
+  const {student_id } = useParams();
   const [showEdit, setShowEdit] = useState(false);
   const [showProgress, setShowProgress] = useState(false); // state để điều khiển hiển thị bảng tiến độ
   const [agencyName, setAgencyName] = useState("");
@@ -104,7 +104,7 @@ function StudentInfoPage() {
               <span className="info-label">Ngày sinh:</span>
               <span className="info-value">
                 {studentInfo?.birthday
-                  ? new Date(studentInfo.birthday).toISOString().slice(0, 10)
+                  ? new Date(studentInfo.birthday).toLocaleDateString("vi-VN")
                   : ""}
               </span>
             </div>
@@ -138,7 +138,9 @@ function StudentInfoPage() {
 
             <div className="student-info-row">
               <span className="info-label">Ngày kết nạp:</span>
-              <span className="info-value">{studentInfo?.party_join_date}</span>
+              <span className="info-value">{studentInfo?.party_join_date
+                ? new Date(studentInfo.party_join_date).toLocaleDateString("vi-VN")
+                : ""}</span>
             </div>
 
             <div className="student-info-row">
@@ -188,9 +190,9 @@ function StudentInfoPage() {
                   />
                   <label>Ngày kết nạp</label>
                   <input
-                    type="text"
+                    type="date"
                     onChange={(e) => setPartyJoinDate(e.target.value)}
-                    value={partyJoinDate}
+                    value={partyJoinDate ? new Date(partyJoinDate).toISOString().slice(0, 10) : ''}
                   />
                   <label>Tiêu đề kế hoạch</label>
                   <input

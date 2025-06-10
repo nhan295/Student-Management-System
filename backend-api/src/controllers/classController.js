@@ -1,4 +1,5 @@
 const classModel = require("../models/classModel");
+const ClassModel = require("../models/classModel");
 
 exports.getStudentsBySubject = async (req, res) => {
   const { name, classId } = req.query;
@@ -90,8 +91,8 @@ exports.exportToExcel = async (req, res) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    const safeName = String(name || '').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const safeClassId = String(classId || '').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeName = String(name || "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    const safeClassId = String(classId || "").replace(/[^a-zA-Z0-9_-]/g, "_");
     res.setHeader(
       "Content-Disposition",
       `attachment; filename=Diem_${safeName}_${safeClassId}.xlsx`

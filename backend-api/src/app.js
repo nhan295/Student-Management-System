@@ -13,6 +13,7 @@ const lectureRoute = require("./routes/lectureRoute");
 const assignmentRoute = require("./routes/assignmentRoute");
 const studentRoute = require("./routes/studentRoute");
 const progressRoute = require("./routes/ProgressRoute");
+const examAssignmentRoute = require("./routes/examAssignmentRoute");
 
 const app = express();
 
@@ -32,10 +33,12 @@ app.use("/api/v1/lookups", lookupRoutes);
 app.use("/api/v1/subjects", subjectRoutes);
 app.use("/api/v1/classes", classRoutes);
 app.use("/api/v1/schedules", scheduleRoutes);
+
 progressRoute.setup(app);
 userRoute.setup(app);
 lectureRoute.setup(app);
 assignmentRoute.setup(app);
 studentRoute.setup(app);
+examAssignmentRoute.setup(app);
 
 module.exports = app;

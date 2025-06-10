@@ -6,7 +6,7 @@ const items = [
   { to: "/subjects/list", icon: "🎓", label: "Chương trình đào tạo" },
   { to: "/homepage", icon: "🏠", label: "Trang Chủ" },
   { to: "/classes/search", icon: "📚", label: "Kết quả học tập" },
-
+  { to: "/students", icon: "👩‍🎓", label: "Hồ sơ học viên",  },
 
   // ... thêm các link khác ở đây ...
 ];

@@ -5,7 +5,7 @@ import banner from "../assets/images/banner.png";
 function HomePage() {
   const navigate = useNavigate();
   const menuItems = [
-    { icon: "👩‍🎓", label: "Hồ sơ học viên" },
+    { icon: "👩‍🎓", label: "Hồ sơ học viên", path: "/students" },
     {
       icon: "📋",
       label: "Chương trình đào tạo",

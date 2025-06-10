@@ -9,7 +9,9 @@ const subjectRoutes = require("./routes/subjectRoute");
 const userRoute = require("./routes/userRoute");
 const classRoutes = require("./routes/classRoute");
 const lectureRoute = require("./routes/lectureRoute");
-const assignmentRoute = require("./routes/assignmentRoute")
+const assignmentRoute = require("./routes/assignmentRoute");
+const studentRoute = require("./routes/studentRoute");
+const courseRoute = require("./routes/courseRoute");
 
 const app = express();
 
@@ -28,9 +30,10 @@ app.use("/api/v1/lookups", lookupRoutes);
 app.use("/api/v1/subjects", subjectRoutes);
 app.use("/api/v1/classes", classRoutes);
 app.use("/api/v1/schedules", scheduleRoutes);
+app.use("/api/v1/students", studentRoute);
+app.use("/api/v1/courses", courseRoute);
 userRoute.setup(app);
 lectureRoute.setup(app);
 assignmentRoute.setup(app);
-
 
 module.exports = app;

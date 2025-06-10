@@ -1,4 +1,3 @@
-// backend/controllers/lookupController.js
 const lookupModel = require("../models/lookupModel");
 
 // Returns all rooms

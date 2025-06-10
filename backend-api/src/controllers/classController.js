@@ -40,7 +40,7 @@ exports.exportToExcel = async (req, res) => {
   const { name, classId } = req.query;
 
   try {
-    const students = await classModel.getStudentsByFilters(name, classId);
+    const students = await ClassModel.getStudentsByFilters(name, classId);
 
     if (!students.length) {
       return res.status(404).json({ error: "Không tìm thấy dữ liệu phù hợp." });
@@ -90,9 +90,11 @@ exports.exportToExcel = async (req, res) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
+    const safeName = String(name || '').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeClassId = String(classId || '').replace(/[^a-zA-Z0-9_-]/g, '_');
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename=Diem_${name}_${classId}.xlsx`
+      `attachment; filename=Diem_${safeName}_${safeClassId}.xlsx`
     );
 
     await workbook.xlsx.write(res);

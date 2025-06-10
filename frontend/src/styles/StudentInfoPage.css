@@ -1,0 +1,303 @@
+/* Container chính */
+.student-container {
+  margin: 0 auto;
+  padding: 32px 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(120deg, #f5f7fa 60%, #e0e7ff 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Card thông tin sinh viên */
+.student-info-card {
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  transition: box-shadow 0.2s;
+}
+.student-info-card:hover {
+  box-shadow: 0 12px 32px rgba(52, 152, 219, 0.13);
+}
+
+/* Header card */
+.student-info-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 28px 36px 18px 36px;
+  text-align: center;
+  border-radius: 18px 18px 0 0;
+}
+
+.student-info-header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+/* Nội dung thông tin */
+.student-info-content {
+  padding: 32px 36px 18px 36px;
+}
+
+.student-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f3f4;
+  font-size: 16px;
+}
+.student-info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 140px;
+  font-size: 17px;
+}
+.info-value {
+  color: #34495e;
+  font-size: 15px;
+  text-align: right;
+  flex: 1;
+  word-break: break-word;
+}
+
+/* Phần nút bấm */
+.student-info-actions {
+  padding: 20px 36px 28px 36px;
+  background-color: #f8f9fa;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  border-top: 1px solid #e9ecef;
+}
+
+.btn-info-edit,
+.btn-progress {
+  padding: 13px 28px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.07);
+}
+
+.btn-info-edit {
+  background: linear-gradient(90deg, #3498db 60%, #6dd5fa 100%);
+  color: white;
+}
+.btn-info-edit:hover {
+  background: linear-gradient(90deg, #2980b9 60%, #3498db 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-progress {
+  background: linear-gradient(90deg, #27ae60 60%, #43e97b 100%);
+  color: white;
+}
+.btn-progress:hover {
+  background: linear-gradient(90deg, #229954 60%, #27ae60 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Modal chỉnh sửa */
+.student-edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.student-edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.student-edit-content {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 32px 24px 32px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(52, 152, 219, 0.18);
+}
+
+.student-edit-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.student-edit-content label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.student-edit-content input {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.student-edit-content input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.10);
+}
+
+.student-btn-save,
+.student-btn-cancel {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+
+.student-btn-save {
+  background: linear-gradient(90deg, #27ae60 60%, #43e97b 100%);
+  color: white;
+  min-width: 110px;
+}
+
+.student-btn-save:hover {
+  background: linear-gradient(90deg, #229954 60%, #27ae60 100%);
+}
+
+.student-btn-cancel {
+  background: linear-gradient(90deg, #e74c3c 60%, #f85032 100%);
+  color: white;
+  margin-left: 10px;
+  min-width: 110px;
+}
+
+.student-btn-cancel:hover {
+  background: linear-gradient(90deg, #c0392b 60%, #e74c3c 100%);
+}
+
+.student-edit-action {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Responsive cho tablet và mobile */
+@media (max-width: 900px) {
+  .student-info-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 98vw;
+  }
+  .student-info-content,
+  .student-info-header,
+  .student-info-actions {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .student-container {
+    padding: 8px;
+  }
+  .student-info-header h2 {
+    font-size: 19px;
+  }
+  .student-info-content {
+    padding: 12px 8px 8px 8px;
+  }
+  .student-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+  .info-label {
+    min-width: auto;
+    font-size: 13px;
+  }
+  .info-value {
+    text-align: left;
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 500;
+  }
+  .student-info-actions {
+    flex-direction: column;
+    padding: 12px 8px 16px 8px;
+    gap: 10px;
+  }
+  .btn-info-edit,
+  .btn-progress {
+    width: 100%;
+    min-width: auto;
+    font-size: 14px;
+  }
+  .student-edit-content {
+    margin: 6px;
+    padding: 12px 8px 8px 8px;
+  }
+
+  .student-edit-btn{
+    gap: 16px;
+    justify-content: center;
+  }
+  .student-btn-save,
+  .student-btn-cancel {
+    width: 48%;
+    margin-left: 0;
+    font-size: 14px;
+    min-width: 110px;
+  }
+  .student-btn-cancel {
+    margin-left: 4%;
+  }
+}
+
+/* Animation cho buttons */
+@keyframes buttonPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.btn-info-edit:active,
+.btn-progress:active,
+.student-btn-save:active,
+.student-btn-cancel:active {
+  animation: buttonPress 0.1s ease;
+}

@@ -1,0 +1,194 @@
+/* Container chính */
+.search-student-container {
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Tiêu đề */
+.search-student-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Phần tìm kiếm */
+.search-student-input {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-student-input input {
+  flex: 1;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-student-input input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-student-input input::placeholder {
+  color: #999;
+}
+
+.search-student-input button {
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-student-input button:hover {
+  background-color: #2980b9;
+}
+
+.search-student-input button:active {
+  transform: translateY(1px);
+}
+
+/* Thông báo đang tải */
+.search-student-container p {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+/* Container kết quả */
+.search-student-container > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Mỗi kết quả học viên */
+.search-student-container > div:last-child > div {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-student-container > div:last-child > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Thông tin học viên */
+.result-student-info {
+  margin-bottom: 16px;
+}
+
+.result-student-info p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #2c3e50;
+  text-align: left;
+}
+
+.result-student-info strong {
+  color: #34495e;
+  font-weight: 600;
+}
+
+/* Nút xem chi tiết */
+.student-view-button {
+  text-align: right;
+}
+
+.student-view-button button {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.student-view-button button:hover {
+  background-color: #229954;
+}
+
+.student-view-button button:active {
+  transform: translateY(1px);
+}
+
+/* Thông báo kết quả */
+.result-alert {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .search-student-container {
+    padding: 16px;
+  }
+  
+  .search-student-container h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .search-student-input {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .search-student-input input {
+    max-width: 100%;
+  }
+  
+  .search-student-input button {
+    width: 100%;
+  }
+  
+  .search-student-container > div:last-child > div {
+    padding: 16px;
+  }
+  
+  .student-view-button {
+    text-align: center;
+  }
+  
+  .student-view-button button {
+    width: 100%;
+  }
+}
+
+/* Animation cho loading */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.search-student-container p:first-of-type {
+  animation: pulse 1.5s infinite;
+}

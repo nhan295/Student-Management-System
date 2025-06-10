@@ -49,7 +49,7 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
           <div className='modal-overlay'>
             <div className='modal-content'>
               <form onSubmit={handleEdit}>
-                <label htmlFor="">Sửa</label>
+                <label htmlFor="">Sửa phân công</label>
                 <label htmlFor="">Giảng viên</label>
                 <select value={editLecturer}
                   onChange={(e)=>setEditLecturer(e.target.value)}>
@@ -74,8 +74,10 @@ function ShowAssign({ assignment, onDelete, onEdit, lecturerOptions = [], subjec
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-                <button type="submit">Lưu</button>
-                <button onClick={CloseEdit}>Huỷ</button>
+                <div className='modal-buttons'>
+                  <button className="save-btn"type="submit">Lưu</button>
+                  <button className= "cancel-btn"onClick={CloseEdit}>Huỷ</button>
+                </div>
               </form>
             </div>
           </div>

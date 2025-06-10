@@ -1,49 +1,173 @@
+/* Bố cục tối ưu, giữ nguyên style màu sắc, border, shadow, ... */
+.assignment-page-root {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f5f7fa 60%, #e0e7ff 100%);
+  padding: 32px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.assignment-main-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  align-items: flex-start;
+}
+
+.assignment-list-panel {
+  flex: 2 1 0;
+  min-width: 340px;
+  max-width: 700px;
+  margin-right: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(52,152,219,0.08);
+  padding: 28px 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.assignment-form-panel {
+  flex: 1 1 0;
+  min-width: 320px;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(52,152,219,0.08);
+  padding: 32px 24px 24px 24px;
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  align-items: stretch;
+}
+
+.assignment-list-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.assignment-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 .assignment-form-container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 32px 24px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .assignment-form-container h1 {
-    text-align: center;
-    margin-bottom: 24px;
-    color: #2d3a4b;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .assignment-form-container label {
-    display: block;
-    margin-top: 16px;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #444;
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 4px;
+  font-size: 18px;
 }
 
 .assignment-form-container input[type="text"] {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #d0d0d0;
-    border-radius: 5px;
-    background: #f7f7f7;
-    margin-bottom: 8px;
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 7px;
+  font-size: 15px;
+  outline: none;
+  background: #f8fafc;
+  margin-bottom: 2px;
+  transition: border-color 0.2s;
+}
+.assignment-form-container input[type="text"]:focus {
+  border-color: #2563eb;
 }
 
-.assignment-form-container button {
+.assignment-form-container .react-select__control {
+  min-height: 38px;
+  border-radius: 7px;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.assignment-form-container button[type="submit"] {
+  margin-top: 10px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #3498db 60%, #6dd5fa 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.07);
+}
+.assignment-form-container button[type="submit"]:hover {
+  background: linear-gradient(90deg, #2980b9 60%, #3498db 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 1000px) {
+  .assignment-main-grid {
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .assignment-list-panel, .assignment-form-panel {
+    max-width: 100vw;
     width: 100%;
+    margin: 0 auto;
+  }
+  .assignment-form-panel {
+    max-width: 100vw;
+    width: 100%;
+    margin: 0 auto;
+    padding: 18px 8px 12px 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .assignment-page-root {
+    padding: 8px 0;
+  }
+  .assignment-main-grid {
+    gap: 12px;
+  }
+  .assignment-list-panel, .assignment-form-panel {
+    padding: 8px 2px 8px 2px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+  }
+  .assignment-list-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .assignment-form-container h1 {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+  .assignment-form-container label {
+    font-size: 13px;
+  }
+  .assignment-form-container input[type="text"] {
+    font-size: 13px;
+    padding: 8px 8px;
+  }
+  .assignment-form-container button[type="submit"] {
+    font-size: 14px;
     padding: 10px 0;
-    margin-top: 20px;
-    background: #1976d2;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.assignment-form-container button:hover {
-    background: #125ea2;
+  }
 }

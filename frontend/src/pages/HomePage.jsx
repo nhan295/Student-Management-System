@@ -2,10 +2,18 @@ import "../styles/HomePage.css";
 import { useNavigate } from "react-router-dom";
 import banner from "../assets/images/banner.png";
 
+
 function HomePage() {
   const navigate = useNavigate();
   const menuItems = [
+
     { icon: "👩‍🎓", label: "Hồ sơ học viên", path: "/students" },
+
+    { icon: "👩‍🎓", 
+      label: "Hồ sơ học viên",
+      path: "/student/search" 
+    },
+
     {
       icon: "📋",
       label: "Chương trình đào tạo",
@@ -13,14 +21,13 @@ function HomePage() {
     },
     {
       icon: "📅",
-      label: "Phân công",
+      label: "Lịch giảng dạy và phân công",
       path: "/schedules",
     },
     { icon: "📖", label: "Tuyển sinh" },
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp" },
     { icon: "⚠️", label: "Cảnh báo" },
-    { icon: "📅", label: "Lịch giảng dạy và phân công" }
   ];
 
   return (

@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 const items = [
-  { to: "/subjects/list", icon: "🎓", label: "Chương trình đào tạo" },
   { to: "/homepage", icon: "🏠", label: "Trang Chủ" },
+  { to: "/student/search", icon: "🔍", label: "Hồ sơ học viên"},
+  { to: "/subjects/list", icon: "🎓", label: "Chương trình đào tạo" },
+  { to: "/schedules", icon: "📅", label: "Lịch dạy & Phân công" },
   { to: "/classes/search", icon: "📚", label: "Kết quả học tập" },
   { to: "/students", icon: "👩‍🎓", label: "Hồ sơ học viên",  },
+
 
   // ... thêm các link khác ở đây ...
 ];

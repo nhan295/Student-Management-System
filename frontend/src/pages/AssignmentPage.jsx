@@ -158,7 +158,7 @@ function Assignment(){
               <h1> Thêm phân công mới</h1>
               <label> Tên giảng viên</label>
               <Select
-                options={lecturerOptions}
+                options={lecturerOptions} // danh sách giảng viên
                 onChange={option => setLecturer(option ? option.value : "")}
                 placeholder="Chọn giảng viên..."
                 isSearchable

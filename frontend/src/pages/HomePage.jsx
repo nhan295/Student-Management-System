@@ -6,10 +6,12 @@ import banner from "../assets/images/banner.png";
 function HomePage() {
   const navigate = useNavigate();
   const menuItems = [
+
     { icon: "👩‍🎓", 
       label: "Hồ sơ học viên",
       path: "/student/search" 
     },
+
     {
       icon: "📋",
       label: "Chương trình đào tạo",

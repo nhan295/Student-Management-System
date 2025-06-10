@@ -59,6 +59,7 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getClass = async (req, res) => {
+  s;
   const Class = await studentModel.getClasses();
   res.json(Class);
 };
@@ -79,7 +80,6 @@ exports.addCourse = async (req, res) => {
   }
 };
 
-const db = require("../config/db");
 const StudentModel = require("../models/studentModel");
 
 exports.getStudentById = async (req, res) => {

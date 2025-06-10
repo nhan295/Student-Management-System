@@ -7,8 +7,6 @@ function HomePage() {
   const navigate = useNavigate();
   const menuItems = [
 
-    { icon: "👩‍🎓", label: "Hồ sơ học viên", path: "/students" },
-
     { icon: "👩‍🎓", 
       label: "Hồ sơ học viên",
       path: "/student/search" 

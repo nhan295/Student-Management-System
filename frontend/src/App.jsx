@@ -20,18 +20,13 @@ import StudentInfoPage from "./pages/StudentInfoPage";
 function App() {
   return (
     <Routes>
-      {/* Đường dẫn bình thường */}
+      {/* Route không dùng layout */}
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/homepage" element={<HomePage />} />
 
-      {/* Đường dẫn có layout và sidebar */}
-      <Route element={<Layout />}>
-        {/* Đổi index route thành homepage hoặc danh sách học viên */}
-        <Route index element={<Navigate to="/homepage" replace />} />
-
-
+      {/* Route dùng layout */}
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/homepage" replace />} />
+        <Route path="/homepage" element={<HomePage />} />
 
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
@@ -40,25 +35,17 @@ function App() {
         <Route path="classes/search" element={<ClassList />} />
         <Route path="schedules" element={<SchedulePage />} />
 
-
-        {/* Routes cho học viên */}
         <Route path="students" element={<StudentPage />} />
+        <Route path="student/search" element={<SearchStudentPage />} />
+        <Route path="student/detail/:student_id" element={<StudentInfoPage />} />
       </Route>
 
-      {/* Nếu không khớp đường dẫn nào thì chuyển về homepage */}
-
-        <Route path="/student/search" element={<SearchStudentPage />} />
-        <Route
-          path="/student/detail/:student_id"
-          element={<StudentInfoPage />}
-        />
-      </Route>
-
-
+      {/* Redirect các route không khớp */}
       <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );
 }
+
 
 
 export default App;

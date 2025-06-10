@@ -9,4 +9,6 @@ module.exports.setup = (app) =>{
     router.get('/',assignmentController.showAssigned)
     router.delete('/delete/:assignment_id',assignmentController.delAssign)
     router.put('/edit/:assignment_id',assignmentController.editAssign)
+    router.get('/subjects',assignmentController.getSubject)
+    router.get('/class/:subject_id', assignmentController.getClassBySubject);
 }

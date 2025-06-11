@@ -16,17 +16,16 @@ import StudentPage from "./pages/StudentPage";
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
 
-
 function App() {
   return (
     <Routes>
       {/* Route không dùng layout */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/homepage" element={<HomePage />} />
 
       {/* Route dùng layout */}
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/homepage" replace />} />
-        <Route path="/homepage" element={<HomePage />} />
 
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
@@ -37,7 +36,10 @@ function App() {
 
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
-        <Route path="student/detail/:student_id" element={<StudentInfoPage />} />
+        <Route
+          path="student/detail/:student_id"
+          element={<StudentInfoPage />}
+        />
       </Route>
 
       {/* Redirect các route không khớp */}
@@ -46,9 +48,4 @@ function App() {
   );
 }
 
-
-
 export default App;
-
-
-

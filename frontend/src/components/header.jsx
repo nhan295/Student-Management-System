@@ -25,6 +25,7 @@ export default function Header({ isOpen, onToggle }) {
       <NavLink to="/login" className="header-action-btn">
         <FontAwesomeIcon icon={faSignOutAlt} />
       </NavLink>
+
       <NavLink to="/homepage" className="header-action-btn" end>
         <FontAwesomeIcon icon={faHome} />
       </NavLink>

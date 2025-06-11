@@ -12,6 +12,7 @@ import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
+import ExamAssignmentPage from "./pages/ExamAssignmentPage";
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
           element={<StudentInfoPage />}
         />
       </Route>
-
+      <Route path="/exam-assign" element={<ExamAssignmentPage/>} />
       <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );

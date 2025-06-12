@@ -98,6 +98,21 @@ const getClassBySubject = async (req, res) => {
     return res.status(500).json({ message: "Lỗi server" });
   }
 };
+
+const getAssignId = async(req,res) =>{
+    const {subject_id,class_id} = req.query;
+    try{
+      const result = await assignmentModel.getAssignId(subject_id,class_id)
+      if(result){
+        return res.status(200).json(result)
+      }
+      else{
+         return res.status(400).json({message: 'Thêm thất bại'})
+      }
+    }catch(err){
+      return res.status(500).json({ message: "Lỗi server" });
+    }
+}
 module.exports = {
   assignLecturer,
   showAssigned,
@@ -105,4 +120,5 @@ module.exports = {
   editAssign,
   getSubject,
   getClassBySubject,
+  getAssignId
 };

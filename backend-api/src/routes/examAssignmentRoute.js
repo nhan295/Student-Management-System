@@ -6,4 +6,5 @@ module.exports.setup = (app)=>{
     app.use('/api/v1/exam-assignment', router);
 
     router.get('/', examAssignmentController.getAllAssignment);
-}
+    router.post('/add',examAssignmentController.createExamAssignment);
+}   

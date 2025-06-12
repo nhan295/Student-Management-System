@@ -41,9 +41,10 @@ function App() {
           path="student/detail/:student_id"
           element={<StudentInfoPage />}
         />
+        <Route path="/exam-assign" element={<ExamAssignmentPage/>} />
       </Route>
 
-      <Route path="/exam-assign" element={<ExamAssignmentPage/>} />
+      
       <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );

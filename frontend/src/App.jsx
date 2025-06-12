@@ -15,9 +15,13 @@ import StudentPage from "./pages/StudentPage";
 
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
+
+import ExamAssignmentPage from "./pages/ExamAssignmentPage";
+
 import GraduateCertPage from "./pages/GraduateCertPage";
 import WarningsPage from "./pages/WarningsPage";
 import WarningsDetailPage from "./pages/WarningsDetailPage";
+
 
 function App() {
   return (
@@ -52,9 +56,10 @@ function App() {
           path="/warnings/class/:classId/subject/:subjectId"
           element={<WarningsDetailPage />}
         />
+        <Route path="/exam-assign" element={<ExamAssignmentPage/>} />
       </Route>
 
-      {/* Redirect các route không khớp */}
+      
       <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );

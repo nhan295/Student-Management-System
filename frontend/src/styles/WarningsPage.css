@@ -1,0 +1,114 @@
+/* Header chính */
+.assignment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: sans-serif;
+}
+
+/* Dòng header trên cùng */
+.assignment-table th.header {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Dòng sub-header (Lớp / Môn / nút) */
+.assignment-table tr.sub-header {
+  background-color: #e5e7eb; /* gray-200 */
+  font-weight: 500;
+}
+.assignment-table th,
+.assignment-table td {
+  border: 1px solid #cbd5e0; /* gray-300 */
+  padding: 0.75rem;
+  text-align: left;
+}
+
+/* Zebra rows */
+.assignment-table tr.even {
+  background-color: #f8fafc; /* gray-50 */
+}
+.assignment-table tr.odd {
+  background-color: #ffffff;
+}
+
+/* Nút Xem */
+.view-btn {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.view-btn:hover {
+  background-color: #2563eb; /* blue-600 */
+}
+
+/* Loading / Error */
+.assignment-loading,
+.assignment-error {
+  margin: 1rem 0;
+  color: #374151;
+}
+.assignment-error {
+  color: #b91c1c;
+}
+
+/* ========== DÒNG TÌM KIẾM ========== */
+.search-row {
+  background-color: #f3f4f6; /* gray-100 */
+  text-align: center;
+}
+
+.search-input {
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #cbd5e0; /* gray-300 */
+  border-radius: 0.375rem;
+  font-size: 0.95rem;
+  width: 150px;
+}
+
+/* Nếu không tìm thấy kết quả */
+.no-data {
+  text-align: center;
+  color: #718096; /* gray-600 */
+  padding: 1rem;
+}
+
+/* Bao ngoài header để chứa filters + title */
+.assignment-table th.header .header-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Khối dropdown nằm sát trái */
+.assignment-table th.header .filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Style cho <select> trong header */
+.header-select {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 0.375rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Tiêu đề bây giờ căn tự động giữa phần còn lại */
+.assignment-table th.header .title {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  font-size: 1.1rem;
+}

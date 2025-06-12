@@ -1,0 +1,44 @@
+.wdp-container {
+  padding: 1rem;
+  max-width: 900px;
+  margin: auto;
+}
+.wdp-header {
+  background: #1e40af; /* blue-800 */
+  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 0.25rem 0.25rem 0 0;
+  margin: 0;
+}
+.wdp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.25rem;
+}
+.wdp-table th,
+.wdp-table td {
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.wdp-table tr.even {
+  background: #f1f5f9; /* gray-100 */
+}
+.wdp-table tr.odd {
+  background: #e2e8f0; /* gray-200 */
+}
+.status span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.warned {
+  color: #dc2626;
+  font-weight: 500;
+}
+.not-warned {
+  color: #0284c7;
+  font-weight: 500;
+}

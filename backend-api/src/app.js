@@ -13,6 +13,8 @@ const assignmentRoute = require("./routes/assignmentRoute");
 const studentRoute = require("./routes/studentRoute");
 const courseRoute = require("./routes/courseRoute");
 const progressRoute = require("./routes/ProgressRoute");
+const graduateCertRoute = require("./routes/graduateCertRoute");
+
 const warningRoute = require("./routes/warningRoute");
 
 const app = express();
@@ -35,6 +37,7 @@ app.use("/api/v1/classes", classRoutes);
 app.use("/api/v1/schedules", scheduleRoutes);
 app.use("/api/v1/students", studentRoute);
 app.use("/api/v1/courses", courseRoute);
+app.use("/api/v1/graduation_certificates", graduateCertRoute);
 app.use("/api/v1/warnings", warningRoute);
 
 userRoute.setup(app);
@@ -45,5 +48,8 @@ userRoute.setup(app);
 lectureRoute.setup(app);
 assignmentRoute.setup(app);
 studentRoute.setup(app);
+app.get("/", (req, res) => {
+  res.send("Backend is running ✅",);
+});
 
 module.exports = app;

@@ -15,6 +15,7 @@ import StudentPage from "./pages/StudentPage";
 
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
+import GraduateCertPage from "./pages/GraduateCertPage";
 import WarningsPage from "./pages/WarningsPage";
 import WarningsDetailPage from "./pages/WarningsDetailPage";
 
@@ -41,7 +42,11 @@ function App() {
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}
+        
         />
+        <Route path="/cert/search" element={<GraduateCertPage />} />
+
+
         <Route path="warnings" element={<WarningsPage />} />
         <Route
           path="/warnings/class/:classId/subject/:subjectId"

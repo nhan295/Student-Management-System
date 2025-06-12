@@ -1,0 +1,210 @@
+/* Container chính */
+.exam-assign-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Phần bộ lọc */
+.exam-assign-filter {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.exam-assign-filter form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.exam-assign-filter form > * {
+  min-width: 200px;
+}
+
+.exam-assign-filter button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.exam-assign-filter button:hover {
+  background: #0056b3;
+}
+
+.exam-assign-filter button[type="button"] {
+  background: #28a745;
+}
+
+.exam-assign-filter button[type="button"]:hover {
+  background: #1e7e34;
+}
+
+/* Bảng hiển thị kết quả */
+.exam-assign-show-table {
+  display: grid;
+  gap: 15px;
+}
+
+.exam-assign-show-table > div {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.exam-assign-show-table > div:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.exam-assign-show-table p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.exam-assign-show-table strong {
+  color: #495057;
+  font-weight: 600;
+}
+
+/* Modal form thêm mới */
+.exam-assign-add-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.exam-assign-add-form form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exam-assign-add-form select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 14px;
+  background: white;
+}
+
+.exam-assign-add-form select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.exam-assign-add-form button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exam-assign-add-form button[type="submit"] {
+  background: #28a745;
+  color: white;
+}
+
+.exam-assign-add-form button[type="submit"]:hover:not(:disabled) {
+  background: #218838;
+}
+
+.exam-assign-add-form button[type="submit"]:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.exam-assign-add-form button[type="button"] {
+  background: #6c757d;
+  color: white;
+}
+
+.exam-assign-add-form button[type="button"]:hover {
+  background: #545b62;
+}
+
+/* React Select styling */
+.exam-assign-filter .css-control,
+.exam-assign-add-form .css-control {
+  border-radius: 5px;
+}
+
+.exam-assign-filter .css-control--is-focused,
+.exam-assign-add-form .css-control--is-focused {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .exam-assign-container {
+    padding: 15px;
+  }
+  
+  .exam-assign-filter form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .exam-assign-filter form > * {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .exam-assign-add-form form {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+}
+
+/* Loading state */
+.exam-assign-add-form button[type="submit"]:disabled {
+  position: relative;
+}
+
+.exam-assign-add-form button[type="submit"]:disabled::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}

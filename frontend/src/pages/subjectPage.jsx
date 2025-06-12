@@ -8,7 +8,8 @@ const PAGE_SIZE = 5;
 
 export default function SubjectPage() {
   const [subjects, setSubjects] = useState([]);
-  const [query, setQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // giữ value input
+  const [query, setQuery] = useState(""); // chỉ áp dụng filter khi nhấn tìm
   const [currentPage, setCurrentPage] = useState(1);
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -33,7 +34,7 @@ export default function SubjectPage() {
     fetchSubjects();
   }, []);
 
-  // Reset page khi tìm kiếm
+  // Reset page khi query (kết quả mới) thay đổi
   useEffect(() => {
     setCurrentPage(1);
   }, [query]);
@@ -57,12 +58,22 @@ export default function SubjectPage() {
     }
   };
 
-  // Filter + paging
-  const filtered = subjects.filter(
-    (s) =>
-      s.subject_code.toLowerCase().includes(query.toLowerCase()) ||
-      s.subject_name.toLowerCase().includes(query.toLowerCase())
-  );
+  // Handler nút tìm
+  const handleSearch = () => {
+    setQuery(searchTerm.trim());
+  };
+  // Nếu muốn reset tìm khi input rỗng:
+  // bạn có thể thêm handleSearch() khi clear input
+
+  // Filter + paging chỉ dựa trên `query`
+  const filtered = subjects.filter((s) => {
+    if (!query) return true;
+    const q = query.toLowerCase();
+    return (
+      s.subject_code.toLowerCase().includes(q) ||
+      s.subject_name.toLowerCase().includes(q)
+    );
+  });
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const startIdx = (currentPage - 1) * PAGE_SIZE;
   const paginated = filtered.slice(startIdx, startIdx + PAGE_SIZE);
@@ -75,10 +86,16 @@ export default function SubjectPage() {
         <input
           type="text"
           placeholder="Nhập từ khóa..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSearch();
+            }
+          }}
         />
-        <button>🔍 Tìm</button>
+        <button onClick={handleSearch}>🔍 Tìm</button>
       </div>
 
       <h2 className="page-title">Danh mục học phần</h2>

@@ -15,6 +15,7 @@ import StudentPage from "./pages/StudentPage";
 
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
+import GraduateCertPage from "./pages/GraduateCertPage";
 
 function App() {
   return (
@@ -39,7 +40,11 @@ function App() {
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}
+        
         />
+        <Route path="/cert/search" element={<GraduateCertPage />} />
+
+
       </Route>
 
       {/* Redirect các route không khớp */}

@@ -35,7 +35,6 @@ const scheduleModel = {
   // ─────── lọc theo startDate, endDate, lecturer_id ───────
   getSchedulesByCriteria: ({ startDate, endDate, lecturer_id }) => {
     const query = db("schedules as s")
-
       // Thay "a.id" thành "a.assignment_id"
       .join("assignment   as a", "s.assignment_id", "a.assignment_id")
       .join("class        as c", "a.class_id", "c.class_id")
@@ -79,7 +78,7 @@ const scheduleModel = {
         end_time: data.end_time,
         room_id: data.room_id,
         exSchedule_id: data.exSchedule_id || null,
-        assignment_id: data.assignment_id, // giữ nguyên assignment_id
+        assignment_id: data.assignment_id,
       },
       ["schedule_id"]
     );

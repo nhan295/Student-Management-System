@@ -129,7 +129,14 @@ function ExamAssignmentPage() {
           class_id: class_id,
         },
       });
-      setAssignedList(res.data);
+         console.log("res.data:", res.data);
+      if(res.data && res.data.length > 0){
+        setAssignedList(res.data);
+      }
+      else{
+        setAssignedList([]);
+        alert("Không tìm thấy hình thức thi nào cho lớp và học phần đã chọn");
+      }
     } catch (err) {
       console.error("Lỗi khi lấy danh sách exam assignment:", err);
     }

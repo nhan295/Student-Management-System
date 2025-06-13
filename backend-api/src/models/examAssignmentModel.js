@@ -20,6 +20,12 @@ const examAssignmentModel = {
             exam_format: exam_format,
             assignment_id: assignment_id
         })
+    },
+
+    editExamAssignment: (exSchedule_id, exam_format) =>{
+        return db('exam_schedule')
+        .update({exam_format: exam_format})
+        .where({exSchedule_id: exSchedule_id})
     }
 
 }

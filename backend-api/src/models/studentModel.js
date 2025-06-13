@@ -45,13 +45,27 @@ const StudentModel = {
     return rows;
   },
 
-  // 🔍 Tìm kiếm học viên theo tên
-  searchStudent: async (student_name) => {
-    return await db("students")
+  // // 🔍 Tìm kiếm học viên theo tên
+  // searchStudent: async (student_name) => {
+  //   return await db("students")
+  //     .leftJoin("class", "students.class_id", "class.class_id")
+  //     .leftJoin("courses", "students.course_id", "courses.course_id")
+  //     .where("students.student_name", "like", `%${student_name}%`)
+  //     .select("students.student_id", "students.student_name");
+  // },
+  // models/studentModel.js
+  searchStudent: async (term) => {
+    return db("students")
       .leftJoin("class", "students.class_id", "class.class_id")
       .leftJoin("courses", "students.course_id", "courses.course_id")
-      .where("students.student_name", "like", `%${student_name}%`)
-      .select("students.student_id", "students.student_name");
+      .select("students.student_id", "students.student_name")
+      .where(function () {
+        this.where("students.student_name", "like", `%${term}%`).orWhere(
+          "students.student_id",
+          "like",
+          `%${term}%`
+        );
+      });
   },
 
   // ✏️ Cập nhật học viên theo ID

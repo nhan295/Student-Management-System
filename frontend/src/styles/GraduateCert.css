@@ -93,7 +93,6 @@ Graduate Certificate Page Styles .cert-container {
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: left 0.5s;
 }
 
 .cert-input-group button:hover::before {

@@ -21,7 +21,6 @@ import GraduateCertPage from "./pages/GraduateCertPage";
 import WarningsPage from "./pages/WarningsPage";
 import WarningsDetailPage from "./pages/WarningsDetailPage";
 
-
 function App() {
   return (
     <Routes>
@@ -43,26 +42,25 @@ function App() {
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
 
-        <Route path="student/detail/:student_id" element={<StudentInfoPage />} />
+        <Route
+          path="student/detail/:student_id"
+          element={<StudentInfoPage />}
+        />
 
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}
-        
         />
         <Route path="/cert/search" element={<GraduateCertPage />} />
-
 
         <Route path="warnings" element={<WarningsPage />} />
         <Route
           path="/warnings/class/:classId/subject/:subjectId"
           element={<WarningsDetailPage />}
         />
-        <Route path="/exam-assign" element={<ExamAssignmentPage/>} />
-
+        <Route path="/exam-assign" element={<ExamAssignmentPage />} />
       </Route>
 
-      
       <Route path="*" element={<Navigate to="/homepage" replace />} />
     </Routes>
   );

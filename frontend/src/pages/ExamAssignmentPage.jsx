@@ -20,7 +20,7 @@ function ExamAssignmentPage() {
   const [modalClassId, setModalClassId] = useState("");
   const [modalExamFormat, setModalExamFormat] = useState("");
   const [modalAssignmentId, setModalAssignmentId] = useState(""); // lưu trạng thái assignment_id sau khi có subject_id và class_id
-  
+
   // State cho chức năng edit
   const [editingId, setEditingId] = useState(null); // ID của item đang được edit
   const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
@@ -51,7 +51,8 @@ function ExamAssignmentPage() {
     }
   }, [modalSubjectId]);
 
-  useEffect(() => {    // theo dõi subject_id và class_id khi người dùng có thay đổi
+  useEffect(() => {
+    // theo dõi subject_id và class_id khi người dùng có thay đổi
     const fetchModalAssignmentId = async () => {
       if (modalSubjectId && modalClassId) {
         try {
@@ -103,7 +104,7 @@ function ExamAssignmentPage() {
         params: { subject_id, class_id },
       });
       console.log("API response:", res.data); // Debug log
-      
+
       // API trả về array, lấy phần tử đầu tiên
       if (res.data && res.data.length > 0) {
         return res.data[0].assignment_id;
@@ -141,7 +142,7 @@ function ExamAssignmentPage() {
 
   const handleExamAssignment = async (e) => {
     e.preventDefault();
-    
+
     if (!modalExamFormat || !modalSubjectId || !modalClassId) {
       alert("Vui lòng chọn đầy đủ thông tin");
       return;
@@ -150,12 +151,12 @@ function ExamAssignmentPage() {
     try {
       // Lấy assignment_id một lần nữa để đảm bảo
       let assignment_id = modalAssignmentId;
-      
+
       if (!assignment_id) {
         console.log("Không có assignment_id trong state, lấy lại từ API...");
         assignment_id = await getAssignId(modalSubjectId, modalClassId);
       }
-      
+
       console.log("assignment_id sẽ gửi:", assignment_id);
 
       if (!assignment_id) {
@@ -203,15 +204,15 @@ function ExamAssignmentPage() {
 
     try {
       const res = await api.put(`/api/v1/exam-assignment/edit/${scheduleId}`, {
-        exam_format: editFormat
+        exam_format: editFormat,
       });
-      
+
       if (res.status === 200) {
         alert("Cập nhật thành công");
         // Cập nhật lại danh sách
-        setAssignedList(prevList => 
-          prevList.map(item => 
-            item.exSchedule_id === scheduleId 
+        setAssignedList((prevList) =>
+          prevList.map((item) =>
+            item.exSchedule_id === scheduleId
               ? { ...item, exam_format: editFormat }
               : item
           )
@@ -277,26 +278,28 @@ function ExamAssignmentPage() {
                 exam_schedule.exam_format
               )}
             </p>
-            
+
             <div className="exam-schedule-actions">
               {editingId === exam_schedule.exSchedule_id ? (
                 <>
-                  <button 
+                  <button
                     onClick={() => handleEdit(exam_schedule.exSchedule_id)}
                     className="save-btn"
                   >
                     Lưu
                   </button>
-                  <button 
-                    onClick={cancelEdit}
-                    className="cancel-btn"
-                  >
+                  <button onClick={cancelEdit} className="cancel-btn">
                     Hủy
                   </button>
                 </>
               ) : (
-                <button 
-                  onClick={() => startEdit(exam_schedule.exSchedule_id, exam_schedule.exam_format)}
+                <button
+                  onClick={() =>
+                    startEdit(
+                      exam_schedule.exSchedule_id,
+                      exam_schedule.exam_format
+                    )
+                  }
                   className="edit-btn"
                 >
                   Sửa
@@ -324,7 +327,10 @@ function ExamAssignmentPage() {
             />
             <Select
               options={classOptions}
-              value={classOptions.find(option => option.value === modalClassId) || null}
+              value={
+                classOptions.find((option) => option.value === modalClassId) ||
+                null
+              }
               onChange={(option) => {
                 const value = option ? option.value : "";
                 console.log("class_id được chọn:", value);

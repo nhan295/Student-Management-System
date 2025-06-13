@@ -1,4 +1,3 @@
-// backend/routes/lookupRoute.js
 const express = require("express");
 const router = express.Router();
 const {
@@ -6,10 +5,9 @@ const {
   getClasses,
   getSubjects,
   getLecturers,
-  getAssignments, // import thêm
+  getAssignments,
 } = require("../controllers/lookupController");
 
-// Hiện có sẵn:
 router.get("/rooms", getRooms);
 router.get("/classes", getClasses);
 router.get("/subjects", getSubjects);

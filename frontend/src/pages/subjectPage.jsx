@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ConfirmDialog from "../components/formDialog";
 import "../styles/SubjectPage.css";
 
 const PAGE_SIZE = 5;
 
 export default function SubjectPage() {
   const [subjects, setSubjects] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [query]);
+  const [confirmParams, setConfirmParams] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: null,
+  });
+
   const navigate = useNavigate();
 
-  // Subject fetch
+  // Load danh sách
   const fetchSubjects = async () => {
     try {
       const resp = await axios.get("http://localhost:3000/api/v1/subjects");
@@ -24,23 +30,25 @@ export default function SubjectPage() {
       alert("Lỗi khi tải danh sách học phần");
     }
   };
-
   useEffect(() => {
     fetchSubjects();
   }, []);
 
-  // Search
-  const filtered = subjects.filter(
-    (s) =>
-      s.subject_code.toLowerCase().includes(query.toLowerCase()) ||
-      s.subject_name.toLowerCase().includes(query.toLowerCase())
-  );
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const startIdx = (currentPage - 1) * PAGE_SIZE;
-  const paginated = filtered.slice(startIdx, startIdx + PAGE_SIZE);
-  // delete
-  const handleDelete = async (id) => {
-    if (!window.confirm("Bạn có chắc muốn xóa không?")) return;
+  // Reset page khi query (kết quả mới) thay đổi
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query]);
+
+  // Mở dialog xác nhận
+  const openConfirm = ({ title, message, onConfirm }) => {
+    setConfirmParams({ isOpen: true, title, message, onConfirm });
+  };
+  const closeConfirm = () => {
+    setConfirmParams((cp) => ({ ...cp, isOpen: false }));
+  };
+
+  // Thực sự xóa
+  const performDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/subjects/${id}`);
       fetchSubjects();
@@ -50,6 +58,21 @@ export default function SubjectPage() {
     }
   };
 
+  // Handler nút tìm
+  const handleSearch = () => {
+    setQuery(searchTerm.trim());
+  };
+  const filtered = subjects.filter((s) => {
+    if (!query) return true;
+    const q = query.toLowerCase();
+    return (
+      s.subject_code.toLowerCase().includes(q) ||
+      s.subject_name.toLowerCase().includes(q)
+    );
+  });
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const paginated = filtered.slice(startIdx, startIdx + PAGE_SIZE);
   const blanksCount = PAGE_SIZE - paginated.length;
 
   return (
@@ -59,10 +82,16 @@ export default function SubjectPage() {
         <input
           type="text"
           placeholder="Nhập từ khóa..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSearch();
+            }
+          }}
         />
-        <button onClick={() => {}}>🔍 Tìm</button>
+        <button onClick={handleSearch}>🔍 Tìm</button>
       </div>
 
       <h2 className="page-title">Danh mục học phần</h2>
@@ -75,7 +104,6 @@ export default function SubjectPage() {
           <col style={{ width: "13%" }} />
           <col style={{ width: "14%" }} />
         </colgroup>
-
         <thead>
           <tr>
             <th>STT</th>
@@ -86,7 +114,6 @@ export default function SubjectPage() {
           </tr>
         </thead>
         <tbody>
-          {/* 1) render dữ liệu */}
           {paginated.map((s, idx) => (
             <tr key={s.subject_id} className={idx % 2 === 1 ? "odd" : ""}>
               <td>{startIdx + idx + 1}</td>
@@ -103,7 +130,16 @@ export default function SubjectPage() {
               <td>
                 <button
                   className="btn-delete"
-                  onClick={() => handleDelete(s.subject_id)}
+                  onClick={() =>
+                    openConfirm({
+                      title: "Xác nhận xóa",
+                      message: `Bạn có chắc muốn xóa học phần:\nMã: ${s.subject_code}\nTên: ${s.subject_name}`,
+                      onConfirm: async () => {
+                        await performDelete(s.subject_id);
+                        closeConfirm();
+                      },
+                    })
+                  }
                 >
                   Xóa
                 </button>
@@ -111,7 +147,6 @@ export default function SubjectPage() {
             </tr>
           ))}
 
-          {/* 2) sau khi hết data, thêm hàng trống cho đủ PAGE_SIZE */}
           {Array.from({ length: blanksCount }).map((_, i) => (
             <tr key={`blank-${i}`} className="blank-row">
               <td>&nbsp;</td>
@@ -147,6 +182,15 @@ export default function SubjectPage() {
           Thêm học phần
         </button>
       </div>
+
+      {/* Dialog xác nhận */}
+      <ConfirmDialog
+        isOpen={confirmParams.isOpen}
+        title={confirmParams.title}
+        message={confirmParams.message}
+        onConfirm={confirmParams.onConfirm}
+        onCancel={closeConfirm}
+      />
     </div>
   );
 }

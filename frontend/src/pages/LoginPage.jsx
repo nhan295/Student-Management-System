@@ -60,13 +60,6 @@ function Login() {
             />
           </div>
 
-          <div className="options">
-            <label>
-              <input type="checkbox" /> Remember Me
-            </label>
-            <span>Forgot Password</span>
-          </div>
-
           <button className="login-btn-form" type="submit">
             Login
           </button>

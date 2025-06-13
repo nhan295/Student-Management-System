@@ -97,17 +97,35 @@ exports.getStudentById = async (req, res) => {
   }
 };
 
+// exports.searchStudents = async (req, res) => {
+//   const name = req.params.student_name;
+//   const data = await StudentModel.searchStudent(name);
+//   try {
+//     if (data) {
+//       res.json(data);
+//     } else {
+//       res.status(404).json({ message: "Không tìm thấy học viên" });
+//     }
+//   } catch (err) {
+//     console.error("Lỗi truy vấn:", err);
+//     res.status(500).json({ error: "Lỗi máy chủ" });
+//   }
+// };
 exports.searchStudents = async (req, res) => {
-  const name = req.params.student_name;
-  const data = await StudentModel.searchStudent(name);
+  const { term } = req.query;
+  if (!term) {
+    return res.status(400).json({ message: "Chưa nhập gì để tìm" });
+  }
+
   try {
-    if (data) {
-      res.json(data);
+    const rows = await StudentModel.searchStudent(term);
+    if (rows.length) {
+      res.json(rows);
     } else {
       res.status(404).json({ message: "Không tìm thấy học viên" });
     }
   } catch (err) {
-    console.error("Lỗi truy vấn:", err);
+    console.error("Lỗi tìm kiếm học viên:", err);
     res.status(500).json({ error: "Lỗi máy chủ" });
   }
 };

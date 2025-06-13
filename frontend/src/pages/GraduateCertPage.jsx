@@ -6,7 +6,9 @@ function GraduateCertPage() {
   const [cert, setCert] = useState(null);
   const [error, setError] = useState("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (e) => {
+    if (e) e.preventDefault(); // Ngăn reload khi submit form
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/graduation_certificates/student/${studentId}`
@@ -16,13 +18,19 @@ function GraduateCertPage() {
         throw new Error("Không tìm thấy bằng tốt nghiệp");
       }
 
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Phản hồi không phải định dạng JSON hợp lệ");
+      }
+
       const data = await response.json();
-      const certificate = Array.isArray(data) ? data[0] : data;
 
-      if (!certificate) throw new Error("Không có dữ liệu hợp lệ");
+      if (!data || typeof data !== "object") {
+        throw new Error("Không có dữ liệu hợp lệ");
+      }
 
-      console.log("Dữ liệu bằng tốt nghiệp:", certificate); // DEBUG
-      setCert(certificate);
+      console.log("Dữ liệu bằng tốt nghiệp:", data);
+      setCert(data);
       setError("");
     } catch (err) {
       setCert(null);
@@ -34,15 +42,15 @@ function GraduateCertPage() {
     <div className="cert-container">
       <h2 className="cert-title">Tra cứu Bằng Tốt Nghiệp</h2>
 
-      <div className="cert-input-group">
+      <form className="cert-input-group" onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="Nhập mã học viên (student_id)"
+          placeholder="Nhập mã học viên"
           value={studentId}
           onChange={(e) => setStudentId(e.target.value)}
         />
-        <button onClick={handleSearch}>Tìm kiếm</button>
-      </div>
+        <button type="submit">Tìm kiếm</button>
+      </form>
 
       {error && <p className="cert-error">{error}</p>}
 
@@ -50,15 +58,10 @@ function GraduateCertPage() {
         <div className="cert-display">
           <h3>Thông tin bằng tốt nghiệp</h3>
           <p><strong>Số hiệu:</strong> {cert.certificate_number || "--"}</p>
-          <p><strong>Ngày cấp:</strong> {cert.issue_date || "--"}</p>
+          <p><strong>Ngày cấp:</strong> {new Date(cert.issue_date).toLocaleDateString('vi-VN')}</p>
           <p><strong>Trạng thái:</strong> {cert.is_issued ? "Đã cấp" : "Chưa cấp"}</p>
           <p><strong>Học viên:</strong> {cert.student_name || "--"}</p>
           <p><strong>Mã học viên:</strong> {cert.student_id || "--"}</p>
-
-          {/* DEBUG HIỂN THỊ TOÀN BỘ OBJECT */}
-          <pre style={{ background: "#f9f9f9", padding: "8px" }}>
-            {JSON.stringify(cert, null, 2)}
-          </pre>
         </div>
       )}
     </div>

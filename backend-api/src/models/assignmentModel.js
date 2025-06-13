@@ -38,13 +38,34 @@ const assignmentModel = {
     });
   },
 
-  getSubject: ()=>{
-    return db('assignment')
-    .select('assignment.assignment_id','subjects.subject_name','subjects.subject_id','class.class_name','courses.course_name')
-    .join('subjects', 'subjects.subject_id', 'assignment.subject_id')
-    .join('class', 'class.class_id', 'assignment.class_id')
-    .join('courses', 'courses.course_id', 'class.course_id')
-    .groupBy('subjects.subject_name');
+  // getSubject: ()=>{
+  //   return db('assignment')
+  //   .select('assignment.assignment_id','subjects.subject_name','subjects.subject_id','class.class_name','courses.course_name')
+  //   .join('subjects', 'subjects.subject_id', 'assignment.subject_id')
+  //   .join('class', 'class.class_id', 'assignment.class_id')
+  //   .join('courses', 'courses.course_id', 'class.course_id')
+  //   .groupBy('subjects.subject_name');
+  // },
+
+  getSubject: () => {
+    return db("assignment")
+      .select(
+        "assignment.assignment_id",
+        "subjects.subject_name",
+        "subjects.subject_id",
+        "class.class_name",
+        "courses.course_name"
+      )
+      .join("subjects", "subjects.subject_id", "assignment.subject_id")
+      .join("class", "class.class_id", "assignment.class_id")
+      .join("courses", "courses.course_id", "class.course_id")
+      .groupBy(
+        "assignment.assignment_id",
+        "subjects.subject_name",
+        "subjects.subject_id",
+        "class.class_name",
+        "courses.course_name"
+      );
   },
 
   getClassBySubject:(subject_id)=>{

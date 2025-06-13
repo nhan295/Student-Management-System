@@ -20,7 +20,6 @@ const graduateCertRoute = require("./routes/graduateCertRoute");
 
 const warningRoute = require("./routes/warningRoute");
 
-
 const app = express();
 
 // CORS trước mọi routes
@@ -42,9 +41,14 @@ app.use("/api/v1/schedules", scheduleRoutes);
 
 app.use("/api/v1/students", studentRoute);
 app.use("/api/v1/courses", courseRoute);
+
+app.use("/api/v1", classRoutes);
+userRoute.setup(app);
+lectureRoute.setup(app);
+assignmentRoute.setup(app);
+
 app.use("/api/v1/graduation_certificates", graduateCertRoute);
 app.use("/api/v1/warnings", warningRoute);
-
 
 progressRoute.setup(app);
 userRoute.setup(app);
@@ -55,8 +59,7 @@ studentRoute.setup(app);
 examAssignmentRoute.setup(app);
 
 app.get("/", (req, res) => {
-  res.send("Backend is running ✅",);
+  res.send("Backend is running ✅");
 });
-
 
 module.exports = app;

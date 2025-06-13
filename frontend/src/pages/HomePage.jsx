@@ -9,15 +9,15 @@ function HomePage() {
   const navigate = useNavigate();
 
   const menuItems = [
+    { icon: "📖", label: "Tuyển sinh", path: "/students" },
     { icon: "👩‍🎓", label: "Hồ sơ học viên", path: "/student/search" },
     { icon: "📋", label: "Chương trình đào tạo", path: "/subjects/list" },
+    { icon: "📝",label: "Hình thức và nội dung thi", path: "/exam-assign"},
     { icon: "📅", label: "Lịch giảng dạy và phân công", path: "/schedules" },
-    { icon: "📖", label: "Tuyển sinh", path: "/students" },
-
     { icon: "📚", label: "Kết quả học tập",path: "/classes/search"},
-    { icon: "🎓", label: "Kết quả tốt nghiệp,", path: "/cert/search"},
     { icon: "⚠️", label: "Cảnh báo", path: "/warnings"},
-    { icon: "📝",label: "Hình thức và nội dung thi", path: "/exam-assign"}
+    { icon: "🎓", label: "Kết quả tốt nghiệp,", path: "/cert/search"},
+   
   ];
 
   return (

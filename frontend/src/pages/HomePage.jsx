@@ -65,7 +65,7 @@ function HomePage() {
     { icon: "📋", label: "Chương trình đào tạo", path: "/subjects/list" },
     { icon: "📅", label: "Lịch giảng dạy và phân công", path: "/schedules" },
     { icon: "📖", label: "Tuyển sinh", path: "/students" },
-    { icon: "📚", label: "Kết quả học tập" },
+    { icon: "📚", label: "Kết quả học tập",path:"/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp" },
     { icon: "⚠️", label: "Cảnh báo" },
   ];

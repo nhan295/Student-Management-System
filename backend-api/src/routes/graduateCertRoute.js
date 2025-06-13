@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const certificateController = require("../controllers/graduateCertController");
+const graduateCertController = require("../controllers/graduateCertController");
 
-router.get("/student/:student_id", certificateController.getByStudentId);
+router.get("/student/:studentId", graduateCertController.getByStudentId);
+
 
 module.exports = router;

@@ -1,23 +1,26 @@
 const GraduateCert = require("../models/graduateCertModel");
 
+// graduateCertController.js
 exports.getByStudentId = async (req, res) => {
-  const { student_id } = req.params;
+  const { studentId } = req.params;
 
   try {
     const data = await new Promise((resolve, reject) => {
-      GraduateCert.getByStudentId(student_id, (err, results) => {
+      GraduateCert.getByStudentId(studentId, (err, results) => {
         if (err) return reject(err);
         resolve(results);
       });
     });
 
-    if (!data || data.length === 0) {
+    if (!data) {
       return res.status(404).json({ message: "Không tìm thấy bằng tốt nghiệp" });
     }
 
-    res.json(data[0]); // trả về object đầu tiên
+    // ✅ Đảm bảo chỉ gửi 1 phản hồi
+    return res.json(data);
   } catch (err) {
     console.error("Lỗi khi lấy bằng:", err);
-    res.status(500).json({ error: "Lỗi máy chủ" });
+    return res.status(500).json({ error: "Lỗi máy chủ" });
   }
 };
+

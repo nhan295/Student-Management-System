@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import banner from "../assets/images/banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import ConfirmDialog from "../components/formDialog";
 
 function HomePage() {
   const navigate = useNavigate();
+  const [isLogoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
   const menuItems = [
     { icon: "📖", label: "Tuyển sinh", path: "/students" },
@@ -20,15 +22,32 @@ function HomePage() {
    
   ];
 
+  const handleLogoutClick = () => {
+    setLogoutDialogOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
+    setLogoutDialogOpen(false);
+    navigate("/login");
+  };
+
+  const handleCancelLogout = () => {
+    setLogoutDialogOpen(false);
+  };
+
   return (
     <div className="home-page">
       <header className="home-banner">
         <img src={banner} alt="Banner" className="header-banner" />
 
         <div className="banner-actions">
-          <NavLink to="/login" className="header-action-btn">
+          <button
+            className="header-action-btn"
+            onClick={handleLogoutClick}
+            title="Đăng xuất"
+          >
             <FontAwesomeIcon icon={faSignOutAlt} />
-          </NavLink>
+          </button>
         </div>
       </header>
 
@@ -45,6 +64,13 @@ function HomePage() {
           </div>
         ))}
       </div>
+      <ConfirmDialog
+        isOpen={isLogoutDialogOpen}
+        title="Xác nhận đăng xuất"
+        message="Bạn có chắc chắn muốn đăng xuất không?"
+        onConfirm={handleConfirmLogout}
+        onCancel={handleCancelLogout}
+      />
     </div>
   );
 }

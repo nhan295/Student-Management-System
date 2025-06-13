@@ -57,6 +57,7 @@ function Assignment() {
     }
   };
 
+
   const fetchSubjects = async () => {
     try {
       const res = await api.get("/api/v1/subjects/");

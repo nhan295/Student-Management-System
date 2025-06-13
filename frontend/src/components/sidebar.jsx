@@ -9,7 +9,9 @@ const items = [
   { to: "/schedules", icon: "📅", label: "Lịch dạy & Phân công" },
   { to: "/classes/search", icon: "📚", label: "Kết quả học tập" },
   { to: "/students", icon: "📖", label: "Tuyển sinh" },
+  { to: "/exam-assign", icon: "📝", label: "Hình thức và nội dung thi" },
   { to: "/warnings", icon: "⚠️", label: "Danh sách cảnh báo" },
+
   // ... thêm các link khác ở đây ...
 ];
 

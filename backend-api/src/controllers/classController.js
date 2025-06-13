@@ -1,6 +1,6 @@
 const classModel = require("../models/classModel");
 const ClassModel = require("../models/classModel");
-
+const db = require("../config/db");
 exports.getStudentsBySubject = async (req, res) => {
   const { name, classId } = req.query;
   try {
@@ -103,5 +103,31 @@ exports.exportToExcel = async (req, res) => {
   } catch (error) {
     console.error("Lỗi khi xuất Excel:", error);
     res.status(500).json({ error: "Không thể xuất file Excel." });
+  }
+};
+
+// Thêm lớp học mới
+exports.addClass = async (req, res) => {
+  try {
+    const { class_id, class_name, course_id, total_student } = req.body;
+
+    if (!class_id || !class_name || !course_id || !total_student) {
+      return res.status(400).json({ message: "Thiếu thông tin lớp học." });
+    }
+
+    const newClass = await db("classes").insert({
+      class_id,
+      class_name,
+      course_id,
+      total_student,
+    });
+
+    res.status(201).json({
+      message: "Lớp học đã được thêm thành công.",
+      data: newClass,
+    });
+  } catch (error) {
+    console.error("Lỗi khi thêm lớp học:", error);
+    res.status(500).json({ message: "Lỗi khi thêm lớp học.", error });
   }
 };

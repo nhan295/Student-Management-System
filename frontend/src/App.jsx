@@ -12,7 +12,6 @@ import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
 
 import StudentPage from "./pages/StudentPage";
-
 import SearchStudentPage from "./pages/SearchStudentPage";
 import StudentInfoPage from "./pages/StudentInfoPage";
 
@@ -42,6 +41,12 @@ function App() {
 
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
+
+        <Route
+          path="student/detail/:student_id"
+          element={<StudentInfoPage />}
+        />
+
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}

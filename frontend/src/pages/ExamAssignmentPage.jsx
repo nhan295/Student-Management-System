@@ -20,6 +20,10 @@ function ExamAssignmentPage() {
   const [modalClassId, setModalClassId] = useState("");
   const [modalExamFormat, setModalExamFormat] = useState("");
   const [modalAssignmentId, setModalAssignmentId] = useState(""); // lưu trạng thái assignment_id sau khi có subject_id và class_id
+  
+  // State cho chức năng edit
+  const [editingId, setEditingId] = useState(null); // ID của item đang được edit
+  const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
 
   const OpenAddForm = () => setShowAddModal(true);
   const CloseAddModal = () => {
@@ -167,11 +171,59 @@ function ExamAssignmentPage() {
       if (res.status === 200 || res.status === 201) {
         alert("Thêm thành công");
         CloseAddModal();
+        // Refresh danh sách sau khi thêm thành công
+        getAllAssignment();
       } else {
         alert("Thêm thất bại");
       }
     } catch (err) {
       console.error("Lỗi khi thêm exam-assignment:", err);
+      alert("Có lỗi xảy ra: " + (err.response?.data?.message || err.message));
+    }
+  };
+
+  // Bắt đầu chỉnh sửa
+  const startEdit = (scheduleId, currentFormat) => {
+    setEditingId(scheduleId);
+    setEditFormat(currentFormat);
+  };
+
+  // Hủy chỉnh sửa
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditFormat("");
+  };
+
+  // Xử lý cập nhật exam format
+  const handleEdit = async (scheduleId) => {
+    if (!editFormat) {
+      alert("Vui lòng chọn hình thức thi");
+      return;
+    }
+
+    try {
+      const res = await api.put(`/api/v1/exam-assignment/edit/${scheduleId}`, {
+        exam_format: editFormat
+      });
+      
+      if (res.status === 200) {
+        alert("Cập nhật thành công");
+        // Cập nhật lại danh sách
+        setAssignedList(prevList => 
+          prevList.map(item => 
+            item.exSchedule_id === scheduleId 
+              ? { ...item, exam_format: editFormat }
+              : item
+          )
+        );
+        // Reset trạng thái edit
+        setEditingId(null);
+        setEditFormat("");
+      } else {
+        alert("Cập nhật thất bại");
+      }
+    } catch (err) {
+      console.error("Lỗi khi cập nhật exam-assignment:", err);
       alert("Có lỗi xảy ra: " + (err.response?.data?.message || err.message));
     }
   };
@@ -199,7 +251,7 @@ function ExamAssignmentPage() {
 
       <div className="exam-assign-show-table">
         {assignedList.map((exam_schedule) => (
-          <div key={exam_schedule.exSchedule_id}>
+          <div key={exam_schedule.exSchedule_id} className="exam-schedule-item">
             <p>
               <strong>Môn học: </strong>
               {exam_schedule.subject_name}
@@ -210,8 +262,47 @@ function ExamAssignmentPage() {
             </p>
             <p>
               <strong>Hình thức thi: </strong>
-              {exam_schedule.exam_format}
+              {editingId === exam_schedule.exSchedule_id ? (
+                <select
+                  value={editFormat}
+                  onChange={(e) => setEditFormat(e.target.value)}
+                  className="edit-format-select"
+                >
+                  <option value="">Chọn hình thức thi</option>
+                  <option value="Trắc nghiệm">Trắc nghiệm</option>
+                  <option value="Tự luận">Tự luận</option>
+                  <option value="Vấn đáp">Vấn đáp</option>
+                </select>
+              ) : (
+                exam_schedule.exam_format
+              )}
             </p>
+            
+            <div className="exam-schedule-actions">
+              {editingId === exam_schedule.exSchedule_id ? (
+                <>
+                  <button 
+                    onClick={() => handleEdit(exam_schedule.exSchedule_id)}
+                    className="save-btn"
+                  >
+                    Lưu
+                  </button>
+                  <button 
+                    onClick={cancelEdit}
+                    className="cancel-btn"
+                  >
+                    Hủy
+                  </button>
+                </>
+              ) : (
+                <button 
+                  onClick={() => startEdit(exam_schedule.exSchedule_id, exam_schedule.exam_format)}
+                  className="edit-btn"
+                >
+                  Sửa
+                </button>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -258,8 +349,6 @@ function ExamAssignmentPage() {
               Huỷ
             </button>
           </form>
-          
-          
         </div>
       )}
     </div>

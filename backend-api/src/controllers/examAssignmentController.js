@@ -34,7 +34,24 @@ const createExamAssignment = async(req,res) =>{
 }
 };
 
+const editExamAssignment = async(req,res) =>{
+    const {exSchedule_id} = req.params
+    const {exam_format} = req.body
+    try{
+        const result = await examAssignmentModel.editExamAssignment(exSchedule_id,exam_format)
+        if(result){
+            return res.status(200).json({message: 'Cập nhật thành công'})
+        }else{
+            return res.status(400).json({message: 'Cập nhật không thành công'})
+        }
+    }catch(err){
+        console.error(err)
+        return res.status(500).json({message: 'Lỗi server'})
+    }
+}
+
 module.exports = {
     getAllAssignment,
-    createExamAssignment
+    createExamAssignment,
+    editExamAssignment
 }

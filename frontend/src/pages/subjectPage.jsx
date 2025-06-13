@@ -8,8 +8,8 @@ const PAGE_SIZE = 5;
 
 export default function SubjectPage() {
   const [subjects, setSubjects] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // giữ value input
-  const [query, setQuery] = useState(""); // chỉ áp dụng filter khi nhấn tìm
+  const [searchTerm, setSearchTerm] = useState("");
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -62,10 +62,6 @@ export default function SubjectPage() {
   const handleSearch = () => {
     setQuery(searchTerm.trim());
   };
-  // Nếu muốn reset tìm khi input rỗng:
-  // bạn có thể thêm handleSearch() khi clear input
-
-  // Filter + paging chỉ dựa trên `query`
   const filtered = subjects.filter((s) => {
     if (!query) return true;
     const q = query.toLowerCase();

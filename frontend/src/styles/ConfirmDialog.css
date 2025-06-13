@@ -1,0 +1,95 @@
+/* 1. Overlay mờ nền */
+.confirm-overlay {
+  position: fixed;
+  inset: 0; /* top/left/right/bottom = 0 */
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* 2. Khung dialog */
+.confirm-modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: fadeInScale 0.2s ease-out;
+}
+
+/* Header với gradient và icon (nếu cần) */
+.confirm-header {
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+.confirm-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+/* Body với padding và khoảng cách dòng */
+.confirm-body {
+  padding: 1rem 1.5rem;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Footer: đẩy các button về bên phải */
+.confirm-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1.5rem;
+  gap: 0.5rem;
+  background: #f9f9f9;
+}
+
+/* Style chung cho button */
+.btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Button Hủy */
+.btn-cancel {
+  background: #e0e0e0;
+  color: #555;
+}
+.btn-cancel:hover {
+  background: #d5d5d5;
+}
+
+/* Button Đồng ý */
+.btn-confirm {
+  background: #4e54c8;
+  color: #fff;
+}
+.btn-confirm:hover {
+  background: #4248a0;
+}
+
+/* Hiệu ứng khi nhấn */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Animation mở dialog */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

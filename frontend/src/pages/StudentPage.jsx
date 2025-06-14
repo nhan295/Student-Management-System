@@ -25,19 +25,37 @@ function StudentPage() {
   }, []);
 
   return (
-    <div>
+    <div className="student-page">
       <h2>Quản lý sinh viên</h2>
-      <div>
-      <button className="btn-add-student" onClick={() => setActiveTab('add')}>Thêm sinh viên</button>
+
+      <div className="tab-buttons">
+        <button
+          className={`btn-tab ${activeTab === 'list' ? 'active' : ''}`}
+          onClick={() => setActiveTab('list')}
+        >
+          Danh sách sinh viên
+        </button>
+        <button
+          className={`btn-tab ${activeTab === 'add' ? 'active' : ''}`}
+          onClick={() => setActiveTab('add')}
+        >
+          Thêm sinh viên
+        </button>
       </div>
 
-      {activeTab === 'add' && (
-        <AddStudentForm courses={courses} fetchCourses={fetchCourses} onStudentAdded={() => {}} />
-      )}
+      <div className="tab-content">
+        {activeTab === 'add' && (
+          <AddStudentForm
+            courses={courses}
+            fetchCourses={fetchCourses}
+            onStudentAdded={() => setActiveTab('list')} // quay lại danh sách sau khi thêm
+          />
+        )}
 
-      {activeTab === 'list' && (
-        <StudentList courses={courses} classes={classes} />
-      )}
+        {activeTab === 'list' && (
+          <StudentList courses={courses} classes={classes} />
+        )}
+      </div>
     </div>
   );
 }

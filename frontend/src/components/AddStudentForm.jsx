@@ -142,13 +142,28 @@ function AddStudentForm() {
 
   const handleAddNewClass = async () => {
     const { class_id, class_name, course_id, total_student } = newClass;
+  
     if (!class_id || !class_name || !course_id || !total_student) {
       alert("Vui lòng điền đầy đủ thông tin lớp học mới.");
       return;
     }
-
+  
+    const idNumber = Number(class_id);
+    if (isNaN(idNumber) || idNumber <= 0) {
+      alert("Mã lớp học không hợp lệ.");
+      return;
+    }
+  
     try {
-      await axios.post("http://localhost:3000/api/v1/classes", newClass);
+      const payload = {
+        class_id: idNumber,
+        class_name,
+        course_id: Number(course_id),
+        total_student: Number(total_student),
+      };
+  
+      await axios.post("http://localhost:3000/api/v1/classes", payload);
+  
       alert("Thêm lớp học mới thành công!");
       setNewClass({
         class_id: "",
@@ -156,14 +171,15 @@ function AddStudentForm() {
         course_id: "",
         total_student: "",
       });
-      fetchClasses(); // cập nhật danh sách lớp sau khi thêm
+      fetchClasses();
       setShowClassForm(false);
     } catch (err) {
       console.error("Lỗi khi thêm lớp học mới:", err);
-      console.log("Chi tiết:", err.response?.data || err.message);
       alert("Không thể thêm lớp học mới.");
     }
   };
+  
+  
 
   return (
     <div className="add-student-form-container">

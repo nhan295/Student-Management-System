@@ -38,7 +38,6 @@ app.use("/api/v1/lookups", lookupRoutes);
 app.use("/api/v1/subjects", subjectRoutes);
 app.use("/api/v1/classes", classRoutes);
 app.use("/api/v1/schedules", scheduleRoutes);
-
 app.use("/api/v1/students", studentRoute);
 app.use("/api/v1/courses", courseRoute);
 

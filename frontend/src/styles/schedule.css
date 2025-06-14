@@ -255,6 +255,15 @@ dialog::backdrop {
   display: flex;
   align-items: center;
   margin: 4px 0;
+  justify-content: flex-end;
+}
+.right-group label {
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}
+.right-group select {
+  width: 200px;
+  white-space: nowrap;
 }
 
 .calendar-controls button {

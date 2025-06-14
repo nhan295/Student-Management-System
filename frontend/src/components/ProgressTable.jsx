@@ -88,7 +88,16 @@ export default function ProgressTable({ studentId, onClose }) {
                   aria-labelledby="title-back-icon"
                 >
                   <title id="title-back-icon">Back</title>
-                  <rect width="64" height="64" fill="#3182ce" rx="4" />
+                  <defs>
+                    <linearGradient
+                      id="grad-close"
+                      gradientTransform="rotate(135)"
+                    >
+                      <stop offset="0%" stopColor="#667eea" />
+                      <stop offset="100%" stopColor="#764ba2" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="64" height="64" fill="url(#grad-close)" rx="4" />
                   <path
                     d="M40 16 L24 32 L40 48"
                     fill="none"

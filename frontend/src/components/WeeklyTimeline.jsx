@@ -104,8 +104,8 @@ export default function WeeklyTimeline({
               {/* Vẽ event */}
               {eventsOfDay.map((evt) => {
                 // Convert kiểu "HH:MM:SS" hoặc "HH:mm" sang số phút từ 6:00
-                const start = evt.start_time.slice(0, 5); // "HH:mm"
-                const end = evt.end_time.slice(0, 5); // "HH:mm"
+                const start = evt.start_time.slice(0, 5);
+                const end = evt.end_time.slice(0, 5);
                 const [sh, sm] = start.split(":").map(Number);
                 const [eh, em] = end.split(":").map(Number);
 
@@ -115,8 +115,8 @@ export default function WeeklyTimeline({
                 const duration = eh * 60 + em - (sh * 60 + sm);
 
                 // Chuyển số phút thành pixel (giả sử mỗi giờ = 60px)
-                const topPx = (offsetMinutes / 60) * 60 + 1; // +1 để cách viền chút
-                const heightPx = (duration / 60) * 60 - 2; // −2 để chừa khoảng giữa
+                const topPx = (offsetMinutes / 60) * 60 + 1;
+                const heightPx = (duration / 60) * 60 - 2;
 
                 return (
                   <div

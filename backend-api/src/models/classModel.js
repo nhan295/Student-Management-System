@@ -63,7 +63,7 @@ module.exports = {
   },
 
   getAllClasses: async () => {
-    return await db("Class as c")
+    return await db("class as c")
       .join("courses as co", "c.course_id", "co.course_id")
       .select("c.class_id", "c.class_name", "co.course_name", "c.course_id");
   },

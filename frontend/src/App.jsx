@@ -41,7 +41,7 @@ function App() {
 
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
-
+        
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}

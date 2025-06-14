@@ -1,7 +1,9 @@
 const classModel = require("../models/classModel");
 const ClassModel = require("../models/classModel");
 const db = require("../config/db");
-exports.getStudentsBySubject = async (req, res) => {
+const ExcelJS = require("exceljs");
+
+const getStudentsBySubject = async (req, res) => {
   const { name, classId } = req.query;
   try {
     const students = await classModel.getStudentsByFilters(name, classId);
@@ -14,7 +16,7 @@ exports.getStudentsBySubject = async (req, res) => {
   }
 };
 
-exports.updateGrade = async (req, res) => {
+const updateGrade = async (req, res) => {
   const { studentId, subjectName, newGrade } = req.body;
   try {
     await classModel.updateGrade(studentId, subjectName, newGrade);
@@ -25,7 +27,7 @@ exports.updateGrade = async (req, res) => {
   }
 };
 
-exports.getAllClasses = async (req, res) => {
+const getAllClasses = async (req, res) => {
   try {
     const classes = await classModel.getAllClasses();
     res.json(classes);
@@ -35,9 +37,7 @@ exports.getAllClasses = async (req, res) => {
   }
 };
 
-const ExcelJS = require("exceljs");
-
-exports.exportToExcel = async (req, res) => {
+const exportToExcel = async (req, res) => {
   const { name, classId } = req.query;
 
   try {
@@ -50,7 +50,6 @@ exports.exportToExcel = async (req, res) => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Bảng điểm");
 
-    // 👉 Tiêu đề chính
     worksheet.mergeCells("A1:E1");
     worksheet.getCell(
       "A1"
@@ -58,7 +57,6 @@ exports.exportToExcel = async (req, res) => {
     worksheet.getCell("A1").alignment = { horizontal: "center" };
     worksheet.getCell("A1").font = { size: 14, bold: true };
 
-    // 👉 Dòng tiêu đề cột (dòng 2)
     worksheet.addRow([
       "Mã sinh viên",
       "Tên sinh viên",
@@ -67,7 +65,6 @@ exports.exportToExcel = async (req, res) => {
       "Điểm",
     ]);
 
-    // 👉 Dữ liệu (từ dòng 3 trở đi)
     students.forEach((student) => {
       worksheet.addRow([
         student.student_id,
@@ -78,7 +75,6 @@ exports.exportToExcel = async (req, res) => {
       ]);
     });
 
-    // 👉 Căn chỉnh độ rộng cột
     worksheet.columns = [
       { width: 15 },
       { width: 25 },
@@ -106,28 +102,34 @@ exports.exportToExcel = async (req, res) => {
   }
 };
 
-// Thêm lớp học mới
-exports.addClass = async (req, res) => {
+const addClass = async (req, res) => {
+  const { class_id, class_name, course_id, total_student } = req.body;
+
+  if (!class_id || !class_name || !course_id || !total_student) {
+    return res
+      .status(400)
+      .json({ error: "Vui lòng nhập đầy đủ thông tin lớp học." });
+  }
+
   try {
-    const { class_id, class_name, course_id, total_student } = req.body;
-
-    if (!class_id || !class_name || !course_id || !total_student) {
-      return res.status(400).json({ message: "Thiếu thông tin lớp học." });
-    }
-
-    const newClass = await db("classes").insert({
-      class_id,
+    await db("class").insert({
+      class_id: Number(class_id),
       class_name,
-      course_id,
-      total_student,
+      course_id: Number(course_id),
+      total_student: Number(total_student),
     });
 
-    res.status(201).json({
-      message: "Lớp học đã được thêm thành công.",
-      data: newClass,
-    });
+    return res.status(201).json({ message: "Thêm lớp học thành công." });
   } catch (error) {
     console.error("Lỗi khi thêm lớp học:", error);
-    res.status(500).json({ message: "Lỗi khi thêm lớp học.", error });
+    return res.status(500).json({ error: error.sqlMessage || "Lỗi máy chủ." });
   }
+};
+
+module.exports = {
+  getStudentsBySubject,
+  updateGrade,
+  getAllClasses,
+  exportToExcel,
+  addClass,
 };

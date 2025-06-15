@@ -9,16 +9,26 @@ function StudentList() {
   const [classes, setClasses] = useState([]);
   const [courses, setCourses] = useState([]);
 
+  const [filteredClasses, setFilteredClasses] = useState([]);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/v1/classes/all-classes")
-      .then((res) => setClasses(res.data));
-    axios
-      .get("http://localhost:3000/api/v1/courses")
-      .then((res) => setCourses(res.data));
+    axios.get("http://localhost:3000/api/v1/classes/all-classes").then((res) => setClasses(res.data));
+    axios.get("http://localhost:3000/api/v1/courses").then((res) => setCourses(res.data));
   }, []);
 
+  useEffect(() => {
+    // Cập nhật danh sách lớp dựa trên courseId được chọn
+    const filtered = classes.filter(cls => cls.course_id === Number(courseId));
+    setFilteredClasses(filtered);
+    setClassId(""); // reset classId khi chọn lại khóa học
+  }, [courseId, classes]);
+
   const fetchStudents = async () => {
+    if (!courseId || !classId) {
+      alert("Vui lòng chọn đầy đủ khóa học và lớp học");
+      return;
+    }
+
     try {
       const res = await axios.get("http://localhost:3000/api/v1/students", {
         params: { classId, courseId },
@@ -30,19 +40,16 @@ function StudentList() {
     }
   };
 
-  // Hàm lấy tên lớp dựa trên class_id
   const getClassName = (id) => {
     const cls = classes.find((c) => c.class_id === id);
     return cls ? cls.class_name : "Không rõ";
   };
 
-  // Hàm lấy tên niên khóa dựa trên course_id
   const getCourseName = (id) => {
     const course = courses.find((c) => c.course_id === id);
     return course ? course.course_name : "Không rõ";
   };
 
-  // Hàm format ngày tháng năm
   const formatDate = (dateString) => {
     if (!dateString) return "Không rõ";
     const date = new Date(dateString);
@@ -56,25 +63,31 @@ function StudentList() {
     <div className="student-list-container">
       <h3>Danh sách học viên</h3>
 
-      <select value={classId} onChange={(e) => setClassId(e.target.value)}>
-        <option value="">Chọn lớp</option>
-        {classes.map((c) => (
-          <option key={c.class_id} value={c.class_id}>
-            {c.class_name}
-          </option>
-        ))}
-      </select>
-
       <select value={courseId} onChange={(e) => setCourseId(e.target.value)}>
-        <option value="">Chọn niên khóa</option>
+        <option value="">-- Chọn niên khóa --</option>
         {courses.map((c) => (
           <option key={c.course_id} value={c.course_id}>
-            {c.course_name}
+            {c.course_name} ({c.start_year} - {c.end_year})
           </option>
         ))}
       </select>
 
-      <button onClick={fetchStudents}>Hiển thị</button>
+      <select
+        value={classId}
+        onChange={(e) => setClassId(e.target.value)}
+        disabled={!courseId}
+      >
+        <option value="">-- Chọn lớp học --</option>
+        {filteredClasses.map((cls) => (
+          <option key={cls.class_id} value={cls.class_id}>
+            {cls.class_name}
+          </option>
+        ))}
+      </select>
+
+      <button onClick={fetchStudents} disabled={!classId || !courseId}>
+        Hiển thị
+      </button>
 
       {students.length === 0 ? (
         <p>Chưa có dữ liệu hiển thị</p>

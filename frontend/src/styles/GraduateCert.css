@@ -1,201 +1,337 @@
-Graduate Certificate Page Styles .cert-container {
+/* Graduate Certificate Page - Professional Simplified Styles */
+
+.cert-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+  background: #f5f5f5;
   padding: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+}
+
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  margin-bottom: 2rem;
 }
 
 .cert-title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 2rem;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.btn-add {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+  background: #2980b9;
 }
 
 .cert-input-group {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto 2rem auto;
   display: flex;
-  gap: 1rem;
-  padding: 2rem;
+  gap: 0.75rem;
+  padding: 1.5rem;
   background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .cert-input-group input {
   flex: 1;
-  padding: 1rem 1.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 0.75rem;
-  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
   outline: none;
-  transition: all 0.3s ease;
-  background: #f8fafc;
+  transition: border-color 0.2s;
 }
 
 .cert-input-group input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  background: white;
-  transform: translateY(-1px);
+  border-color: #3498db;
+  outline: 2px solid rgba(52, 152, 219, 0.2);
 }
 
 .cert-input-group input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
+  color: #999;
 }
 
 .cert-input-group button {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  padding: 0.75rem 1.5rem;
+  background: #3498db;
   color: white;
   border: none;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-  position: relative;
-  overflow: hidden;
+  transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
-.cert-input-group button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+.cert-input-group button:hover:not(:disabled) {
+  background: #2980b9;
 }
 
-.cert-input-group button:active {
-  transform: translateY(0);
+.cert-input-group button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
 }
 
-.cert-input-group button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+.cert-input-group button[type="button"] {
+  background: #95a5a6;
 }
 
-.cert-input-group button:hover::before {
-  left: 100%;
+.cert-input-group button[type="button"]:hover {
+  background: #7f8c8d;
 }
 
 .cert-error {
-  max-width: 600px;
-  margin: 0 auto 2rem auto;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-  color: #dc2626;
-  border: 1px solid #fca5a5;
-  border-radius: 0.75rem;
-  font-weight: 500;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
-  animation: slideIn 0.3s ease-out;
-}
-
-.cert-display {
   max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  animation: fadeInUp 0.5s ease-out;
-  position: relative;
-  overflow: hidden;
+  margin: 0 auto 1rem auto;
+  padding: 0.75rem 1rem;
+  background: #fee;
+  color: #c0392b;
+  border: 1px solid #f1c0c0;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
 }
 
-.cert-display::before {
-  content: "";
-  position: absolute;
+.cert-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.cert-summary {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.cert-summary:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cert-summary span {
+  font-size: 0.95rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.cert-summary button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+.cert-summary button:hover {
+  background: #2980b9;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
-  border-radius: 1.5rem 1.5rem 0 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cert-display {
+  padding: 1.5rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+  background: #c0392b;
 }
 
 .cert-display h3 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ecf0f1;
   text-align: center;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e2e8f0;
-  position: relative;
-}
-
-.cert-display h3::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #10b981);
-  border-radius: 2px;
 }
 
 .cert-display p {
-  margin: 1.5rem 0;
-  font-size: 1.125rem;
-  line-height: 1.6;
-  padding: 1rem;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-  border-radius: 0.75rem;
-  border-left: 4px solid #3b82f6;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.cert-display p:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #3498db;
 }
 
 .cert-display p strong {
-  color: #1e293b;
+  flex: 0 0 100px;
   font-weight: 600;
-  margin-right: 0.5rem;
-  display: inline-block;
-  min-width: 120px;
+  color: #2c3e50;
+  font-size: 0.9rem;
 }
 
-.cert-display p:nth-child(even) {
-  border-left-color: #10b981;
+.cert-display p input,
+.cert-display p select {
+  flex: 1;
+  margin-left: 0.5rem;
+  padding: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  outline: none;
 }
 
-.cert-display p:nth-child(3n) {
-  border-left-color: #f59e0b;
+.cert-display p input:focus,
+.cert-display p select:focus {
+  border-color: #3498db;
+  outline: 2px solid rgba(52, 152, 219, 0.2);
 }
 
-.cert-display p:last-child {
-  border-left-color: #ef4444;
+.cert-display p input:disabled {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #ecf0f1;
+}
+
+.modal-actions button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-actions button.btn-confirm,
+.modal-actions button[type="submit"] {
+  background: #27ae60;
+  color: white;
+}
+
+.modal-actions button.btn-confirm:hover,
+.modal-actions button[type="submit"]:hover {
+  background: #229954;
+}
+
+.modal-actions button:not(.btn-confirm):not([type="submit"]) {
+  background: #95a5a6;
+  color: white;
+}
+
+.modal-actions button:not(.btn-confirm):not([type="submit"]):hover {
+  background: #7f8c8d;
+}
+
+.modal-actions button[style*="background: #ef4444"] {
+  background: #e74c3c !important;
+}
+
+.modal-actions button[style*="background: #ef4444"]:hover {
+  background: #c0392b !important;
+}
+
+/* Form Styles for Add Modal */
+.cert-display form p {
+  display: block;
+  margin: 0.75rem 0;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.cert-display form p strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  flex: none;
+  font-size: 0.9rem;
+}
+
+.cert-display form p input,
+.cert-display form p select {
+  width: 100%;
+  margin: 0;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.85rem;
 }
 
 /* Responsive Design */
@@ -204,40 +340,64 @@ Graduate Certificate Page Styles .cert-container {
     padding: 1rem;
   }
 
+  .cert-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
   .cert-title {
-    font-size: 1.875rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .cert-input-group {
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 1rem;
+    padding: 1rem;
   }
 
-  .cert-input-group input,
-  .cert-input-group button {
-    width: 100%;
+  .cert-list {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .cert-summary button {
+    margin-left: 0;
+    align-self: flex-end;
   }
 
   .cert-display {
-    padding: 1.5rem;
-    margin: 0 1rem;
-  }
-
-  .cert-display h3 {
-    font-size: 1.5rem;
+    padding: 1rem;
   }
 
   .cert-display p {
-    font-size: 1rem;
-    padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0.4rem 0;
+    padding: 0.4rem;
   }
 
   .cert-display p strong {
-    display: block;
-    margin-bottom: 0.25rem;
-    min-width: auto;
+    flex: none;
+    margin-bottom: 0.2rem;
+    font-size: 0.85rem;
+  }
+
+  .cert-display p input,
+  .cert-display p select {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0.2rem;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
   }
 }
 
@@ -246,370 +406,35 @@ Graduate Certificate Page Styles .cert-container {
     padding: 0.5rem;
   }
 
-  .cert-title {
-    font-size: 1.5rem;
-  }
-
   .cert-input-group {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .cert-display {
-    margin: 0 0.5rem;
     padding: 1rem;
   }
-}
 
-/* Animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Loading Animation */
-.cert-input-group button:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.cert-input-group button:disabled::before {
-  display: none;
-}
-
-/* Focus Accessibility */
-.cert-input-group input:focus,
-.cert-input-group button:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
+/* Print Styles */
+@media print {
   .cert-container {
     background: white;
+    padding: 1rem;
   }
 
-  .cert-title {
-    background: none;
-    -webkit-text-fill-color: initial;
-    color: #000;
-  }
-
-  .cert-input-group {
-    border: 2px solid #000;
+  .btn-add,
+  .cert-input-group,
+  .cert-summary button {
+    display: none;
   }
 
   .cert-display {
-    border: 2px solid #000;
+    box-shadow: none;
+    border: 1px solid #000;
   }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .cert-input-group input,
-  .cert-input-group button,
-  .cert-display p,
-  .cert-error {
-    transition: none;
-    animation: none;
-  }
-
-  .cert-input-group button:hover,
-  .cert-display p:hover {
-    transform: none;
-  }
-}
-
-/* Container grid cho list */
-.cert-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
-  padding: 0 1rem;
-}
-
-/* Mỗi item thành card */
-.cert-summary {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.cert-summary:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Thông tin tóm tắt */
-.cert-summary span {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 0.75rem;
-  word-break: break-word;
-}
-
-/* Nút Chi tiết */
-.cert-summary button {
-  align-self: flex-end;
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.cert-summary button:hover {
-  background: #155fa0;
-}
-
-/* Nếu muốn thêm header title cho từng card */
-.cert-summary h4 {
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-  color: #1976d2;
-}
-
-/* Modal content (nằm trên) */
-.modal-content.cert-display {
-  max-width: 480px;
-  width: 90%;
-  padding: 2rem;
-}
-
-/* Tiêu đề modal */
-.modal-content.cert-display h3 {
-  margin-top: 0;
-  color: #1976d2;
-}
-
-/* Các đoạn thông tin chi tiết */
-.modal-content.cert-display p {
-  margin: 0.5rem 0;
-  line-height: 1.4;
-}
-
-/* Đóng modal */
-.modal-close {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #76beee 0%, #a09ef9 100%);
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  color: #fff;
-  font-size: 1.25rem;
-
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.modal-close:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  color: #efa1a1;
-}
-
-/* HEADER với nút Thêm mới */
-.cert-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem;
-}
-.btn-add {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Gradient mềm mại */
-  background: linear-gradient(90deg, #42a5f5 0%, #1976d2 100%);
-  color: #fff;
-  border: none;
-
-  /* Padding + bo tròn */
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
-
-  /* Shadow tạo độ nổi */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-
-  /* Chuyển động mượt mà */
-  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-.btn-add:hover {
-  /* Nhẹ nâng lên và đậm màu hơn */
-  transform: translateY(-2px);
-  background: linear-gradient(90deg, #2196f3 0%, #1565c0 100%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.btn-add:active {
-  /* Hạ xuống khi nhấn */
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.btn-add:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* Modal add */
-.modal-content.cert-display input,
-.modal-content.cert-display select {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-  background: #f8fafc;
-  box-sizing: border-box;
-}
-
-.modal-content.cert-display input:focus,
-.modal-content.cert-display select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  background: white;
-  transform: translateY(-1px);
-}
-
-.modal-content.cert-display input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
-}
-
-.modal-content.cert-display form {
-  display: block;
-  grid-template-columns: none;
-  gap: 0;
-}
-
-.modal-actions button {
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
-  margin-right: 1rem;
-}
-.modal-actions button:hover {
-  opacity: 0.9;
-}
-.modal-actions button:first-child {
-  background: #1976d2;
-  color: #fff;
-}
-.modal-actions button:last-child {
-  background: #e5e7eb;
-  color: #1e293b;
-}
-
-.modal-content.cert-display {
-  max-width: 480px;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.cert-display p {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0.5rem 0;
-  padding: 0.7rem 1.25rem;
-  font-size: 1.125rem;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-  border-radius: 0.75rem;
-  border-left: 4px solid #3b82f6;
-}
-
-/* 3. Giữ màu border-left tuần tự */
-.cert-display p:nth-child(even) {
-  border-left-color: #10b981;
-}
-.cert-display p:nth-child(3n) {
-  border-left-color: #f59e0b;
-}
-.cert-display p:nth-child(4n) {
-  border-left-color: #ef4444;
-}
-
-/* 4. Label cố định chiều ngang */
-.cert-display p strong {
-  flex: 0 0 100px;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.cert-display p input,
-.cert-display p select {
-  flex: 1;
-  margin-left: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 0.75rem;
-  background: #fff;
-  outline: none;
-  transition: all 0.2s;
-}
-
-/* 6. Focus effect */
-.cert-display p input:focus,
-.cert-display p select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  transform: translateY(-1px);
-}
-
-/* 7. Giảm khoảng cách của title & action */
-.modal-content.cert-display h3 {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-}
-.modal-actions {
-  margin-top: 1rem;
-  gap: 0.5rem;
 }

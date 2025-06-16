@@ -2,6 +2,8 @@ import api from "../api";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import "../styles/ExamAssignmentPage.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ExamAssignmentPage() {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -24,7 +26,6 @@ function ExamAssignmentPage() {
   // State cho chức năng edit
   const [editingId, setEditingId] = useState(null); // ID của item đang được edit
   const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
-
   const OpenAddForm = () => setShowAddModal(true);
   const CloseAddModal = () => {
     setShowAddModal(false);
@@ -129,11 +130,10 @@ function ExamAssignmentPage() {
           class_id: class_id,
         },
       });
-         console.log("res.data:", res.data);
-      if(res.data && res.data.length > 0){
+      console.log("res.data:", res.data);
+      if (res.data && res.data.length > 0) {
         setAssignedList(res.data);
-      }
-      else{
+      } else {
         setAssignedList([]);
         alert("Không tìm thấy hình thức thi nào cho lớp và học phần đã chọn");
       }
@@ -177,12 +177,12 @@ function ExamAssignmentPage() {
       });
 
       if (res.status === 200 || res.status === 201) {
-        alert("Thêm thành công");
+        toast.success("Thêm thành công");
         CloseAddModal();
         // Refresh danh sách sau khi thêm thành công
         getAllAssignment();
       } else {
-        alert("Thêm thất bại");
+        toast.error("Thêm thất bại");
       }
     } catch (err) {
       console.error("Lỗi khi thêm exam-assignment:", err);
@@ -205,7 +205,7 @@ function ExamAssignmentPage() {
   // Xử lý cập nhật exam format
   const handleEdit = async (scheduleId) => {
     if (!editFormat) {
-      alert("Vui lòng chọn hình thức thi");
+      toast.warning("Vui lòng chọn hình thức thi");
       return;
     }
 
@@ -215,7 +215,7 @@ function ExamAssignmentPage() {
       });
 
       if (res.status === 200) {
-        alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công");
         // Cập nhật lại danh sách
         setAssignedList((prevList) =>
           prevList.map((item) =>
@@ -233,6 +233,16 @@ function ExamAssignmentPage() {
     } catch (err) {
       console.error("Lỗi khi cập nhật exam-assignment:", err);
       alert("Có lỗi xảy ra: " + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const handleDelete = async (exSchedule_id) => {
+    try {
+      await api.delete(`/api/v1/exam-assignment/delete/${exSchedule_id}`);
+      toast.success("Đã xoá nội dung thi");
+    } catch (error) {
+      console.error(error);
+      toast.error("Không thể xoá nội dung thi");
     }
   };
 
@@ -291,11 +301,11 @@ function ExamAssignmentPage() {
                 <>
                   <button
                     onClick={() => handleEdit(exam_schedule.exSchedule_id)}
-                    className="save-btn"
+                    className="ex-assign-save-btn"
                   >
                     Lưu
                   </button>
-                  <button onClick={cancelEdit} className="cancel-btn">
+                  <button onClick={cancelEdit} className="ex-assign-cancel-btn">
                     Hủy
                   </button>
                 </>
@@ -307,11 +317,26 @@ function ExamAssignmentPage() {
                       exam_schedule.exam_format
                     )
                   }
-                  className="edit-btn"
+                  className="ex-assign-edit-btn"
                 >
                   Sửa
                 </button>
               )}
+
+              <button
+                className="ex-assign-delete-btn"
+                onClick={() => handleDelete(exam_schedule.exSchedule_id)}
+              >
+                Xoá
+              </button>
+
+              {/* Toast notifications */}
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar
+                pauseOnHover
+              />
             </div>
           </div>
         ))}

@@ -317,9 +317,6 @@ export default function GraduateCertPage() {
             className="modal-content cert-display"
             onClick={(e) => e.stopPropagation()}
           >
-            <button className="modal-close" onClick={closeAdd}>
-              ×
-            </button>
             <h3>Thêm mới chứng chỉ</h3>
 
             <form onSubmit={handleAddSubmit}>

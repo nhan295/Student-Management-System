@@ -26,6 +26,13 @@ const examAssignmentModel = {
         return db('exam_schedule')
         .update({exam_format: exam_format})
         .where({exSchedule_id: exSchedule_id})
+    },
+
+    delExamAssignment: (exSchedule_id)=>{
+        return db('exam_schedule')
+        .where({exSchedule_id: exSchedule_id})
+        .del();
+
     }
 
 }

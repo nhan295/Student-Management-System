@@ -31,7 +31,7 @@
 /* Tiêu đề chính (có nút đóng) */
 .progress-table th.table-header {
   position: relative; /* Để nút đóng được đặt tuyệt đối bên trong */
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: #1976d2;
   color: white;
   text-align: center;
   padding: 1rem 1rem; /* Tăng padding top/bottom tạo không gian cho icon (32px) */
@@ -90,7 +90,7 @@
 
 /* Footer (nếu cần bo góc) */
 .progress-table td.footer-cell {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: #1976d2;
   height: 0.5rem;
 }
 

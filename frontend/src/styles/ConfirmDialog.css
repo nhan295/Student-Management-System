@@ -22,7 +22,7 @@
 
 /* Header với gradient và icon (nếu cần) */
 .confirm-header {
-  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  background: linear-gradient(90deg, #101cf6, #6060ff);
   color: #fff;
   padding: 1rem 1.5rem;
 }
@@ -70,11 +70,11 @@
 
 /* Button Đồng ý */
 .btn-confirm {
-  background: #4e54c8;
+  background: #4851f6;
   color: #fff;
 }
 .btn-confirm:hover {
-  background: #4248a0;
+  background: #5c65de;
 }
 
 /* Hiệu ứng khi nhấn */

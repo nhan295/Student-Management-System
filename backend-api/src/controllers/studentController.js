@@ -1,6 +1,12 @@
 const studentModel = require("../models/studentModel");
 const db = require("../config/db");
 
+function formatDate(dateString) {
+  if (!dateString) return null;
+  const d = new Date(dateString);
+  return d.toISOString().slice(0, 10);
+}
+
 exports.addStudent = async (req, res) => {
   try {
     const {
@@ -18,6 +24,8 @@ exports.addStudent = async (req, res) => {
       class_id,
     } = req.body;
 
+    const bd = formatDate(birthday);
+    const pjd = formatDate(party_join_date);
     await db("students").insert({
       student_id,
       student_name,
@@ -132,7 +140,7 @@ exports.searchStudents = async (req, res) => {
 
 exports.updateStudent = async (req, res) => {
   const { student_id } = req.params;
-  const {
+  let {
     student_name,
     birthday,
     agency_name,
@@ -142,7 +150,10 @@ exports.updateStudent = async (req, res) => {
     party_join_date,
     plan_title,
   } = req.body;
+
   try {
+    birthday = formatDate(birthday);
+    party_join_date = formatDate(party_join_date);
     // Gọi model update và chờ kết quả
     const count = await StudentModel.updateStudent(student_id, {
       student_name,

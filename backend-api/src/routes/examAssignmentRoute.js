@@ -7,5 +7,6 @@ module.exports.setup = (app)=>{
 
     router.get('/', examAssignmentController.getAllAssignment);
     router.post('/add',examAssignmentController.createExamAssignment);
-    router.put('/edit/:exSchedule_id',examAssignmentController.editExamAssignment)
+    router.put('/edit/:exSchedule_id',examAssignmentController.editExamAssignment);
+    router.delete('delete/:exSchedule_id', examAssignmentController.delExamAssignment)
 }   

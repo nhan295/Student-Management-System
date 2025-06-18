@@ -297,7 +297,7 @@ export default function GraduateCertPage() {
                 </>
               ) : (
                 <>
-                  <button onClick={handleStartEdit}>Sửa</button>
+                  <button onClick={handleStartEdit} className="graduate-fix-btn">Sửa</button>
                   {/* <button
                     onClick={handleDelete}
                     style={{ background: "#ef4444", color: "#fff" }}

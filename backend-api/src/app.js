@@ -41,7 +41,6 @@ app.use("/api/v1/schedules", scheduleRoutes);
 app.use("/api/v1/students", studentRoute);
 app.use("/api/v1/courses", courseRoute);
 
-app.use("/api/v1", classRoutes);
 userRoute.setup(app);
 lectureRoute.setup(app);
 assignmentRoute.setup(app);

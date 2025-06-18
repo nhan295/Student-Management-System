@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/ClassList.css";
+import EnterGradeModal from "./EnterGradeModal"; // Đường dẫn tuỳ vào cấu trúc project
 
 function ClassList() {
   const [subjectName, setSubjectName] = useState("");
@@ -9,6 +10,7 @@ function ClassList() {
   const [editedGrade, setEditedGrade] = useState("");
   const [classId, setClassId] = useState("");
   const [classOptions, setClassOptions] = useState([]);
+  const [showEnterModal, setShowEnterModal] = useState(false);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -28,7 +30,7 @@ function ClassList() {
     try {
       const response = await axios.get("http://localhost:3000/api/v1/classes/students-by-subject", {
         params: {
-          name: subjectName,
+          subjectName: subjectName,
           classId: classId,
         },
         withCredentials: true,
@@ -46,11 +48,11 @@ function ClassList() {
     }
 
     try {
-      await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
+      await axios.post("http://localhost:3000/api/v1/classes/update-grade", {
         studentId: student.student_id,
         subjectName: student.subject_name,
         newGrade: editedGrade,
-      }, { withCredentials: true });
+      });
 
       const updatedStudents = [...students];
       updatedStudents[editingIndex].grade = editedGrade;
@@ -68,7 +70,6 @@ function ClassList() {
     const url = `http://localhost:3000/api/v1/classes/export-to-excel?name=${subjectName}&classId=${classId}`;
     window.open(url, "_blank");
   };
-  
 
   return (
     <div className="classlist-container">
@@ -95,7 +96,7 @@ function ClassList() {
 
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
         <button onClick={handleExport}>📁 Xuất Excel</button>
-
+        <button onClick={() => setShowEnterModal(true)}>📝 Nhập điểm mới</button>
       </div>
 
       <table>
@@ -157,6 +158,8 @@ function ClassList() {
           ))}
         </tbody>
       </table>
+
+      <EnterGradeModal visible={showEnterModal} onClose={() => setShowEnterModal(false)} />
     </div>
   );
 }

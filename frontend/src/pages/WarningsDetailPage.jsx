@@ -29,7 +29,7 @@ export default function WarningsDetailPage() {
         );
         if (data.length > 0) {
           setTitle(
-            `Danh sách cảnh báo lớp ${data[0].class_name} môn ${data[0].subject_name}`
+            `Danh sách cảnh báo lớp ${data[0].class_name} học phần ${data[0].subject_name}`
           );
         }
       })

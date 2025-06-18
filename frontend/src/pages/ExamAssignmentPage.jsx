@@ -24,11 +24,11 @@ function ExamAssignmentPage() {
   const [modalSubjectId, setModalSubjectId] = useState("");
   const [modalClassId, setModalClassId] = useState("");
   const [modalExamFormat, setModalExamFormat] = useState("");
-  const [modalAssignmentId, setModalAssignmentId] = useState("");  // lưu trạng thái assignment_id sau khi có subject_id và class_id
+  const [modalAssignmentId, setModalAssignmentId] = useState(""); // lưu trạng thái assignment_id sau khi có subject_id và class_id
 
   // ─── Edit state ───
   const [editingId, setEditingId] = useState(null); // ID của item đang được edit
-  const [editFormat, setEditFormat] = useState("");  // Format mới khi edit
+  const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
 
   // ─── ConfirmDialog state ───
   const [confirmParams, setConfirmParams] = useState({
@@ -67,7 +67,7 @@ function ExamAssignmentPage() {
       );
     } catch (err) {
       console.error(err);
-      toast.error("Lỗi khi lấy danh sách môn học");
+      toast.error("Lỗi khi lấy danh sách học phần");
     }
   };
 
@@ -94,8 +94,6 @@ function ExamAssignmentPage() {
     throw new Error("Không tìm thấy assignment_id");
   };
 
-
-
   const openAddModal = () => setShowAddModal(true);
   const closeAddModal = () => {
     setShowAddModal(false);
@@ -105,11 +103,12 @@ function ExamAssignmentPage() {
     setModalAssignmentId("");
   };
 
-  useEffect(() => {  // theo dõi subject_id và class_id khi người dùng có thay đổi
+  useEffect(() => {
+    // theo dõi subject_id và class_id khi người dùng có thay đổi
     const fetchModalAssignId = async () => {
       if (modalSubjectId && modalClassId) {
         try {
-          const id = await getAssignId(modalSubjectId, modalClassId);  // gọi getAssign và cập nhật modalAssignmentId
+          const id = await getAssignId(modalSubjectId, modalClassId); // gọi getAssign và cập nhật modalAssignmentId
           setModalAssignmentId(id);
         } catch {
           toast.warn("Không lấy được assignment_id");
@@ -125,7 +124,7 @@ function ExamAssignmentPage() {
       return toast.warn("Chọn đầy đủ thông tin trước khi tạo");
     openConfirm({
       title: "Xác nhận tạo mới",
-      message: `Môn: ${modalSubjectId}\nLớp: ${modalClassId}\nHình thức: ${modalExamFormat}`,
+      message: `Học phần: ${modalSubjectId}\nLớp: ${modalClassId}\nHình thức: ${modalExamFormat}`,
       onConfirm: async () => {
         try {
           await api.post("/api/v1/exam-assignment/add", {
@@ -154,11 +153,10 @@ function ExamAssignmentPage() {
           class_id: class_id,
         },
       });
-         console.log("res.data:", res.data);
-      if(res.data && res.data.length > 0){
+      console.log("res.data:", res.data);
+      if (res.data && res.data.length > 0) {
         setAssignedList(res.data);
-      }
-      else{
+      } else {
         setAssignedList([]);
         alert("Không tìm thấy hình thức thi nào cho lớp và học phần đã chọn");
       }
@@ -232,7 +230,7 @@ function ExamAssignmentPage() {
           <Select
             options={subjectOptions}
             onChange={(opt) => setSubject(opt?.value || "")}
-            placeholder="Chọn môn học"
+            placeholder="Chọn học phần"
           />
           <Select
             options={classOptions}
@@ -250,7 +248,7 @@ function ExamAssignmentPage() {
         {assignedList.map((item) => (
           <div key={item.exSchedule_id} className="exam-schedule-item">
             <p>
-              <strong>Môn học: </strong>
+              <strong>Học phần: </strong>
               {item.subject_name}
             </p>
             <p>
@@ -285,7 +283,12 @@ function ExamAssignmentPage() {
                   >
                     Lưu
                   </button>
-                  <button onClick={() => setEditingId(null)} className="ex-assign-cancel-btn">Hủy</button>
+                  <button
+                    onClick={() => setEditingId(null)}
+                    className="ex-assign-cancel-btn"
+                  >
+                    Hủy
+                  </button>
                 </>
               ) : (
                 <button
@@ -327,7 +330,7 @@ function ExamAssignmentPage() {
                 setModalSubjectId(opt?.value || "");
                 setModalClassId("");
               }}
-              placeholder="Chọn môn học"
+              placeholder="Chọn học phần"
             />
             <Select
               options={classOptions}
@@ -350,7 +353,7 @@ function ExamAssignmentPage() {
             >
               Tạo
             </button>
-            <button type="button" onClick={closeAddModal} >
+            <button type="button" onClick={closeAddModal}>
               Hủy
             </button>
           </form>

@@ -30,7 +30,7 @@ function ClassList() {
         setSubjectOptions(subjectRes.data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu:", error);
-        toast.error("Không tải được danh sách lớp hoặc môn học");
+        toast.error("Không tải được danh sách lớp hoặc học phần");
       }
     };
 
@@ -39,7 +39,7 @@ function ClassList() {
 
   const handleSearch = async () => {
     if (!subjectId && !classId) {
-      return toast.warn("Vui lòng chọn môn học hoặc lớp học");
+      return toast.warn("Vui lòng chọn học phần hoặc lớp học");
     }
 
     try {
@@ -92,7 +92,7 @@ function ClassList() {
 
   const handleExport = () => {
     if (!subjectId || !classId) {
-      return toast.warn("Vui lòng chọn môn học và lớp học trước khi xuất");
+      return toast.warn("Vui lòng chọn học phần và lớp học trước khi xuất");
     }
     const url = `http://localhost:3000/api/v1/classes/export-to-excel?subjectId=${subjectId}&classId=${classId}`;
     window.open(url, "_blank");
@@ -102,11 +102,14 @@ function ClassList() {
   return (
     <div className="classlist-container">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-      <h2 className="classlist-title">📘 Danh sách điểm theo môn học</h2>
+      <h2 className="classlist-title">📘 Danh sách điểm theo học phần</h2>
 
       <div className="classlist-search">
-        <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)}>
-          <option value="">-- Chọn môn học --</option>
+        <select
+          value={subjectId}
+          onChange={(e) => setSubjectId(e.target.value)}
+        >
+          <option value="">-- Chọn học phần --</option>
           {subjectOptions.map((subject) => (
             <option key={subject.subject_id} value={subject.subject_id}>
               {subject.subject_name}
@@ -125,13 +128,15 @@ function ClassList() {
 
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
         <button onClick={handleExport}>📁 Xuất Excel</button>
-        <button onClick={() => setShowEnterModal(true)}>📝 Nhập điểm mới</button>
+        <button onClick={() => setShowEnterModal(true)}>
+          📝 Nhập điểm mới
+        </button>
       </div>
 
       <table>
         <thead>
           <tr>
-            <th>Môn học</th>
+            <th>Học phần</th>
             <th>Tên sinh viên</th>
             <th>Mã lớp</th>
             <th>Điểm</th>
@@ -152,7 +157,9 @@ function ClassList() {
                     onChange={(e) => setEditedGrade(e.target.value)}
                   />
                 ) : (
-                  student.grade ?? <em style={{ color: "#999" }}>Chưa có điểm</em>
+                  student.grade ?? (
+                    <em style={{ color: "#999" }}>Chưa có điểm</em>
+                  )
                 )}
               </td>
               <td>
@@ -191,7 +198,10 @@ function ClassList() {
         </tbody>
       </table>
 
-      <EnterGradeModal visible={showEnterModal} onClose={() => setShowEnterModal(false)} />
+      <EnterGradeModal
+        visible={showEnterModal}
+        onClose={() => setShowEnterModal(false)}
+      />
     </div>
   );
 }

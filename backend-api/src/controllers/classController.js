@@ -1,12 +1,13 @@
+// src/controllers/classController.js
 const classModel = require("../models/classModel");
-const ClassModel = require("../models/classModel");
 const db = require("../config/db");
 const ExcelJS = require("exceljs");
 
 const getStudentsBySubject = async (req, res) => {
-  const { name, classId } = req.query;
+  const { subjectId, classId } = req.query;
+
   try {
-    const students = await classModel.getStudentsByFilters(name, classId);
+    const students = await classModel.getStudentsByFilters(subjectId, classId);
     res.json(students);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách sinh viên:", error);
@@ -18,8 +19,29 @@ const getStudentsBySubject = async (req, res) => {
 
 const updateGrade = async (req, res) => {
   const { studentId, subjectName, newGrade } = req.body;
+
+  if (!studentId || !subjectName || newGrade === undefined) {
+    return res.status(400).json({ error: "Thiếu dữ liệu để cập nhật điểm." });
+  }
+
   try {
-    await classModel.updateGrade(studentId, subjectName, newGrade);
+    const subject = await db("subjects")
+      .where({ subject_name: subjectName })
+      .first();
+
+    if (!subject) {
+      return res.status(404).json({ error: "Không tìm thấy môn học." });
+    }
+
+    const subjectId = subject.subject_id;
+
+    const existing = await classModel.findGradeRecord(studentId, subjectId);
+    if (existing) {
+      await classModel.updateGrade(studentId, subjectId, newGrade);
+    } else {
+      await classModel.insertGrade(studentId, subjectId, newGrade);
+    }
+
     res.json({ message: "Cập nhật điểm thành công!" });
   } catch (error) {
     console.error("Lỗi cập nhật điểm:", error);
@@ -38,10 +60,14 @@ const getAllClasses = async (req, res) => {
 };
 
 const exportToExcel = async (req, res) => {
-  const { name, classId } = req.query;
+  const { subjectId, classId } = req.query;
+
+  if (!subjectId || !classId) {
+    return res.status(400).json({ error: "Thiếu subjectId hoặc classId." });
+  }
 
   try {
-    const students = await ClassModel.getStudentsByFilters(name, classId);
+    const students = await classModel.getStudentsByFilters(subjectId, classId);
 
     if (!students.length) {
       return res.status(404).json({ error: "Không tìm thấy dữ liệu phù hợp." });
@@ -51,9 +77,9 @@ const exportToExcel = async (req, res) => {
     const worksheet = workbook.addWorksheet("Bảng điểm");
 
     worksheet.mergeCells("A1:E1");
-    worksheet.getCell(
-      "A1"
-    ).value = `BẢNG ĐIỂM MÔN: ${students[0].subject_name} - LỚP: ${students[0].class_id}`;
+    worksheet.getCell("A1").value = `BẢNG ĐIỂM MÔN: ${
+      students[0].subject_name || "Chưa rõ"
+    } - LỚP: ${students[0].class_name} (khóa ${students[0].course_name})`;
     worksheet.getCell("A1").alignment = { horizontal: "center" };
     worksheet.getCell("A1").font = { size: 14, bold: true };
 
@@ -87,11 +113,9 @@ const exportToExcel = async (req, res) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    const safeName = String(name || "").replace(/[^a-zA-Z0-9_-]/g, "_");
-    const safeClassId = String(classId || "").replace(/[^a-zA-Z0-9_-]/g, "_");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename=Diem_${safeName}_${safeClassId}.xlsx`
+      `attachment; filename=Diem_subject${subjectId}_class${classId}.xlsx`
     );
 
     await workbook.xlsx.write(res);
@@ -112,7 +136,7 @@ const addClass = async (req, res) => {
   }
 
   try {
-    await db("class").insert({
+    await classModel.addClass({
       class_id: Number(class_id),
       class_name,
       course_id: Number(course_id),
@@ -126,10 +150,34 @@ const addClass = async (req, res) => {
   }
 };
 
+const getStudentsByClassId = async (req, res) => {
+  const classId = req.params.id;
+
+  try {
+    const students = await classModel.getStudentsByClassId(classId);
+    res.json(students);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách sinh viên:", error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+};
+
+const getAllSubjects = async (req, res) => {
+  try {
+    const subjects = await db("subjects").select("subject_id", "subject_name");
+    res.json(subjects);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách môn học:", error);
+    res.status(500).json({ error: "Không thể lấy danh sách môn học." });
+  }
+};
+
 module.exports = {
   getStudentsBySubject,
   updateGrade,
   getAllClasses,
   exportToExcel,
   addClass,
+  getStudentsByClassId,
+  getAllSubjects,
 };

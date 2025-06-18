@@ -2,20 +2,24 @@
 const db = require("../config/db");
 
 module.exports = {
-  getStudentsByFilters: (subjectName, classId) => {
+  getStudentsByFilters: (subjectId, classId) => {
     const query = db("students as s")
       .leftJoin("exams as e", "e.student_id", "s.student_id")
       .leftJoin("subjects as sub", "e.subject_id", "sub.subject_id")
+      .leftJoin("class as c", "s.class_id", "c.class_id")
+      .leftJoin("courses as co", "c.course_id", "co.course_id")
       .select(
         "s.student_id",
         "s.student_name",
         "s.class_id",
         "sub.subject_name",
-        "e.grade"
+        "e.grade",
+        "c.class_name",
+        "co.course_name"
       );
 
-    if (subjectName) {
-      query.where("sub.subject_name", "like", `%${subjectName}%`);
+    if (subjectId) {
+      query.where("sub.subject_id", subjectId);
     }
 
     if (classId) {

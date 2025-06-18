@@ -4,13 +4,10 @@ const db = require("../config/db");
 const ExcelJS = require("exceljs");
 
 const getStudentsBySubject = async (req, res) => {
-  const { subjectName, classId } = req.query;
+  const { subjectId, classId } = req.query;
 
   try {
-    const students = await classModel.getStudentsByFilters(
-      subjectName,
-      classId
-    );
+    const students = await classModel.getStudentsByFilters(subjectId, classId);
     res.json(students);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách sinh viên:", error);
@@ -63,10 +60,14 @@ const getAllClasses = async (req, res) => {
 };
 
 const exportToExcel = async (req, res) => {
-  const { name, classId } = req.query;
+  const { subjectId, classId } = req.query;
+
+  if (!subjectId || !classId) {
+    return res.status(400).json({ error: "Thiếu subjectId hoặc classId." });
+  }
 
   try {
-    const students = await classModel.getStudentsByFilters(name, classId);
+    const students = await classModel.getStudentsByFilters(subjectId, classId);
 
     if (!students.length) {
       return res.status(404).json({ error: "Không tìm thấy dữ liệu phù hợp." });
@@ -77,8 +78,8 @@ const exportToExcel = async (req, res) => {
 
     worksheet.mergeCells("A1:E1");
     worksheet.getCell("A1").value = `BẢNG ĐIỂM MÔN: ${
-      students[0].subject_name || ""
-    } - LỚP: ${students[0].class_id}`;
+      students[0].subject_name || "Chưa rõ"
+    } - LỚP: ${students[0].class_name} (khóa ${students[0].course_name})`;
     worksheet.getCell("A1").alignment = { horizontal: "center" };
     worksheet.getCell("A1").font = { size: 14, bold: true };
 
@@ -114,7 +115,7 @@ const exportToExcel = async (req, res) => {
     );
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename=Diem_${name || "mon"}_${classId || "lop"}.xlsx`
+      `attachment; filename=Diem_subject${subjectId}_class${classId}.xlsx`
     );
 
     await workbook.xlsx.write(res);
@@ -161,6 +162,16 @@ const getStudentsByClassId = async (req, res) => {
   }
 };
 
+const getAllSubjects = async (req, res) => {
+  try {
+    const subjects = await db("subjects").select("subject_id", "subject_name");
+    res.json(subjects);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách môn học:", error);
+    res.status(500).json({ error: "Không thể lấy danh sách môn học." });
+  }
+};
+
 module.exports = {
   getStudentsBySubject,
   updateGrade,
@@ -168,4 +179,5 @@ module.exports = {
   exportToExcel,
   addClass,
   getStudentsByClassId,
+  getAllSubjects,
 };

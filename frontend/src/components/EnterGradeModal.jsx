@@ -61,7 +61,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
         const grade = grades[student.student_id] ?? null;
 
         if (grade !== null) {
-          await axios.post("http://localhost:3000/api/v1/classes/update-grade", {
+          await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
             studentId: student.student_id,
             subjectName: subjectName,
             newGrade: grade,

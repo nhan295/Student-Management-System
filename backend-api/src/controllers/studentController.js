@@ -152,7 +152,6 @@ exports.updateStudent = async (req, res) => {
   } = req.body;
 
   try {
-    birthday = formatDate(birthday);
     party_join_date = formatDate(party_join_date);
     // Gọi model update và chờ kết quả
     const count = await StudentModel.updateStudent(student_id, {

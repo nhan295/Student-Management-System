@@ -1,20 +1,25 @@
+// src/models/classModel.js
 const db = require("../config/db");
 
 module.exports = {
-  getStudentsByFilters: (subjectName, classId) => {
+  getStudentsByFilters: (subjectId, classId) => {
     const query = db("students as s")
-      .join("exams as e", "e.student_id", "s.student_id")
-      .join("subjects as sub", "e.subject_id", "sub.subject_id")
+      .leftJoin("exams as e", "e.student_id", "s.student_id")
+      .leftJoin("subjects as sub", "e.subject_id", "sub.subject_id")
+      .leftJoin("class as c", "s.class_id", "c.class_id")
+      .leftJoin("courses as co", "c.course_id", "co.course_id")
       .select(
         "s.student_id",
         "s.student_name",
         "s.class_id",
         "sub.subject_name",
-        "e.grade"
-      ); // <-- sửa dấu phẩy thành dấu chấm phẩy
+        "e.grade",
+        "c.class_name",
+        "co.course_name"
+      );
 
-    if (subjectName) {
-      query.where("sub.subject_name", "like", `%${subjectName}%`);
+    if (subjectId) {
+      query.where("sub.subject_id", subjectId);
     }
 
     if (classId) {
@@ -24,47 +29,39 @@ module.exports = {
     return query;
   },
 
-  updateGrade: async (studentId, subjectName, newGrade) => {
-    try {
-      const subject = await db("subjects")
-        .select("subject_id")
-        .where("subject_name", subjectName)
-        .first();
-
-      if (!subject) {
-        throw new Error("Không tìm thấy môn học với tên đã cho");
-      }
-
-      const existingRecord = await db("exams")
-        .where({
-          student_id: studentId,
-          subject_id: subject.subject_id,
-        })
-        .first();
-
-      if (existingRecord) {
-        await db("exams")
-          .where({
-            student_id: studentId,
-            subject_id: subject.subject_id,
-          })
-          .update({ grade: newGrade });
-      } else {
-        await db("exams").insert({
-          student_id: studentId,
-          subject_id: subject.subject_id,
-          grade: newGrade,
-        });
-      }
-    } catch (error) {
-      console.error("Lỗi trong updateGrade:", error);
-      throw error;
-    }
-  },
-
   getAllClasses: async () => {
     return await db("class as c")
       .join("courses as co", "c.course_id", "co.course_id")
       .select("c.class_id", "c.class_name", "co.course_name", "c.course_id");
+  },
+
+  findGradeRecord: async (studentId, subjectId) => {
+    return await db("exams")
+      .where({ student_id: studentId, subject_id: subjectId })
+      .first();
+  },
+
+  insertGrade: async (studentId, subjectId, grade) => {
+    await db("exams").insert({
+      student_id: studentId,
+      subject_id: subjectId,
+      grade: grade,
+    });
+  },
+
+  updateGrade: async (studentId, subjectId, grade) => {
+    await db("exams")
+      .where({ student_id: studentId, subject_id: subjectId })
+      .update({ grade: grade });
+  },
+
+  getStudentsByClassId: async (classId) => {
+    return await db("students")
+      .select("student_id", "student_name")
+      .where("class_id", classId);
+  },
+
+  addClass: async (classData) => {
+    await db("class").insert(classData);
   },
 };

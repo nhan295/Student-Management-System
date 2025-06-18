@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./components/layout";
@@ -20,17 +20,29 @@ import ExamAssignmentPage from "./pages/ExamAssignmentPage";
 import GraduateCertPage from "./pages/GraduateCertPage";
 import WarningsPage from "./pages/WarningsPage";
 import WarningsDetailPage from "./pages/WarningsDetailPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
+import  React,{ useState } from "react";
 function App() {
+  const [authKey, setAuthKey] = useState(Date.now());
+
+    const handleLogout = () => {
+    localStorage.clear();
+    setAuthKey(Date.now()); 
+  };
   return (
     <Routes>
       {/* Route không dùng layout */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/homepage" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} 
+      />
+       <Route path="/homepage" element={ 
+        <ProtectedRoute key={authKey}>
+          <HomePage  onLogout={handleLogout}/>
+        </ProtectedRoute>} />
+      
 
       {/* Route dùng layout */}
-      <Route element={<Layout />}>
-        <Route index element={<Navigate to="/homepage" replace />} />
+      <Route element={<Layout onLogout={handleLogout}/>}>
 
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
@@ -60,8 +72,7 @@ function App() {
         />
         <Route path="/exam-assign" element={<ExamAssignmentPage />} />
       </Route>
-
-      <Route path="*" element={<Navigate to="/homepage" replace />} />
+          <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   );
 }

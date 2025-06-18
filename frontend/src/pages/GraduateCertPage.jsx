@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import api from "../api";
 import "../styles/GraduateCert.css";
 
@@ -161,20 +161,21 @@ export default function GraduateCertPage() {
   };
 
   // Xóa bản ghi
-  const handleDelete = async () => {
-    if (!window.confirm("Bạn có chắc muốn xóa chứng chỉ này?")) return;
-    try {
-      await api.delete(
-        `/api/v1/graduation_certificates/${selectedCert.certificate_id}`
-      );
-      setSelectedCert(null);
-      setResults((prev) =>
-        prev.filter((c) => c.certificate_id !== selectedCert.certificate_id)
-      );
-    } catch (err) {
-      alert("Lỗi khi xóa: " + (err.response?.data?.error || err.message));
-    }
-  };
+
+  // const handleDelete = async () => {
+  //   if (!window.confirm("Bạn có chắc muốn xóa chứng chỉ này?")) return;
+  //   try {
+  //     await api.delete(
+  //       `/api/v1/graduation_certificates/${selectedCert.certificate_id}`
+  //     );
+  //     setSelectedCert(null);
+  //     setResults((prev) =>
+  //       prev.filter((c) => c.certificate_id !== selectedCert.certificate_id)
+  //     );
+  //   } catch (err) {
+  //     alert("Lỗi khi xóa: " + (err.response?.data?.error || err.message));
+  //   }
+  // };
 
   return (
     <div className="cert-container">
@@ -297,12 +298,12 @@ export default function GraduateCertPage() {
               ) : (
                 <>
                   <button onClick={handleStartEdit}>Sửa</button>
-                  <button
+                  {/* <button
                     onClick={handleDelete}
                     style={{ background: "#ef4444", color: "#fff" }}
                   >
                     Xóa
-                  </button>
+                  </button> */}
                 </>
               )}
             </div>

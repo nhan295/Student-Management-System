@@ -256,7 +256,7 @@ export default function ScheduleTab() {
         String(a.class_id) === class_id
     );
     if (!found) {
-      toast.error("Cặp (Môn – Giáo viên – Lớp) không tồn tại.");
+      toast.error("Cặp (Học phần – Giảng viên – Lớp) không tồn tại.");
       return;
     }
     // check conflict
@@ -450,9 +450,9 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* Môn học */}
+          {/* Học phần */}
           <div className="form-group">
-            <label>Môn học</label>
+            <label>Học phần</label>
             <select
               name="subject_id"
               value={formData.subject_id}
@@ -460,7 +460,7 @@ export default function ScheduleTab() {
               className="form-select"
               required
             >
-              <option value="">-- Chọn môn --</option>
+              <option value="">-- Chọn học phần --</option>
               {subjects.map((sub) => (
                 <option key={sub.subject_id} value={sub.subject_id}>
                   {sub.subject_name}
@@ -469,7 +469,7 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* Giáo viên (lọc theo môn) */}
+          {/* Giáo viên (lọc theo học phần) */}
           <div className="form-group">
             <label>Giáo viên</label>
             <select
@@ -489,7 +489,7 @@ export default function ScheduleTab() {
             </select>
           </div>
 
-          {/* Lớp học (lọc theo môn + giáo viên) */}
+          {/* Lớp học (lọc theo học phần + giảng viên) */}
           <div className="form-group">
             <label>Lớp học</label>
             <select
@@ -531,7 +531,7 @@ export default function ScheduleTab() {
               <th>Giờ kết thúc</th>
               <th>Phòng</th>
               <th>Lớp</th>
-              <th>Môn học</th>
+              <th>Học phần</th>
               <th>Giáo viên</th>
               <th>Hành động</th>
             </tr>

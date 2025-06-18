@@ -23,7 +23,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
         setSubjects(subjectsRes.data);
         setClasses(classesRes.data);
       } catch {
-        message.error("Lỗi tải môn học hoặc lớp học");
+        message.error("Lỗi tải học phần hoặc lớp học");
       }
     };
     fetchData();
@@ -31,7 +31,9 @@ const EnterGradeModal = ({ visible, onClose }) => {
 
   const fetchStudents = async (classId) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/v1/classes/${classId}/students`);
+      const res = await axios.get(
+        `http://localhost:3000/api/v1/classes/${classId}/students`
+      );
       setStudents(res.data);
     } catch {
       message.error("Lỗi khi tải danh sách sinh viên");
@@ -44,7 +46,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
 
   const handleSubmit = async () => {
     if (!selectedSubject || !selectedClass) {
-      message.warning("Vui lòng chọn môn học và lớp học");
+      message.warning("Vui lòng chọn học phần và lớp học");
       return;
     }
 
@@ -52,7 +54,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
     const subjectName = subject?.subject_name;
 
     if (!subjectName) {
-      message.error("Không tìm thấy tên môn học.");
+      message.error("Không tìm thấy tên học phần.");
       return;
     }
 
@@ -89,9 +91,9 @@ const EnterGradeModal = ({ visible, onClose }) => {
       okText="Lưu điểm"
     >
       <Form form={form} layout="vertical">
-        <Form.Item label="Môn học" name="subject">
+        <Form.Item label="Học phần" name="subject">
           <Select
-            placeholder="Chọn môn học"
+            placeholder="Chọn học phần"
             onChange={(value) => setSelectedSubject(value)}
           >
             {subjects.map((s) => (
@@ -143,7 +145,9 @@ const EnterGradeModal = ({ visible, onClose }) => {
                   step={0.1}
                   style={{ width: "100%" }}
                   value={grades[record.student_id]}
-                  onChange={(value) => handleGradeChange(record.student_id, value)}
+                  onChange={(value) =>
+                    handleGradeChange(record.student_id, value)
+                  }
                 />
               ),
             },

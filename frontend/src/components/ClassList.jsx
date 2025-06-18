@@ -52,9 +52,7 @@ function ClassList() {
       );
       setStudents(response.data);
       if (response.data.length === 0) {
-        toast.info("Không tìm thấy sinh viên nào");
-      } else {
-        toast.success("Tìm kiếm thành công");
+        toast.info("Lớp chưa có sinh viên nào hoặc không có điểm");
       }
     } catch (error) {
       console.error("Lỗi tìm kiếm:", error);

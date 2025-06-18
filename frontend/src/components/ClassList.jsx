@@ -1,7 +1,12 @@
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/ClassList.css";
-import EnterGradeModal from "./EnterGradeModal"; // Đường dẫn tuỳ vào cấu trúc project
+import EnterGradeModal from "./EnterGradeModal"; 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function ClassList() {
   const [subjectName, setSubjectName] = useState("");
@@ -15,64 +20,99 @@ function ClassList() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/classes/all-classes", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/classes/all-classes",
+          { withCredentials: true }
+        );
         setClassOptions(response.data);
       } catch (error) {
         console.error("Lỗi khi tải danh sách lớp:", error);
+        toast.error("Không tải được danh sách lớp");
       }
     };
     fetchClasses();
   }, []);
 
   const handleSearch = async () => {
+    if (!subjectName && !classId) {
+      return toast.warn("Vui lòng nhập tên môn hoặc chọn lớp");
+    }
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/classes/students-by-subject", {
-        params: {
-          subjectName: subjectName,
-          classId: classId,
-        },
-        withCredentials: true,
-      });
+
+
+      const response = await axios.get(
+        "http://localhost:3000/api/v1/classes/students-by-subject",
+        {
+          params: {
+            name: subjectName,
+            classId: classId,
+          },
+          withCredentials: true,
+        }
+      );
+
       setStudents(response.data);
+      if (response.data.length === 0) {
+        toast.info("Không tìm thấy sinh viên nào");
+      } else {
+        toast.success("Tìm kiếm thành công");
+      }
     } catch (error) {
       console.error("Lỗi tìm kiếm:", error);
+      toast.error("Lỗi khi tìm kiếm dữ liệu");
     }
   };
 
   const handleUpdateGrade = async (student) => {
     if (editedGrade === "") {
-      alert("Vui lòng nhập điểm trước khi lưu.");
-      return;
+      return toast.warn("Vui lòng nhập điểm trước khi lưu");
     }
 
     try {
+
       await axios.post("http://localhost:3000/api/v1/classes/update-grade", {
         studentId: student.student_id,
         subjectName: student.subject_name,
         newGrade: editedGrade,
       });
 
+      await axios.put(
+        "http://localhost:3000/api/v1/classes/update-grade",
+        {
+          studentId: student.student_id,
+          subjectName: student.subject_name,
+          newGrade: editedGrade,
+        },
+        { withCredentials: true }
+      );
+
+
       const updatedStudents = [...students];
       updatedStudents[editingIndex].grade = editedGrade;
       setStudents(updatedStudents);
       setEditingIndex(null);
       setEditedGrade("");
-      alert("Cập nhật điểm thành công!");
+      toast.success("Cập nhật điểm thành công!");
     } catch (error) {
       console.error("Lỗi cập nhật điểm:", error);
-      alert("Cập nhật thất bại.");
+      toast.error("Cập nhật điểm thất bại");
     }
   };
 
   const handleExport = () => {
+    if (!subjectName || !classId) {
+      return toast.warn("Vui lòng nhập tên môn và chọn lớp trước khi xuất");
+    }
     const url = `http://localhost:3000/api/v1/classes/export-to-excel?name=${subjectName}&classId=${classId}`;
     window.open(url, "_blank");
+    toast.info("Đang xuất file Excel…");
   };
 
   return (
     <div className="classlist-container">
+      {/* ToastContainer chỉ cần khai báo một lần */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
       <h2 className="classlist-title">📘 Danh sách điểm theo môn học</h2>
 
       <div className="classlist-search">
@@ -82,10 +122,7 @@ function ClassList() {
           onChange={(e) => setSubjectName(e.target.value)}
           placeholder="Nhập tên môn học"
         />
-        <select
-          value={classId}
-          onChange={(e) => setClassId(e.target.value)}
-        >
+        <select value={classId} onChange={(e) => setClassId(e.target.value)}>
           <option value="">-- Chọn lớp --</option>
           {classOptions.map((cls) => (
             <option key={cls.class_id} value={cls.class_id}>
@@ -96,6 +133,7 @@ function ClassList() {
 
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
         <button onClick={handleExport}>📁 Xuất Excel</button>
+
         <button onClick={() => setShowEnterModal(true)}>📝 Nhập điểm mới</button>
       </div>
 
@@ -123,7 +161,9 @@ function ClassList() {
                     onChange={(e) => setEditedGrade(e.target.value)}
                   />
                 ) : (
-                  student.grade ?? <em style={{ color: "#999" }}>Chưa có điểm</em>
+                  student.grade ?? (
+                    <em style={{ color: "#999" }}>Chưa có điểm</em>
+                  )
                 )}
               </td>
               <td>
@@ -136,7 +176,10 @@ function ClassList() {
                       💾 Lưu
                     </button>
                     <button
-                      onClick={() => setEditingIndex(null)}
+                      onClick={() => {
+                        setEditingIndex(null);
+                        setEditedGrade("");
+                      }}
                       className="action-btn cancel-btn"
                     >
                       ❌ Hủy

@@ -78,6 +78,91 @@
   font-weight: 600;
 }
 
+/* Styling cho select khi đang edit */
+.edit-format-select {
+  padding: 8px 12px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.edit-format-select:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Container cho các nút actions */
+.exam-schedule-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Styling chung cho tất cả các nút */
+.ex-assign-edit-btn, 
+.ex-assign-delete-btn, 
+.ex-assign-save-btn, 
+.ex-assign-cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Nút Edit */
+.ex-assign-edit-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.ex-assign-edit-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+/* Nút Delete */
+.ex-assign-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.ex-assign-delete-btn:hover {
+  background-color: #ba0101;
+  transform: translateY(-1px);
+}
+
+/* Nút Save (Lưu) */
+.ex-assign-save-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.ex-assign-save-btn:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+/* Nút Cancel (Hủy) */
+.ex-assign-cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.ex-assign-cancel-btn:hover {
+  background-color: #545b62;
+  transform: translateY(-1px);
+}
+
 /* Modal form thêm mới */
 .exam-assign-add-form {
   position: fixed;
@@ -181,6 +266,21 @@
   .exam-assign-add-form form {
     margin: 20px;
     width: calc(100% - 40px);
+  }
+
+  /* Responsive cho actions buttons */
+  .exam-schedule-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ex-assign-edit-btn, 
+  .ex-assign-delete-btn, 
+  .ex-assign-save-btn, 
+  .ex-assign-cancel-btn {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 8px;
   }
 }
 

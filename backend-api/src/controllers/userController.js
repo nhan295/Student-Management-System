@@ -26,7 +26,7 @@ const login = async(req,res) =>{
                 maxAge: 1000 * 60 * 60 * 24  // cookie tồn tại 1 ngày
             });
             
-            return res.status(200).json({message: 'Login successfully!',access_token})
+            return res.status(200).json({message: 'Login successfully!',access_token, refesh_token})
             
         }
     }
@@ -36,7 +36,7 @@ const login = async(req,res) =>{
     }
 }  
 
-const refeshToken = (req,res) =>{
+const refreshToken = (req,res) =>{
     const token = req.cookies.refesh_token;
     if(token){
         jwt.verify(token, process.env.JWT_REFRESH_SECRET,(err, user)=>{
@@ -56,5 +56,5 @@ const refeshToken = (req,res) =>{
 
 module.exports = {
     login,
-    refeshToken
+    refreshToken
 }

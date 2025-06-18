@@ -4,14 +4,14 @@ import Sidebar from "./sidebar";
 import { Outlet } from "react-router-dom";
 import "../styles/index.css";
 
-export default function Layout() {
+export default function Layout({ onLogout }) {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div
       className="layout"
       style={{ gridTemplateColumns: isOpen ? "240px 1fr" : "100px 1fr" }}
     >
-      <Header isOpen={isOpen} onToggle={() => setIsOpen((o) => !o)} />
+      <Header isOpen={isOpen} onToggle={() => setIsOpen((o) => !o)} onLogout={onLogout} />
       <Sidebar isOpen={isOpen} />
       <main className="main">
         <div className="main-container">

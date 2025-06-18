@@ -50,8 +50,23 @@ const editExamAssignment = async(req,res) =>{
     }
 }
 
+const delExamAssignment = async(req,res) =>{
+    const {exSchedule_id} = req.params
+    try{
+        const result = await examAssignmentModel.delExamAssignment(exSchedule_id)
+        if(result){
+            return res.status(200).json({message: 'Đã xoá nội dung thi'})
+        }
+        else{
+            return res.status(400).json({message: 'Lỗi khi xoá'})
+        }
+    }catch(err){
+        return res.status(500).json({message: 'Lỗi server'})
+    }
+}
 module.exports = {
     getAllAssignment,
     createExamAssignment,
-    editExamAssignment
+    editExamAssignment,
+    delExamAssignment
 }

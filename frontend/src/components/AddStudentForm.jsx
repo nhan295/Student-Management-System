@@ -7,6 +7,7 @@ function AddStudentForm() {
     student_id: "",
     student_name: "",
     birthday: "",
+    education_level: "", 
     gender: "",
     party_join_date: "",
     professional_level: "",
@@ -17,6 +18,7 @@ function AddStudentForm() {
     course_id: "",
     class_id: "",
   });
+  
 
   const [courses, setCourses] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -224,14 +226,20 @@ function AddStudentForm() {
           onFocus={(e) => (e.target.type = "date")}
         />
         <input
+          name="education_level"
+          placeholder="Trình độ học vấn"
+          value={form.education_level}
+          onChange={handleInputChange}
+        />
+        <input
           name="professional_level"
-          placeholder="Học vấn"
+          placeholder="Trình độ chuyên môn"
           value={form.professional_level}
           onChange={handleInputChange}
         />
         <input
           name="title"
-          placeholder="Chức danh"
+          placeholder="Chức vụ"
           value={form.title}
           onChange={handleInputChange}
         />
@@ -243,7 +251,7 @@ function AddStudentForm() {
         />
         <input
           name="plan_title"
-          placeholder="Kế hoạch học tập"
+          placeholder="Chức danh quy hoạch"
           value={form.plan_title}
           onChange={handleInputChange}
         />

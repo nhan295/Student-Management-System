@@ -135,13 +135,6 @@
     background-color: #0056b3;
 }
 
-.student-list-container table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .student-list-container th,
 .student-list-container td {
@@ -214,3 +207,68 @@
     background-color: #007bff;
     color: white;
 }
+
+
+/* Làm bảng rộng và căng ra toàn khung */
+.student-list-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+
+/* Viền bảng và padding ô */
+.student-list-container th,
+.student-list-container td {
+    border: 1px solid #ddd;
+    padding: 10px 14px;
+    text-align: left;
+}
+
+/* Màu nền tiêu đề */
+.student-list-container thead {
+    background-color: #f2f2f2;
+}
+
+/* Hiệu ứng khi hover dòng */
+.student-list-container tbody tr:hover {
+    background-color: #e9f5ff;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+/* Canh trái văn bản và chỉnh màu */
+.student-list-container th {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+}
+
+/* Tạo biến lưu chỉ số cột đang hover */
+table td,
+table th {
+    position: relative;
+}
+
+/* Khi rê chuột vào 1 ô td/th, thêm lớp `hover-col` vào bảng */
+table td:hover::before,
+table th:hover::before {
+    content: "";
+    position: absolute;
+    top: -5000px;
+    bottom: -5000px;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 123, 255, 0.1);
+    /* màu nền nhẹ */
+    z-index: -1;
+}
+
+/* Hiệu ứng hover dòng như trước */
+.student-list-container tbody tr:hover {
+    background-color: #e9f5ff;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+

@@ -7,9 +7,9 @@ module.exports.setup = (app) =>{
     app.use('/api/v1/user_auth',router)
 
     router.post('/login',userController.login);
-    router.post('/refeshtoken',userController.refeshToken);
+    router.post('/refreshtoken',userController.refreshToken);
 
     router.get('/admin-only',verifyToken,(req,res,next)=>{
-        res.json({message: 'Welcom!'})
+        res.json({message: 'Welcome!'})
     })
 }

@@ -6,7 +6,7 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import ConfirmDialog from "../components/formDialog";
 
-function HomePage() {
+function HomePage({onLogout}) {
   const navigate = useNavigate();
   const [isLogoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
@@ -27,6 +27,7 @@ function HomePage() {
 
   const handleConfirmLogout = () => {
     setLogoutDialogOpen(false);
+    onLogout();
     navigate("/login");
   };
 

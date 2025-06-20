@@ -57,7 +57,6 @@ function Assignment() {
     }
   };
 
-
   const fetchSubjects = async () => {
     try {
       const res = await api.get("/api/v1/subjects/");
@@ -68,7 +67,7 @@ function Assignment() {
       setSubjectOptions(opts);
     } catch (err) {
       console.error(err);
-      toast.error("Lỗi khi lấy danh sách môn học");
+      toast.error("Lỗi khi lấy danh sách học phần");
     }
   };
 
@@ -151,7 +150,7 @@ function Assignment() {
     e.preventDefault();
     openConfirm({
       title: "Xác nhận thêm phân công",
-      message: `Giảng viên: ${lecturer_id}\nMôn: ${subject_id}\nLớp: ${class_id}`,
+      message: `Giảng viên: ${lecturer_id}\nHọc phần: ${subject_id}\nLớp: ${class_id}`,
       onConfirm: () => {
         performAdd();
         closeConfirm();
@@ -210,11 +209,11 @@ function Assignment() {
               placeholder="Chọn giảng viên..."
               isSearchable
             />
-            <label>Môn học</label>
+            <label>Học phần</label>
             <Select
               options={subjectOptions}
               onChange={(opt) => setSubject(opt?.value || "")}
-              placeholder="Chọn môn học..."
+              placeholder="Chọn học phần..."
             />
             <label>Lớp học</label>
             <Select

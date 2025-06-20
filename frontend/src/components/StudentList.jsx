@@ -12,13 +12,19 @@ function StudentList() {
   const [filteredClasses, setFilteredClasses] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/classes/all-classes").then((res) => setClasses(res.data));
-    axios.get("http://localhost:3000/api/v1/courses").then((res) => setCourses(res.data));
+    axios
+      .get("http://localhost:3000/api/v1/classes/all-classes")
+      .then((res) => setClasses(res.data));
+    axios
+      .get("http://localhost:3000/api/v1/courses")
+      .then((res) => setCourses(res.data));
   }, []);
 
   useEffect(() => {
     // Cập nhật danh sách lớp dựa trên courseId được chọn
-    const filtered = classes.filter(cls => cls.course_id === Number(courseId));
+    const filtered = classes.filter(
+      (cls) => cls.course_id === Number(courseId)
+    );
     setFilteredClasses(filtered);
     setClassId(""); // reset classId khi chọn lại khóa học
   }, [courseId, classes]);
@@ -104,6 +110,7 @@ function StudentList() {
               <th>Trình độ chuyên môn</th>
               <th>Chức vụ</th>
               <th>Đơn vị công tác</th>
+              <th>Trình độ chuyên môn</th>
               <th>Niên khóa</th>
               <th>Lớp</th>
             </tr>

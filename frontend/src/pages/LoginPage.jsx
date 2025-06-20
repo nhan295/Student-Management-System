@@ -17,8 +17,10 @@ function Login() {
     try {
       const response = await api.post("/api/v1/user_auth/login",{ username, password });
       
-      localStorage.setItem(ACCESS_TOKEN, response.data.access);
-      localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+      localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
+      localStorage.setItem(REFRESH_TOKEN, response.data.refresh_token);
+      console.log("Login response:", response.data);
+
       navigate("/homepage");
     } catch (error) {
       console.log(error.response?.data);

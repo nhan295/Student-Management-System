@@ -22,7 +22,7 @@ export default function WarningsPage() {
       })
       .catch((err) => {
         console.error("Load class-subject warnings error", err);
-        setError("Không tải được danh sách lớp–môn có cảnh báo");
+        setError("Không tải được danh sách lớp–học phần có cảnh báo");
       });
   }, []);
 
@@ -47,7 +47,7 @@ export default function WarningsPage() {
   });
 
   const handleView = (classId, subjectId) => {
-    // Điều hướng sang trang chi tiết cảnh báo của lớp & môn này
+    // Điều hướng sang trang chi tiết cảnh báo của lớp & học phần này
     nav(`/warnings/class/${classId}/subject/${subjectId}`);
   };
 
@@ -76,7 +76,7 @@ export default function WarningsPage() {
                     onChange={(e) => setFilterSubject(e.target.value)}
                     className="header-select"
                   >
-                    <option value="">Tất cả môn</option>
+                    <option value="">Tất cả học phần</option>
                     {subjectOptions.map((sub, i) => (
                       <option key={i} value={sub}>
                         {sub}
@@ -90,7 +90,7 @@ export default function WarningsPage() {
           </tr>
           <tr className="sub-header">
             <th>Lớp</th>
-            <th>Môn</th>
+            <th>Học phần</th>
             <th></th>
           </tr>
         </thead>

@@ -138,7 +138,7 @@ function ClassList() {
             <th>Tên sinh viên</th>
             <th>Mã lớp</th>
             <th>Điểm</th>
-            <th>Hành động</th>
+            <th>Cập nhật</th>
           </tr>
         </thead>
         <tbody>

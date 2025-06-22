@@ -110,7 +110,6 @@ function StudentList() {
               <th>Trình độ chuyên môn</th>
               <th>Chức vụ</th>
               <th>Đơn vị công tác</th>
-              <th>Trình độ chuyên môn</th>
               <th>Niên khóa</th>
               <th>Lớp</th>
             </tr>

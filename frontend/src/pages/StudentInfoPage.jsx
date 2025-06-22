@@ -19,6 +19,9 @@ function StudentInfoPage() {
   const [professionalLevel, setProfessionalLevel] = useState("");
   const [partyJoinDate, setPartyJoinDate] = useState("");
   const [planTitle, setPlanTitle] = useState("");
+  const [title, setTitle] = useState("");
+  const [education_level, setEducationLevel] = useState("");
+
 
   // ConfirmDialog state
   const [confirmParams, setConfirmParams] = useState({
@@ -46,6 +49,7 @@ function StudentInfoPage() {
         setProfessionalLevel(data.professional_level || "");
         setPartyJoinDate(data.party_join_date || "");
         setPlanTitle(data.plan_title || "");
+        setTitle(data.title || "");
       })
       .catch((err) => {
         console.error("Lỗi khi lấy thông tin học viên", err);
@@ -100,6 +104,7 @@ function StudentInfoPage() {
             professional_level: professionalLevel,
             party_join_date: partyJoinDate,
             plan_title: planTitle,
+            title: title,
           })
           .then((res) => res.data)
           .then((data) => {
@@ -158,29 +163,7 @@ function StudentInfoPage() {
               <span className="info-value">{studentInfo?.gender}</span>
             </div>
 
-            <div className="student-info-row">
-              <span className="info-label">Lớp:</span>
-              <span className="info-value">{studentInfo?.class_name}</span>
-            </div>
-
-            <div className="student-info-row">
-              <span className="info-label">Khoá học:</span>
-              <span className="info-value">{studentInfo?.course_name}</span>
-            </div>
-
-            <div className="student-info-row">
-              <span className="info-label">Đơn vị:</span>
-              <span className="info-value">{studentInfo?.agency_name}</span>
-            </div>
-
-            <div className="student-info-row">
-              <span className="info-label">Chức vụ:</span>
-              <span className="info-value">
-                {studentInfo?.professional_level}
-              </span>
-            </div>
-
-            <div className="student-info-row">
+             <div className="student-info-row">
               <span className="info-label">Ngày kết nạp:</span>
               <span className="info-value">
                 {studentInfo?.party_join_date
@@ -192,6 +175,23 @@ function StudentInfoPage() {
             </div>
 
             <div className="student-info-row">
+              <span className="info-label">Trình độ học vấn:</span>
+              <span className="info-value">{studentInfo?.education_level}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Trình độ chuyên môn:</span>
+              <span className="info-value">{studentInfo?.professional_level}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Chức vụ:</span>
+              <span className="info-value">
+                {studentInfo?.title}
+              </span>
+            </div>
+
+            <div className="student-info-row">
               <span className="info-label">Chức danh quy hoạch:</span>
               <span className="info-value">{studentInfo?.plan_title}</span>
             </div>
@@ -199,6 +199,16 @@ function StudentInfoPage() {
             <div className="student-info-row">
               <span className="info-label">Đơn vị công tác</span>
               <span className="info-value">{studentInfo?.agency_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Lớp:</span>
+              <span className="info-value">{studentInfo?.class_name}</span>
+            </div>
+
+            <div className="student-info-row">
+              <span className="info-label">Khoá học:</span>
+              <span className="info-value">{studentInfo?.course_name}</span>
             </div>
 
             <div className="student-info-row">
@@ -227,18 +237,7 @@ function StudentInfoPage() {
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
                   />
-                  <label>Chức vị:</label>
-                  <input
-                    type="text"
-                    value={professionalLevel}
-                    onChange={(e) => setProfessionalLevel(e.target.value)}
-                  />
-                  <label>Đơn vị:</label>
-                  <input
-                    type="text"
-                    value={agencyName}
-                    onChange={(e) => setAgencyName(e.target.value)}
-                  />
+
                   <label>Ngày kết nạp:</label>
                   <input
                     type="date"
@@ -249,7 +248,36 @@ function StudentInfoPage() {
                     }
                     onChange={(e) => setPartyJoinDate(e.target.value)}
                   />
-                  <label>Tiêu đề kế hoạch:</label>
+
+                  <label>Trình độ học vấn:</label>
+                  <input
+                    type="text"
+                    value={education_level}
+                    onChange={(e) => setEducationLevel(e.target.value)}
+                  />
+
+                  <label>Trình độ chuyên môn:</label>
+                  <input
+                    type="text"
+                    value={professionalLevel}
+                    onChange={(e) => setProfessionalLevel(e.target.value)}
+                  />
+
+                  <label>Chức vụ:</label>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  
+                  <label>Đơn vị:</label>
+                  <input
+                    type="text"
+                    value={agencyName}
+                    onChange={(e) => setAgencyName(e.target.value)}
+                  />
+
+                  <label>Chức danh quy hoạch:</label>
                   <input
                     type="text"
                     value={planTitle}

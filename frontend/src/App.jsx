@@ -42,7 +42,8 @@ function App() {
       
 
       {/* Route dùng layout */}
-      <Route element={<Layout onLogout={handleLogout}/>}>
+      
+      <Route element={<ProtectedRoute><Layout onLogout={handleLogout}/></ProtectedRoute>}>
 
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
@@ -54,22 +55,13 @@ function App() {
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
         
-        <Route
-          path="student/detail/:student_id"
-          element={<StudentInfoPage />}
-        />
+        <Route path="student/detail/:student_id"element={<StudentInfoPage />}/>
 
-        <Route
-          path="student/detail/:student_id"
-          element={<StudentInfoPage />}
-        />
+        <Route path="student/detail/:student_id"element={<StudentInfoPage />}/>
         <Route path="/cert/search" element={<GraduateCertPage />} />
 
         <Route path="warnings" element={<WarningsPage />} />
-        <Route
-          path="/warnings/class/:classId/subject/:subjectId"
-          element={<WarningsDetailPage />}
-        />
+        <Route path="/warnings/class/:classId/subject/:subjectId" element={<WarningsDetailPage />}/>
         <Route path="/exam-assign" element={<ExamAssignmentPage />} />
       </Route>
           <Route path="/" element={<Navigate to="/login" />} />

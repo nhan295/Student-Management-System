@@ -169,11 +169,6 @@ function StudentInfoPage() {
             </div>
 
             <div className="student-info-row">
-              <span className="info-label">Đơn vị:</span>
-              <span className="info-value">{studentInfo?.agency_name}</span>
-            </div>
-
-            <div className="student-info-row">
               <span className="info-label">Chức vụ:</span>
               <span className="info-value">
                 {studentInfo?.professional_level}

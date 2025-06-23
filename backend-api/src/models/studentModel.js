@@ -93,19 +93,7 @@ const StudentModel = {
   // 📄 Lấy thông tin học viên theo ID
   getStudentById: async (student_id) => {
     return await db("students")
-      .select(
-        "student_id",
-        "student_name",
-        "birthday",
-        "class.class_name",
-        "courses.course_name",
-        "gender",
-        "agency_name",
-        "party_join_date",
-        "professional_level",
-        "plan_title",
-        "barcode"
-      )
+      .select("*")
       .join("class", "students.class_id", "class.class_id")
       .join("courses", "students.course_id", "courses.course_id")
       .where({ student_id: student_id })

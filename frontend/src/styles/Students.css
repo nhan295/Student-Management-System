@@ -41,7 +41,13 @@
 .add-student-form-container button:hover {
     background-color: #0056b3;
 }
+.add-student-form-container .add-student{
+    background-color: #27ae60;
+}
 
+.add-student-form-container .add-student:hover{
+    background-color: #207d47;
+}
 /* CSS dành riêng cho StudentList */
 .student-list-container {
     max-width: 600px;
@@ -50,7 +56,9 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
+     overflow-y: auto;
 }
+
 
 .student-list-container h3 {
     text-align: center;
@@ -100,6 +108,7 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
 }
 
 .student-list-container h3 {
@@ -254,16 +263,16 @@ table th {
 /* Khi rê chuột vào 1 ô td/th, thêm lớp `hover-col` vào bảng */
 table td:hover::before,
 table th:hover::before {
-    content: "";
-    position: absolute;
-    top: -5000px;
-    bottom: -5000px;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 123, 255, 0.1);
-    /* màu nền nhẹ */
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 123, 255, 0.1);
+  z-index: -1;
 }
+
 
 /* Hiệu ứng hover dòng như trước */
 .student-list-container tbody tr:hover {

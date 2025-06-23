@@ -110,30 +110,28 @@ function StudentList() {
               <th>Trình độ chuyên môn</th>
               <th>Chức vụ</th>
               <th>Đơn vị công tác</th>
-              <th>Trình độ chuyên môn</th>
               <th>Niên khóa</th>
               <th>Lớp</th>
             </tr>
           </thead>
 
           <tbody>
-  {students.map((s) => (
-    <tr key={s.student_id}>
-      <td>{s.student_id}</td>
-      <td>{s.student_name}</td>
-      <td>{formatDate(s.birthday)}</td>
-      <td>{s.gender}</td>
-      <td>{formatDate(s.party_join_date)}</td>
-      <td>{s.education_level || "Không rõ"}</td>
-      <td>{s.professional_level || "Không rõ"}</td>
-      <td>{s.title || "Không rõ"}</td>
-      <td>{s.agency_name || "Không rõ"}</td>
-      <td>{getCourseName(s.course_id)}</td>
-      <td>{getClassName(s.class_id)}</td>
-    </tr>
-  ))}
-</tbody>
-
+            {students.map((s) => (
+              <tr key={s.student_id}>
+                <td>{s.student_id}</td>
+                <td>{s.student_name}</td>
+                <td>{formatDate(s.birthday)}</td>
+                <td>{s.gender}</td>
+                <td>{formatDate(s.party_join_date)}</td>
+                <td>{s.education_level || "Không rõ"}</td>
+                <td>{s.professional_level || "Không rõ"}</td>
+                <td>{s.title || "Không rõ"}</td>
+                <td>{s.agency_name || "Không rõ"}</td>
+                <td>{getCourseName(s.course_id)}</td>
+                <td>{getClassName(s.class_id)}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>

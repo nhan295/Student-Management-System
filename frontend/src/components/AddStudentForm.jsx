@@ -277,7 +277,7 @@ function AddStudentForm() {
           ))}
         </select>
 
-        <button type="submit">Thêm sinh viên</button>
+        <button type="submit" className="add-student">Thêm sinh viên</button>
         <button
           type="button"
           onClick={() => setShowCourseForm(!showCourseForm)}

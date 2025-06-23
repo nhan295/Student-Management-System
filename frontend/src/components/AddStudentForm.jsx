@@ -34,7 +34,6 @@ function AddStudentForm() {
   });
 
   const [newClass, setNewClass] = useState({
-    class_id: "",
     class_name: "",
     course_id: "",
     total_student: "",
@@ -143,32 +142,24 @@ function AddStudentForm() {
   };
 
   const handleAddNewClass = async () => {
-    const { class_id, class_name, course_id, total_student } = newClass;
-
-    if (!class_id || !class_name || !course_id || !total_student) {
+    const { class_name, course_id, total_student } = newClass;
+  
+    if (!class_name || !course_id || !total_student) {
       alert("Vui lòng điền đầy đủ thông tin lớp học mới.");
       return;
     }
-
-    const idNumber = Number(class_id);
-    if (isNaN(idNumber) || idNumber <= 0) {
-      alert("Mã lớp học không hợp lệ.");
-      return;
-    }
-
+  
+    const payload = {
+      class_name,
+      course_id: Number(course_id),
+      total_student: Number(total_student),
+    };
+  
     try {
-      const payload = {
-        class_id: idNumber,
-        class_name,
-        course_id: Number(course_id),
-        total_student: Number(total_student),
-      };
-
       await axios.post("http://localhost:3000/api/v1/classes", payload);
-
+  
       alert("Thêm lớp học mới thành công!");
       setNewClass({
-        class_id: "",
         class_name: "",
         course_id: "",
         total_student: "",
@@ -180,6 +171,7 @@ function AddStudentForm() {
       alert("Không thể thêm lớp học mới.");
     }
   };
+  
 
   return (
     <div className="add-student-form-container">
@@ -329,12 +321,6 @@ function AddStudentForm() {
       {showClassForm && (
         <div className="new-class-form">
           <h4>Thêm lớp học mới</h4>
-          <input
-            name="class_id"
-            placeholder="Mã lớp học"
-            value={newClass.class_id}
-            onChange={handleNewClassChange}
-          />
           <input
             name="class_name"
             placeholder="Tên lớp học"

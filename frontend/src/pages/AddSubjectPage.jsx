@@ -48,7 +48,7 @@ export default function AddSubject() {
         await axios.post("http://localhost:3000/api/v1/subjects", {
           subject_name: data.name,
           subject_code: data.code,
-          total_lessons: Number(data.totalLessons),
+          total_lessons: data.totalLessons,
         });
         alert(`Đã thêm: ${data.name} (${data.code})`);
         setSubjectName("");
@@ -71,7 +71,7 @@ export default function AddSubject() {
   // Form submit for add
   const handleAdd = (e) => {
     e.preventDefault();
-    openConfirm("add", { name: subjectName, code: subjectCode });
+    openConfirm("add", { name: subjectName, code: subjectCode, totalLessons });
   };
 
   // Handle delete click

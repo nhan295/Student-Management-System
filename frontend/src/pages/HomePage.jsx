@@ -19,6 +19,7 @@ function HomePage({ onLogout }) {
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp", path: "/cert/search" },
     { icon: "⚠️", label: "Cảnh báo", path: "/warnings" },
+    { icon: "📊", label: "Điểm danh", path: "/attendance" },
   ];
 
   const handleLogoutClick = () => {

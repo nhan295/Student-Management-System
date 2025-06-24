@@ -6,11 +6,17 @@ import "../styles/Login.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword,setShowPassword] = useState(false)
   const navigate = useNavigate();
+
+  const togglePassword = () => {
+    setShowPassword(prev=>!prev)  // hàm callback nhận giá trị hiện tại (prev) rồi đảo ngược nó:
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,11 +61,17 @@ function Login() {
               <FontAwesomeIcon icon={faLock} />
             </div>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
+            <button
+            type="button"
+            onClick={togglePassword}
+            className="toggle-password-btn">     
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </button>
           </div>
 
           <button className="login-btn-form" type="submit">

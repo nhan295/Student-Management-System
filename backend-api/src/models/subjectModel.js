@@ -3,12 +3,17 @@ const db = require("../config/db");
 module.exports = {
   // Lấy danh sách tất cả học phần
   getAll: () =>
-    db("subjects").select("subject_id", "subject_name", "subject_code"),
+    db("subjects").select(
+      "subject_id",
+      "subject_name",
+      "subject_code",
+      "total_lessons"
+    ),
 
   // Lấy một học phần theo ID
   getById: (id) => db("subjects").where({ subject_id: id }).first(),
 
-  // Tạo mới học phần, data = { subject_name, subject_code }
+  // Tạo mới học phần
   create: (data) => db("subjects").insert(data),
 
   // Cập nhật học phần theo ID

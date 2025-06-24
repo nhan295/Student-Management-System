@@ -7,6 +7,7 @@ import "../styles/Index.css";
 export default function AddSubject() {
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
+  const [totalLessons, setTotalLessons] = useState("");
   const [recentSubjects, setRecentSubjects] = useState([]);
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -47,10 +48,12 @@ export default function AddSubject() {
         await axios.post("http://localhost:3000/api/v1/subjects", {
           subject_name: data.name,
           subject_code: data.code,
+          total_lessons: Number(data.totalLessons),
         });
         alert(`Đã thêm: ${data.name} (${data.code})`);
         setSubjectName("");
         setSubjectCode("");
+        setTotalLessons("");
         fetchRecent();
       } else if (mode === "delete") {
         await axios.delete(
@@ -117,6 +120,24 @@ export default function AddSubject() {
                 borderRadius: 4,
               }}
               required
+            />
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 25 }}
+          >
+            <label style={{ width: 150 }}>Tổng số tiết:</label>
+            <input
+              type="number"
+              value={totalLessons}
+              onChange={(e) => setTotalLessons(e.target.value)}
+              placeholder="Nhập tổng số tiết"
+              required
+              style={{
+                flex: 1,
+                padding: 8,
+                border: "1px solid #ccc",
+                borderRadius: 4,
+              }}
             />
           </div>
           <button
@@ -216,7 +237,11 @@ export default function AddSubject() {
         }
         message={
           confirmParams.mode === "add"
-            ? `Bạn có chắc muốn thêm học phần?\nTên HP: ${confirmParams.data?.name}\nMã HP: ${confirmParams.data?.code}`
+            ? `Bạn có chắc muốn thêm học phần?\nTên HP: ${
+                confirmParams.data?.name
+              }\nMã HP: ${confirmParams.data?.code}\nTổng số tiết: ${
+                totalLessons || 0
+              }`
             : `Bạn có chắc muốn xóa học phần?\nTên HP: ${confirmParams.data?.subject_name}\nMã HP: ${confirmParams.data?.subject_code}`
         }
         onConfirm={handleConfirm}

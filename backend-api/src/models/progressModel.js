@@ -1,6 +1,6 @@
 const db = require("../config/db"); // là Knex instance (db.js)
 
-const ProgressModel = {
+const progressModel = {
   /**
    * Lấy tiến độ học tập của học viên (student_id).
    * Join giữa bảng exams (e) và subjects (s) để lấy mã môn + tên môn.
@@ -54,4 +54,4 @@ const ProgressModel = {
   },
 };
 
-module.exports = ProgressModel;
+module.exports = progressModel;

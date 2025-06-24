@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ConfirmDialog from "../components/FormDialog";
-import "../styles/index.css";
+import "../styles/Index.css";
 
 export default function AddSubject() {
   const [subjectName, setSubjectName] = useState("");

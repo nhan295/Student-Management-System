@@ -1,7 +1,7 @@
 import api from "../api";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/ExamAssignmentPage.css";

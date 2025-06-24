@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import WeeklyTimeline from "./WeeklyTimeline";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "./FormDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/schedule.css";

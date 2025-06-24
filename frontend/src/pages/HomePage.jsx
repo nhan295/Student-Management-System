@@ -4,9 +4,9 @@ import banner from "../assets/images/banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 
-function HomePage({onLogout}) {
+function HomePage({ onLogout }) {
   const navigate = useNavigate();
   const [isLogoutDialogOpen, setLogoutDialogOpen] = useState(false);
 

@@ -11,8 +11,8 @@ const items = [
   { to: "/schedules", icon: "📅", label: "Lịch dạy & Phân công" },
   { to: "/classes/search", icon: "📚", label: "Kết quả học tập" },
   { to: "/warnings", icon: "⚠️", label: "Danh sách cảnh báo" },
-  { to: "/cert/search", icon: "🎓", label: "Kết quả tốt nghiệp"}
-
+  { to: "/cert/search", icon: "🎓", label: "Kết quả tốt nghiệp" },
+  { to: "/attendance", icon: "📊", label: "Điểm danh" },
   // ... thêm các link khác ở đây ...
 ];
 

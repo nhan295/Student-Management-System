@@ -47,6 +47,8 @@ assignmentRoute.setup(app);
 
 app.use("/api/v1/graduation_certificates", graduateCertRoute);
 app.use("/api/v1/warnings", warningRoute);
+const attendanceRoute = require("./routes/attendanceRoute");
+app.use("/api/v1/attendance", attendanceRoute);
 
 progressRoute.setup(app);
 userRoute.setup(app);

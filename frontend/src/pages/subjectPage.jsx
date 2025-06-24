@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 import "../styles/SubjectPage.css";
 
 const PAGE_SIZE = 5;

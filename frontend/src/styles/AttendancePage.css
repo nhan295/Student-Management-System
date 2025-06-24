@@ -1,0 +1,194 @@
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-700: #374151;
+  --white: #ffffff;
+  --border-radius: 8px;
+}
+
+.attendance-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  background: var(--white);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-radius: var(--border-radius);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.attendance-page h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--gray-700);
+  font-size: 1.75rem;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab-header button {
+  padding: 0.6rem 1.2rem;
+  background: var(--gray-200);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  color: var(--gray-700);
+  transition: background 0.2s;
+}
+
+.tab-header button.active,
+.tab-header button:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.filters input,
+.filters select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  transition: border 0.2s;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: inset 0 0 0 1px var(--gray-200);
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.attendance-table thead {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.attendance-table tbody tr {
+  background: var(--white);
+  transition: background 0.2s;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+  background-color: var(--gray-100);
+}
+
+.attendance-table tbody tr:hover {
+  background-color: var(--gray-200);
+}
+
+.submit-btn {
+  margin-top: 1.2rem;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.attendance-history {
+  margin-top: 1rem;
+}
+
+.attendance-table.history {
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .attendance-page {
+    padding: 1rem;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tab-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+/* Action buttons styling */
+.attendance-table.history button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0 0.25rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--gray-200);
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.attendance-table.history button:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.1);
+}
+.attendance-table.history button:nth-child(2):hover {
+  background: #f87171;
+}
+
+.search-input {
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

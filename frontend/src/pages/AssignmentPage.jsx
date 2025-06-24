@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import api from "../api";
 import ShowAssign from "../components/ShowAssign";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/AssignmentPage.css";

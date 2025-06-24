@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 import "../styles/index.css";
 
 export default function EditSubject() {

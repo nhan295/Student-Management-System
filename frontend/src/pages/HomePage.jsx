@@ -18,7 +18,6 @@ function HomePage({ onLogout }) {
     { icon: "📅", label: "Lịch giảng dạy và phân công", path: "/schedules" },
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp", path: "/cert/search" },
-    { icon: "📊", label: "Điểm danh", path: "/attendance" },
     { icon: "⚠️", label: "Cảnh báo", path: "/warnings" },
     { icon: "📊", label: "Điểm danh", path: "/attendance" },
   ];

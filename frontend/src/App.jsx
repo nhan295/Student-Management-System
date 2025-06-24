@@ -1,7 +1,6 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
 
 import AddSubject from "./pages/AddSubjectPage";
 import EditSubject from "./pages/EditSubjectPage";
@@ -21,29 +20,31 @@ import GraduateCertPage from "./pages/GraduateCertPage";
 import WarningsPage from "./pages/WarningsPage";
 import WarningsDetailPage from "./pages/WarningsDetailPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AttendancePage from "./pages/AttendancePage";
 
-import  React,{ useState } from "react";
+import React, { useState } from "react";
 function App() {
   const [authKey, setAuthKey] = useState(Date.now());
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.clear();
-    setAuthKey(Date.now()); 
+    setAuthKey(Date.now());
   };
   return (
     <Routes>
       {/* Route không dùng layout */}
-      <Route path="/login" element={<LoginPage />} 
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/homepage"
+        element={
+          <ProtectedRoute key={authKey}>
+            <HomePage onLogout={handleLogout} />
+          </ProtectedRoute>
+        }
       />
-       <Route path="/homepage" element={ 
-        <ProtectedRoute key={authKey}>
-          <HomePage  onLogout={handleLogout}/>
-        </ProtectedRoute>} />
-      
 
       {/* Route dùng layout */}
-      <Route element={<Layout onLogout={handleLogout}/>}>
-
+      <Route element={<Layout onLogout={handleLogout} />}>
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
         <Route path="subjects/edit/:id" element={<EditSubject />} />
@@ -53,7 +54,7 @@ function App() {
 
         <Route path="students" element={<StudentPage />} />
         <Route path="student/search" element={<SearchStudentPage />} />
-        
+
         <Route
           path="student/detail/:student_id"
           element={<StudentInfoPage />}
@@ -71,8 +72,9 @@ function App() {
           element={<WarningsDetailPage />}
         />
         <Route path="/exam-assign" element={<ExamAssignmentPage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
       </Route>
-          <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   );
 }

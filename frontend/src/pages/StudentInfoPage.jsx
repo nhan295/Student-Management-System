@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api.js";
 import { useParams } from "react-router-dom";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/StudentInfoPage.css";

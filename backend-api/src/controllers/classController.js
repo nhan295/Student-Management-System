@@ -127,9 +127,9 @@ const exportToExcel = async (req, res) => {
 };
 
 const addClass = async (req, res) => {
-  const { class_id, class_name, course_id, total_student } = req.body;
+  const { class_name, course_id, total_student } = req.body;
 
-  if (!class_id || !class_name || !course_id || !total_student) {
+  if (!class_name || !course_id || !total_student) {
     return res
       .status(400)
       .json({ error: "Vui lòng nhập đầy đủ thông tin lớp học." });
@@ -137,7 +137,6 @@ const addClass = async (req, res) => {
 
   try {
     await classModel.addClass({
-      class_id: Number(class_id),
       class_name,
       course_id: Number(course_id),
       total_student: Number(total_student),

@@ -44,7 +44,14 @@ function App() {
       />
 
       {/* Route dùng layout */}
-      <Route element={<Layout onLogout={handleLogout} />}>
+
+      <Route
+        element={
+          <ProtectedRoute>
+            <Layout onLogout={handleLogout} />
+          </ProtectedRoute>
+        }
+      >
         <Route path="subjects/list" element={<SubjectPage />} />
         <Route path="subjects/add" element={<AddSubject />} />
         <Route path="subjects/edit/:id" element={<EditSubject />} />

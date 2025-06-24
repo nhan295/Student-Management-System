@@ -44,6 +44,7 @@
 }
 
 .login-input-group {
+  position: relative; /* ✅ Thêm dòng này */
   display: flex;
   align-items: center;
   background: #f8fafc;
@@ -130,3 +131,26 @@
     padding: 10px 0;
   }
 }
+.toggle-password-btn{
+  position: absolute;
+  top: 50%;                /* ✅ Canh giữa chiều dọc */
+  right: 12px;
+  transform: translateY(-50%); /* ✅ Căn giữa chuẩn */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a0aec0;
+  z-index: 2;
+  padding: 8px;
+  border-radius: 4px;
+  transition: color 0.3s ease;
+}
+
+.toggle-password-btn:hover {
+  color: #718096;
+}
+
+.toggle-password-btn i {
+  font-size: 1.1rem;
+}
+

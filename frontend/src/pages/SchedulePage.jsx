@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Assignment from "./AssignmentPage";
 import ScheduleTab from "../components/ScheduleTab";
-import "../styles/schedule.css";
+import "../styles/Schedule.css";
 import "../styles/AssignmentPage.css";
 import "../styles/ShowAssign.css";
 

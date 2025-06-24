@@ -44,7 +44,7 @@
 }
 
 .login-input-group {
-  position: relative; /* ✅ Thêm dòng này */
+  position: relative; 
   display: flex;
   align-items: center;
   background: #f8fafc;
@@ -133,9 +133,9 @@
 }
 .toggle-password-btn{
   position: absolute;
-  top: 50%;                /* ✅ Canh giữa chiều dọc */
+  top: 50%;                /* Canh giữa chiều dọc */
   right: 12px;
-  transform: translateY(-50%); /* ✅ Căn giữa chuẩn */
+  transform: translateY(-50%); /*Căn giữa chuẩn */
   background: none;
   border: none;
   cursor: pointer;

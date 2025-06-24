@@ -11,12 +11,14 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword,setShowPassword] = useState(false)
+
   const navigate = useNavigate();
 
-  const togglePassword = () => {
-    setShowPassword(prev=>!prev)  // hàm callback nhận giá trị hiện tại (prev) rồi đảo ngược nó:
-}
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = ()=>{
+    setShowPassword (prev=>!prev)  //// hàm callback nhận giá trị hiện tại (prev) rồi đảo ngược nó
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +72,7 @@ function Login() {
             type="button"
             onClick={togglePassword}
             className="toggle-password-btn">     
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </button>
           </div>
 

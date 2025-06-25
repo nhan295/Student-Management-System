@@ -8,29 +8,29 @@ import "../styles/ExamAssignmentPage.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function ExamAssignmentPage() {
-  // ─── Form selections ───
+  // Form selections
   const [subject_id, setSubject] = useState("");
   const [class_id, setClass] = useState("");
 
-  // ─── Options for selects ───
+  // Options for selects
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
 
-  // ─── Assigned list ───
+  // Assigned list
   const [assignedList, setAssignedList] = useState([]);
 
-  // ─── Modal state ───
+  // Modal state
   const [showAddModal, setShowAddModal] = useState(false);
   const [modalSubjectId, setModalSubjectId] = useState("");
   const [modalClassId, setModalClassId] = useState("");
   const [modalExamFormat, setModalExamFormat] = useState("");
   const [modalAssignmentId, setModalAssignmentId] = useState(""); // lưu trạng thái assignment_id sau khi có subject_id và class_id
 
-  // ─── Edit state ───
+  // Edit state
   const [editingId, setEditingId] = useState(null); // ID của item đang được edit
   const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
 
-  // ─── ConfirmDialog state ───
+  // ConfirmDialog state
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
     title: "",
@@ -59,7 +59,8 @@ function ExamAssignmentPage() {
   }, [modalSubjectId]);
 
   // ─── API calls ───
-  const getSubjectOptions = async () => {
+  // danh sách môn học để tìm kiếm
+  const getSubjectOptions = async () => {   
     try {
       const res = await api.get("/api/v1/assignment/subjects");
       setSubjectOptions(
@@ -71,13 +72,14 @@ function ExamAssignmentPage() {
     }
   };
 
-  const getClassOptions = async (subject_id) => {
+  // danh sách lớp theo môn để tìm kiếm
+  const getClassOptions = async (subject_id) => {   
     try {
       const res = await api.get(`/api/v1/assignment/class/${subject_id}`);
       setClassOptions(
         res.data.map((c) => ({
           value: c.class_id,
-          label: `${c.class_name} - ${c.course_name}`,
+          label: `${c.class_name} - (${c.course_name})`,
         }))
       );
     } catch (err) {
@@ -86,6 +88,7 @@ function ExamAssignmentPage() {
     }
   };
 
+  // lấy assignment_id theo subject_id và class_id
   const getAssignId = async (subjId, clsId) => {
     const res = await api.get("/api/v1/assignment/getid", {
       params: { subject_id: subjId, class_id: clsId },
@@ -118,6 +121,8 @@ function ExamAssignmentPage() {
     fetchModalAssignId();
   }, [modalSubjectId, modalClassId]);
 
+
+// thêm hình thức thi mới
   const handleAddClick = (e) => {
     e.preventDefault();
     if (!modalAssignmentId || !modalExamFormat)
@@ -141,6 +146,7 @@ function ExamAssignmentPage() {
     });
   };
 
+  // lấy danh sách hình thức thi
   const getAllAssignment = async () => {
     if (!subject_id || !class_id) {
       alert("Vui lòng chọn đầy đủ thông tin");
@@ -170,6 +176,7 @@ function ExamAssignmentPage() {
     getAllAssignment();
   };
 
+  // Sửa hình thức thi
   const handleEditClick = (id, format) => {
     openConfirm({
       title: "Xác nhận cập nhật",
@@ -195,7 +202,7 @@ function ExamAssignmentPage() {
       },
     });
   };
-
+  // Xoá nội dung thi
   const handleDelete = async (exSchedule_id) => {
     try {
       await api.delete(`/api/v1/exam-assignment/delete/${exSchedule_id}`);

@@ -74,7 +74,7 @@ function StudentInfoPage() {
       changes.push(
         `Chức vị: ${studentInfo.professional_level} → ${professionalLevel}`
       );
-      if (education_level !== studentInfo.education_level_level)
+    if (education_level !== studentInfo.education_level_level)
       changes.push(
         `Trình độ học vấn: ${studentInfo.education_level} → ${education_level}`
       );
@@ -215,11 +215,6 @@ function StudentInfoPage() {
               <span className="info-label">Khoá học:</span>
               <span className="info-value">{studentInfo?.course_name}</span>
             </div>
-
-            {/* <div className="student-info-row">
-              <span className="info-label">Barcode:</span>
-              <span className="info-value">{studentInfo?.barcode}</span> 
-            </div> */}
           </div>
           <div className="student-info-actions">
             <button className="btn-info-edit" onClick={OpenEdit}>

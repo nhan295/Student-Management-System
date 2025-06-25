@@ -4,10 +4,9 @@ import { useNavigate, Navigate } from "react-router-dom";
 import banner from "../assets/images/banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "./FormDialog";
 
-
-export default function Header({ isOpen, onToggle, onLogout}) {
+export default function Header({ isOpen, onToggle, onLogout }) {
   const navigate = useNavigate();
   const [isLogoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
@@ -77,5 +76,5 @@ export default function Header({ isOpen, onToggle, onLogout}) {
 Header.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired
+  onLogout: PropTypes.func.isRequired,
 };

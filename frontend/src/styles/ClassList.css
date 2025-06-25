@@ -1,99 +1,258 @@
-.classlist-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 24px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+/* .classlist-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .classlist-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #1e40af;
-    margin-bottom: 24px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 24px;
 }
 
 .classlist-search {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 24px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
 .classlist-search input {
-    padding: 10px;
-    width: 60%;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+  padding: 10px;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 .classlist-search button {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .classlist-search button:hover {
-    background-color: #1d4ed8;
+  background-color: #1d4ed8;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 thead {
-    background-color: #eff6ff;
+  background-color: #eff6ff;
 }
 
 th,
 td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 td input[type="number"] {
-    width: 60px;
-    padding: 4px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+  width: 60px;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 .action-btn {
-    padding: 6px 12px;
-    border-radius: 4px;
-    color: white;
-    border: none;
-    margin-right: 6px;
-    cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  margin-right: 6px;
+  cursor: pointer;
 }
 
 .edit-btn {
-    background-color: #facc15;
+  background-color: #facc15;
 }
 
 .save-btn {
-    background-color: #10b981;
+  background-color: #10b981;
 }
 
 .cancel-btn {
-    background-color: #9ca3af;
+  background-color: #9ca3af;
 }
 
 .edit-btn:hover {
-    background-color: #eab308;
+  background-color: #eab308;
 }
 
 .save-btn:hover {
-    background-color: #059669;
+  background-color: #059669;
 }
 
 .cancel-btn:hover {
-    background-color: #6b7280;
+  background-color: #6b7280;
+} */
+
+/* Container tổng */
+.classlist-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tiêu đề */
+.classlist-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e40af;
+  text-align: center;
+  margin: 0;
+}
+
+/* Thanh tìm kiếm & thao tác */
+.classlist-search {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 16px 0 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Style chung cho select và button trong search */
+.classlist-search select,
+.classlist-search button {
+  height: 40px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding: 0 12px;
+  transition: all 0.2s;
+}
+
+.classlist-search select {
+  background: #f9fafb;
+  min-width: 180px;
+}
+
+.classlist-search select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.classlist-search button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.classlist-search button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.classlist-search button:active {
+  transform: translateY(0);
+}
+
+/* Bảng dữ liệu */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+thead {
+  background-color: #eff6ff;
+  position: sticky;
+  top: 96px; /* bằng tổng height của header + search */
+  z-index: 5;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Input số, giống style chung */
+td input[type="number"] {
+  width: 70px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Nút hành động */
+.action-btn {
+  padding: 6px 12px;
+  margin-right: 4px;
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.edit-btn {
+  background: #facc15;
+}
+.save-btn {
+  background: #10b981;
+}
+.cancel-btn {
+  background: #9ca3af;
+}
+
+.edit-btn:hover {
+  background: #eab308;
+  transform: translateY(-1px);
+}
+.save-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+.cancel-btn:hover {
+  background: #6b7280;
+  transform: translateY(-1px);
+}
+
+/* Responsive: ở màn nhỏ hơn */
+@media (max-width: 600px) {
+  .classlist-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .classlist-search select,
+  .classlist-search button {
+    width: 100%;
+  }
+}
+.subject-select{
+  margin-left: 36px;
 }

@@ -16,14 +16,30 @@
 }
 
 .exam-assign-filter form {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 2fr auto auto;
   gap: 15px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
-.exam-assign-filter form > * {
-  min-width: 200px;
+/* React Select wrapper để đảm bảo tỷ lệ đúng */
+.exam-assign-filter .react-select-container {
+  min-width: 0; /* Cho phép shrink khi cần */
+}
+
+/* Tùy chỉnh react-select để text dài không làm vỡ layout */
+.exam-assign-filter .css-1dimb5e-singleValue {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.exam-assign-filter .css-1uccc91-singleValue {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .exam-assign-filter button {
@@ -35,14 +51,12 @@
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.2s;
+  white-space: nowrap;
+  min-width: fit-content;
 }
 
 .exam-assign-filter button:hover {
   background: #0056b3;
-}
-
-.exam-assign-filter button[type="button"] {
-  background: #28a745;
 }
 
 .exam-assign-filter button[type="button"]:hover {
@@ -103,20 +117,49 @@
   align-items: center;
 }
 
-/* Styling chung cho tất cả các nút */
+/* Cải thiện hiệu ứng hover cho toàn bộ container */
+.exam-assign-show-table > div:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* Thêm animation cho các button */
 .ex-assign-edit-btn, 
 .ex-assign-delete-btn, 
 .ex-assign-save-btn, 
 .ex-assign-cancel-btn {
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
   transition: all 0.3s ease;
-  min-width: 60px;
+  min-width: 70px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ex-assign-edit-btn::before,
+.ex-assign-delete-btn::before,
+.ex-assign-save-btn::before,
+.ex-assign-cancel-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.ex-assign-edit-btn:hover::before,
+.ex-assign-delete-btn:hover::before,
+.ex-assign-save-btn:hover::before,
+.ex-assign-cancel-btn:hover::before {
+  left: 100%;
 }
 
 /* Nút Edit */
@@ -248,19 +291,21 @@
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+  .exam-assign-filter form {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+}
+
 @media (max-width: 768px) {
   .exam-assign-container {
     padding: 15px;
   }
   
   .exam-assign-filter form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .exam-assign-filter form > * {
-    min-width: auto;
-    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
   
   .exam-assign-add-form form {
@@ -284,7 +329,72 @@
   }
 }
 
-/* Loading state */
+/* Đảm bảo item display tốt trên các screen size */
+.exam-schedule-item {
+  position: relative;
+  border-left: 4px solid #007bff;
+  transition: all 0.3s ease;
+}
+
+.exam-schedule-item:hover {
+  border-left-color: #0056b3;
+  transform: translateX(2px);
+}
+
+/* Cải thiện typography */
+.exam-schedule-item p {
+  margin: 12px 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.exam-schedule-item strong {
+  color: #495057;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 120px;
+}
+
+/* Select styling trong edit mode */
+.exam-schedule-item select {
+  padding: 6px 10px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-left: 8px;
+}
+
+.exam-schedule-item select:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* For larger screens, ensure good spacing and better layout */
+@media (min-width: 1024px) {
+  .exam-assign-filter form {
+    grid-template-columns: 2fr 2fr auto auto;
+    gap: 20px;
+  }
+  
+  .exam-assign-show-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .exam-assign-container {
+    padding: 30px;
+  }
+  
+  .exam-assign-filter {
+    padding: 25px;
+  }
+}
 .exam-assign-add-form button[type="submit"]:disabled {
   position: relative;
 }

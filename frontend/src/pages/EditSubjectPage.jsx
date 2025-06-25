@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ConfirmDialog from "../components/formDialog";
-import "../styles/index.css";
+import ConfirmDialog from "../components/FormDialog";
+import "../styles/Index.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function EditSubject() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", code: "" });
-  const [original, setOriginal] = useState({ name: "", code: "" });
+  const [form, setForm] = useState({ name: "", code: "", totalLessons: "" });
+  const [original, setOriginal] = useState({
+    name: "",
+    code: "",
+    totalLessons: "",
+  });
   const [subjects, setSubjects] = useState([]);
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -25,9 +31,17 @@ export default function EditSubject() {
           axios.get(`http://localhost:3000/api/v1/subjects/${id}`),
           axios.get("http://localhost:3000/api/v1/subjects"),
         ]);
-        const { subject_name, subject_code } = resSub.data;
-        setForm({ name: subject_name, code: subject_code });
-        setOriginal({ name: subject_name, code: subject_code });
+        const { subject_name, subject_code, total_lessons } = resSub.data;
+        setForm({
+          name: subject_name,
+          code: subject_code,
+          totalLessons: total_lessons,
+        });
+        setOriginal({
+          name: subject_name,
+          code: subject_code,
+          totalLessons: total_lessons,
+        });
         setSubjects(resAll.data);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -50,12 +64,16 @@ export default function EditSubject() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, code } = form;
+    const { name, code, totalLessons } = form;
 
-    // No changes
-    if (name === original.name && code === original.code) {
+    // // No changes
+    if (
+      name === original.name &&
+      code === original.code &&
+      totalLessons === original.totalLessons
+    ) {
       openConfirm({
-        message: "Bạn chưa thay đổi tên hoặc mã học phần.",
+        message: "Bạn chưa thay đổi dữ liệu.",
         onConfirm: closeConfirm,
       });
       return;
@@ -88,18 +106,19 @@ export default function EditSubject() {
     // Confirm update
     openConfirm({
       title: "Xác nhận cập nhật",
-      message: `Bạn có muốn cập nhật học phần thành:\nTên: ${name}\nMã: ${code}`,
+      message: `Bạn có muốn cập nhật học phần thành:\nTên: ${name}\nMã: ${code}\nTổng số tiết: ${totalLessons}`,
       onConfirm: async () => {
         try {
           await axios.put(`http://localhost:3000/api/v1/subjects/${id}`, {
             subject_name: name,
             subject_code: code,
+            total_lessons: Number(totalLessons),
           });
-          alert(`Cập nhật thành công: ${name} (${code})`);
-          navigate("/subjects/add");
+          // navigate("/subjects/add");
+          toast.success(`Cập nhật thành công: ${name} (${code})`);
         } catch (err) {
           console.error("Update error:", err);
-          alert("Lỗi khi cập nhật học phần");
+          toast.error("Lỗi khi cập nhật học phần");
         } finally {
           closeConfirm();
         }
@@ -148,6 +167,24 @@ export default function EditSubject() {
           />
         </div>
         <div
+          style={{ display: "flex", alignItems: "center", marginBottom: 25 }}
+        >
+          <label style={{ width: 150 }}>Tổng số tiết:</label>
+          <input
+            name="totalLessons"
+            type="number"
+            value={form.totalLessons}
+            onChange={handleChange}
+            required
+            style={{
+              flex: 1,
+              padding: 8,
+              border: "1px solid #ccc",
+              borderRadius: 4,
+            }}
+          />
+        </div>
+        <div
           style={{
             display: "flex",
             justifyContent: "center",
@@ -185,6 +222,12 @@ export default function EditSubject() {
         </div>
       </form>
 
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />
       <ConfirmDialog
         isOpen={confirmParams.isOpen}
         title={confirmParams.title}

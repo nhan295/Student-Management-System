@@ -4,9 +4,9 @@ import banner from "../assets/images/banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 
-function HomePage({onLogout}) {
+function HomePage({ onLogout }) {
   const navigate = useNavigate();
   const [isLogoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
@@ -14,11 +14,12 @@ function HomePage({onLogout}) {
     { icon: "📖", label: "Tuyển sinh", path: "/students" },
     { icon: "👩‍🎓", label: "Hồ sơ học viên", path: "/student/search" },
     { icon: "📋", label: "Chương trình đào tạo", path: "/subjects/list" },
-    { icon: "📝", label: "Hình thức và nội dung thi", path: "/exam-assign" },
     { icon: "📅", label: "Lịch giảng dạy và phân công", path: "/schedules" },
+    { icon: "📝", label: "Hình thức và nội dung thi", path: "/exam-assign" },
     { icon: "📚", label: "Kết quả học tập", path: "/classes/search" },
     { icon: "🎓", label: "Kết quả tốt nghiệp", path: "/cert/search" },
     { icon: "⚠️", label: "Cảnh báo", path: "/warnings" },
+    { icon: "📊", label: "Điểm danh", path: "/attendance" },
   ];
 
   const handleLogoutClick = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api.js";
 import { useParams } from "react-router-dom";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/StudentInfoPage.css";
@@ -21,7 +21,6 @@ function StudentInfoPage() {
   const [planTitle, setPlanTitle] = useState("");
   const [title, setTitle] = useState("");
   const [education_level, setEducationLevel] = useState("");
-
 
   // ConfirmDialog state
   const [confirmParams, setConfirmParams] = useState({
@@ -47,6 +46,7 @@ function StudentInfoPage() {
         setStudentName(data.student_name || "");
         setAgencyName(data.agency_name || "");
         setProfessionalLevel(data.professional_level || "");
+        setEducationLevel(data.education_level || "");
         setPartyJoinDate(data.party_join_date || "");
         setPlanTitle(data.plan_title || "");
         setTitle(data.title || "");
@@ -73,6 +73,10 @@ function StudentInfoPage() {
     if (professionalLevel !== studentInfo.professional_level)
       changes.push(
         `Chức vị: ${studentInfo.professional_level} → ${professionalLevel}`
+      );
+    if (education_level !== studentInfo.education_level_level)
+      changes.push(
+        `Trình độ học vấn: ${studentInfo.education_level} → ${education_level}`
       );
     if (partyJoinDate !== studentInfo.party_join_date) {
       const oldD = studentInfo.party_join_date
@@ -102,6 +106,7 @@ function StudentInfoPage() {
             student_name: studentName,
             agency_name: agencyName,
             professional_level: professionalLevel,
+            education_level: education_level,
             party_join_date: partyJoinDate,
             plan_title: planTitle,
             title: title,
@@ -135,7 +140,7 @@ function StudentInfoPage() {
       <div className="student-container">
         <div className="student-info-card">
           <div className="student-info-header">
-            <h2>Thông tin sinh viên</h2>
+            <h2>Thông tin học viên</h2>
           </div>
 
           <div className="student-info-content">
@@ -163,7 +168,7 @@ function StudentInfoPage() {
               <span className="info-value">{studentInfo?.gender}</span>
             </div>
 
-             <div className="student-info-row">
+            <div className="student-info-row">
               <span className="info-label">Ngày kết nạp:</span>
               <span className="info-value">
                 {studentInfo?.party_join_date
@@ -181,14 +186,14 @@ function StudentInfoPage() {
 
             <div className="student-info-row">
               <span className="info-label">Trình độ chuyên môn:</span>
-              <span className="info-value">{studentInfo?.professional_level}</span>
+              <span className="info-value">
+                {studentInfo?.professional_level}
+              </span>
             </div>
 
             <div className="student-info-row">
               <span className="info-label">Chức vụ:</span>
-              <span className="info-value">
-                {studentInfo?.title}
-              </span>
+              <span className="info-value">{studentInfo?.title}</span>
             </div>
 
             <div className="student-info-row">
@@ -209,11 +214,6 @@ function StudentInfoPage() {
             <div className="student-info-row">
               <span className="info-label">Khoá học:</span>
               <span className="info-value">{studentInfo?.course_name}</span>
-            </div>
-
-            <div className="student-info-row">
-              <span className="info-label">Barcode:</span>
-              <span className="info-value">{studentInfo?.barcode}</span>
             </div>
           </div>
           <div className="student-info-actions">
@@ -269,7 +269,7 @@ function StudentInfoPage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                  
+
                   <label>Đơn vị:</label>
                   <input
                     type="text"

@@ -22,12 +22,12 @@ exports.getSubjectById = async (req, res) => {
 };
 
 exports.createSubject = async (req, res) => {
-  const { subject_name, subject_code } = req.body;
+  const { subject_name, subject_code, total_lessons } = req.body;
   if (!subject_name || !subject_code) {
     return res.status(400).json({ error: "Thiếu tên hoặc mã học phần" });
   }
   try {
-    await subjectModel.create({ subject_name, subject_code });
+    await subjectModel.create({ subject_name, subject_code, total_lessons });
     res.status(201).json({ message: "Thêm học phần thành công" });
   } catch (err) {
     console.error(err);
@@ -37,11 +37,12 @@ exports.createSubject = async (req, res) => {
 
 exports.updateSubject = async (req, res) => {
   const { id } = req.params;
-  const { subject_name, subject_code } = req.body;
+  const { subject_name, subject_code, total_lessons } = req.body;
   try {
     const count = await subjectModel.updateById(id, {
       subject_name,
       subject_code,
+      total_lessons,
     });
     if (count === 0)
       return res.status(404).json({ error: "Không tìm thấy học phần" });

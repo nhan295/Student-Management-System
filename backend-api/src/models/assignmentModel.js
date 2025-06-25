@@ -63,13 +63,12 @@ const assignmentModel = {
       .where("assignment.is_active", true); // Hiện các cặp môn-gv đang đc phân công
   },
 
-  // delAssign: (assignment_id) => {
-  //   return db("assignment").where({ assignment_id: assignment_id }).del();
-  // },
+
   delAssign: (assignment_id) => {
     return db("assignment")
       .where({ assignment_id })
-      .update({ is_active: false }); // Đánh dấu là không hoạt động thay vì xóa
+      .del();
+     
   },
 
   editAssign: (assignment_id, lecturer_id, subject_id, class_id) => {

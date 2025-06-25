@@ -1,4 +1,4 @@
-const ProgressModel = require("../models/ProgressModel");
+const progressModel = require("../models/progressModel");
 
 exports.getProgressByStudent = async (req, res) => {
   const { student_id } = req.params;
@@ -10,7 +10,7 @@ exports.getProgressByStudent = async (req, res) => {
 
   try {
     // Gọi model
-    const rows = await ProgressModel.getProgressByStudent(sid);
+    const rows = await progressModel.getProgressByStudent(sid);
     return res.json({ student_id: sid, progress: rows });
   } catch (err) {
     console.error("Lỗi khi lấy tiến độ học tập:", err);

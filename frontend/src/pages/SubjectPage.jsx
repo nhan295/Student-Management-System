@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ConfirmDialog from "../components/formDialog";
+import ConfirmDialog from "../components/FormDialog";
 import "../styles/SubjectPage.css";
 
 const PAGE_SIZE = 5;
@@ -99,16 +99,18 @@ export default function SubjectPage() {
       <table className="subject-table">
         <colgroup>
           <col style={{ width: "8%" }} />
-          <col style={{ width: "20%" }} />
+          <col style={{ width: "15%" }} />
           <col style={{ width: "45%" }} />
-          <col style={{ width: "13%" }} />
-          <col style={{ width: "14%" }} />
+          <col style={{ width: "12%" }} />
+          <col style={{ width: "10%" }} />
+          <col style={{ width: "10%" }} />
         </colgroup>
         <thead>
           <tr>
             <th>STT</th>
             <th>Mã HP</th>
             <th>Tên học phần</th>
+            <th>Tổng số tiết</th>
             <th>Sửa</th>
             <th>Xóa</th>
           </tr>
@@ -119,6 +121,7 @@ export default function SubjectPage() {
               <td>{startIdx + idx + 1}</td>
               <td>{s.subject_code}</td>
               <td>{s.subject_name}</td>
+              <td>{s.total_lessons}</td>
               <td>
                 <button
                   className="btn-edit"
@@ -149,6 +152,7 @@ export default function SubjectPage() {
 
           {Array.from({ length: blanksCount }).map((_, i) => (
             <tr key={`blank-${i}`} className="blank-row">
+              <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>

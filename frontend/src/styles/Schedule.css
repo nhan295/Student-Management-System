@@ -372,3 +372,19 @@ dialog::backdrop {
 .calendar-event:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.table-container {
+  /* nếu chưa có overflow-x, thêm luôn overflow-y */
+  max-height: calc(
+    100vh - 400px
+  ); /* 400px ~ chiều cao của header + form; chỉnh lại cho phù hợp */
+  overflow-y: auto;
+}
+
+/* 2. Sticky header chỉ dính trong .table-container */
+.table-container table thead {
+  position: sticky;
+  top: 0;
+  background-color: #2563eb; /* cùng màu với header cũ */
+  z-index: 2; /* đảm bảo nằm trên rows */
+}

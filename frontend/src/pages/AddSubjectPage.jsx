@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import ConfirmDialog from "../components/formDialog";
-import "../styles/index.css";
+import ConfirmDialog from "../components/FormDialog";
+import "../styles/Index.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function AddSubject() {
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
+  const [totalLessons, setTotalLessons] = useState("");
   const [recentSubjects, setRecentSubjects] = useState([]);
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -47,16 +50,18 @@ export default function AddSubject() {
         await axios.post("http://localhost:3000/api/v1/subjects", {
           subject_name: data.name,
           subject_code: data.code,
+          total_lessons: data.totalLessons,
         });
-        alert(`Đã thêm: ${data.name} (${data.code})`);
+        toast.success(`Đã thêm: ${data.name} (${data.code})`);
         setSubjectName("");
         setSubjectCode("");
+        setTotalLessons("");
         fetchRecent();
       } else if (mode === "delete") {
         await axios.delete(
           `http://localhost:3000/api/v1/subjects/${data.subject_id}`
         );
-        alert(`Đã xóa: ${data.subject_name} (${data.subject_code})`);
+        toast.success(`Đã xóa: ${data.subject_name} (${data.subject_code})`);
         fetchRecent();
       }
     } catch (err) {
@@ -68,7 +73,7 @@ export default function AddSubject() {
   // Form submit for add
   const handleAdd = (e) => {
     e.preventDefault();
-    openConfirm("add", { name: subjectName, code: subjectCode });
+    openConfirm("add", { name: subjectName, code: subjectCode, totalLessons });
   };
 
   // Handle delete click
@@ -117,6 +122,24 @@ export default function AddSubject() {
                 borderRadius: 4,
               }}
               required
+            />
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 25 }}
+          >
+            <label style={{ width: 150 }}>Tổng số tiết:</label>
+            <input
+              type="number"
+              value={totalLessons}
+              onChange={(e) => setTotalLessons(e.target.value)}
+              placeholder="Nhập tổng số tiết"
+              required
+              style={{
+                flex: 1,
+                padding: 8,
+                border: "1px solid #ccc",
+                borderRadius: 4,
+              }}
             />
           </div>
           <button
@@ -207,6 +230,13 @@ export default function AddSubject() {
         </div>
       )}
 
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />
+
       <ConfirmDialog
         isOpen={confirmParams.isOpen}
         title={
@@ -216,7 +246,11 @@ export default function AddSubject() {
         }
         message={
           confirmParams.mode === "add"
-            ? `Bạn có chắc muốn thêm học phần?\nTên HP: ${confirmParams.data?.name}\nMã HP: ${confirmParams.data?.code}`
+            ? `Bạn có chắc muốn thêm học phần?\nTên HP: ${
+                confirmParams.data?.name
+              }\nMã HP: ${confirmParams.data?.code}\nTổng số tiết: ${
+                totalLessons || 0
+              }`
             : `Bạn có chắc muốn xóa học phần?\nTên HP: ${confirmParams.data?.subject_name}\nMã HP: ${confirmParams.data?.subject_code}`
         }
         onConfirm={handleConfirm}

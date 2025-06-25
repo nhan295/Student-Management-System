@@ -52,7 +52,7 @@ export default function AddSubject() {
           subject_code: data.code,
           total_lessons: data.totalLessons,
         });
-        alert(`Đã thêm: ${data.name} (${data.code})`);
+        toast.success(`Đã thêm: ${data.name} (${data.code})`);
         setSubjectName("");
         setSubjectCode("");
         setTotalLessons("");

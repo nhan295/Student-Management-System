@@ -321,33 +321,35 @@ export default function AttendancePage() {
                     />
                   </p>
                 </div>
-                <table className="attendance-table">
-                  <thead>
-                    <tr>
-                      <th>Mã HV</th>
-                      <th>Học viên</th>
-                      <th>Số ngày vắng</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map((s) => (
-                      <tr key={s.student_id}>
-                        <td>{s.student_id}</td>
-                        <td>{s.student_name}</td>
-                        <td>
-                          <input
-                            type="number"
-                            min={0}
-                            value={attendanceData[s.student_id] || ""}
-                            onChange={(e) =>
-                              handleAbsentChange(s.student_id, e.target.value)
-                            }
-                          />
-                        </td>
+                <div className="table-container">
+                  <table className="attendance-table">
+                    <thead>
+                      <tr>
+                        <th>Mã HV</th>
+                        <th>Học viên</th>
+                        <th>Số ngày vắng</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {students.map((s) => (
+                        <tr key={s.student_id}>
+                          <td>{s.student_id}</td>
+                          <td>{s.student_name}</td>
+                          <td>
+                            <input
+                              type="number"
+                              min={0}
+                              value={attendanceData[s.student_id] || ""}
+                              onChange={(e) =>
+                                handleAbsentChange(s.student_id, e.target.value)
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
                 <button className="submit-btn" onClick={confirmAdd}>
                   Lưu điểm danh
                 </button>
@@ -379,85 +381,87 @@ export default function AttendancePage() {
             </div>
 
             {history.length > 0 ? (
-              <table className="attendance-table history">
-                <thead>
-                  <tr>
-                    <th>Mã HV</th>
-                    <th>Họ tên</th>
-                    <th>Số ngày vắng</th>
-                    <th>Tổng buổi</th>
-                    <th>Ngày ghi</th>
-                    <th>Hành động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {history.map((h) => (
-                    <tr key={h.warning_id}>
-                      <td>{h.student_id}</td>
-                      <td>{h.student_name}</td>
-                      <td>
-                        {editingId === h.warning_id ? (
-                          <input
-                            type="number"
-                            value={editingData.absent_day}
-                            onChange={(e) =>
-                              setEditingData({
-                                ...editingData,
-                                absent_day: e.target.value,
-                              })
-                            }
-                            style={{ width: "50px" }}
-                          />
-                        ) : (
-                          h.absent_day
-                        )}
-                      </td>
-                      <td>
-                        {editingId === h.warning_id ? (
-                          <input
-                            type="number"
-                            value={editingData.total_day}
-                            onChange={(e) =>
-                              setEditingData({
-                                ...editingData,
-                                total_day: e.target.value,
-                              })
-                            }
-                            style={{ width: "50px" }}
-                          />
-                        ) : (
-                          h.total_day
-                        )}
-                      </td>
-                      <td>
-                        {new Date(h.created_at).toLocaleDateString("vi-VN")}
-                      </td>
-                      <td>
-                        {editingId === h.warning_id ? (
-                          <button onClick={() => confirmUpdate(h.warning_id)}>
-                            💾
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              setEditingId(h.warning_id);
-                              setEditingData({
-                                absent_day: h.absent_day,
-                                total_day: h.total_day,
-                              });
-                            }}
-                          >
-                            ✏️
-                          </button>
-                        )}
-                        <button onClick={() => confirmDelete(h.warning_id)}>
-                          🗑️
-                        </button>
-                      </td>
+              <div className="table-container">
+                <table className="attendance-table history">
+                  <thead>
+                    <tr>
+                      <th>Mã HV</th>
+                      <th>Họ tên</th>
+                      <th>Số ngày vắng</th>
+                      <th>Tổng buổi</th>
+                      <th>Ngày ghi</th>
+                      <th>Hành động</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {history.map((h) => (
+                      <tr key={h.warning_id}>
+                        <td>{h.student_id}</td>
+                        <td>{h.student_name}</td>
+                        <td>
+                          {editingId === h.warning_id ? (
+                            <input
+                              type="number"
+                              value={editingData.absent_day}
+                              onChange={(e) =>
+                                setEditingData({
+                                  ...editingData,
+                                  absent_day: e.target.value,
+                                })
+                              }
+                              style={{ width: "50px" }}
+                            />
+                          ) : (
+                            h.absent_day
+                          )}
+                        </td>
+                        <td>
+                          {editingId === h.warning_id ? (
+                            <input
+                              type="number"
+                              value={editingData.total_day}
+                              onChange={(e) =>
+                                setEditingData({
+                                  ...editingData,
+                                  total_day: e.target.value,
+                                })
+                              }
+                              style={{ width: "50px" }}
+                            />
+                          ) : (
+                            h.total_day
+                          )}
+                        </td>
+                        <td>
+                          {new Date(h.created_at).toLocaleDateString("vi-VN")}
+                        </td>
+                        <td>
+                          {editingId === h.warning_id ? (
+                            <button onClick={() => confirmUpdate(h.warning_id)}>
+                              💾
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setEditingId(h.warning_id);
+                                setEditingData({
+                                  absent_day: h.absent_day,
+                                  total_day: h.total_day,
+                                });
+                              }}
+                            >
+                              ✏️
+                            </button>
+                          )}
+                          <button onClick={() => confirmDelete(h.warning_id)}>
+                            🗑️
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <p>⚠️HÃY CHỌN HỌC PHẦN VÀ LỚP CÓ ĐIỂM DANH⚠️ </p>
             )}

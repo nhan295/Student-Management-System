@@ -217,10 +217,6 @@ function StudentInfoPage() {
               <span className="info-value">{studentInfo?.course_name}</span>
             </div>
 
-            <div className="student-info-row">
-              <span className="info-label">Barcode:</span>
-              <span className="info-value">{studentInfo?.barcode}</span>
-            </div>
           </div>
           <div className="student-info-actions">
             <button className="btn-info-edit" onClick={OpenEdit}>

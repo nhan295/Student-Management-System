@@ -20,7 +20,6 @@ exports.addStudent = async (req, res) => {
       title,
       agency_name,
       plan_title,
-      barcode,
       course_id,
       class_id,
     } = req.body;
@@ -38,7 +37,6 @@ exports.addStudent = async (req, res) => {
       title,
       agency_name,
       plan_title,
-      barcode,
       course_id,
       class_id,
     });

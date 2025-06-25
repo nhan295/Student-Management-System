@@ -47,6 +47,7 @@ function StudentInfoPage() {
         setStudentName(data.student_name || "");
         setAgencyName(data.agency_name || "");
         setProfessionalLevel(data.professional_level || "");
+        setEducationLevel(data.education_level || "");
         setPartyJoinDate(data.party_join_date || "");
         setPlanTitle(data.plan_title || "");
         setTitle(data.title || "");
@@ -73,6 +74,10 @@ function StudentInfoPage() {
     if (professionalLevel !== studentInfo.professional_level)
       changes.push(
         `Chức vị: ${studentInfo.professional_level} → ${professionalLevel}`
+      );
+      if (education_level !== studentInfo.education_level_level)
+      changes.push(
+        `Trình độ học vấn: ${studentInfo.education_level} → ${education_level}`
       );
     if (partyJoinDate !== studentInfo.party_join_date) {
       const oldD = studentInfo.party_join_date
@@ -102,6 +107,7 @@ function StudentInfoPage() {
             student_name: studentName,
             agency_name: agencyName,
             professional_level: professionalLevel,
+            education_level: education_level,
             party_join_date: partyJoinDate,
             plan_title: planTitle,
             title: title,

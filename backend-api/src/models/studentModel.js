@@ -5,7 +5,7 @@ const StudentModel = {
   addStudent: async (student) => {
     const [result] = await db.execute(
       `INSERT INTO students 
-      (student_id, student_name, birthday, gender, party_join_date, education_level, professional_level, title, agency_name, plan_title, barcode, course_id, class_id)
+      (student_id, student_name, birthday, gender, party_join_date, education_level, professional_level, title, agency_name, plan_title, course_id, class_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         student.student_id,
@@ -18,7 +18,6 @@ const StudentModel = {
         student.title,
         student.agency_name,
         student.plan_title,
-        student.barcode,
         student.course_id,
         student.class_id,
       ]
@@ -41,7 +40,6 @@ const StudentModel = {
         "title",
         "agency_name",
         "plan_title",
-        "barcode",
         "course_id",
         "class_id"
       )

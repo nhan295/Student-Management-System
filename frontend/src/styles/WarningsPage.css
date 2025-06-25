@@ -112,3 +112,18 @@
   font-weight: bold;
   font-size: 1.1rem;
 }
+/* Chỉ vùng bảng được scroll, không ảnh hưởng form */
+.table-scroll {
+  max-height: calc(
+    100vh - 460px
+  ); /* 460px ≈ form + tab-bar + margins; chỉnh cho vừa */
+  overflow-y: auto;
+}
+
+/* Sticky header bên trong vùng scroll đó */
+.table-scroll thead {
+  position: sticky;
+  top: 0;
+  background-color: #2563eb; /* giữ màu cột header */
+  z-index: 1;
+}

@@ -7,7 +7,7 @@ function AddStudentForm() {
     student_id: "",
     student_name: "",
     birthday: "",
-    education_level: "", 
+    education_level: "",
     gender: "",
     party_join_date: "",
     professional_level: "",
@@ -18,7 +18,6 @@ function AddStudentForm() {
     course_id: "",
     class_id: "",
   });
-  
 
   const [courses, setCourses] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -82,7 +81,13 @@ function AddStudentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Các trường không cần validate
+    const optionalFields = ["barcode", "plan_title"];
+
+    // Check các trường bắt buộc
     for (let key in form) {
+      if (optionalFields.includes(key)) continue;
       if (!form[key]) {
         alert(`Vui lòng điền đầy đủ thông tin: ${key}`);
         return;
@@ -91,7 +96,7 @@ function AddStudentForm() {
 
     try {
       await axios.post("http://localhost:3000/api/v1/students", form);
-      alert("Thêm sinh viên thành công!");
+      alert("Thêm học viên thành công!");
       setForm({
         student_id: "",
         student_name: "",
@@ -108,7 +113,7 @@ function AddStudentForm() {
       });
     } catch (err) {
       console.error("Lỗi từ backend:", err.response?.data || err.message);
-      alert("Lỗi khi thêm sinh viên!");
+      alert("Lỗi khi thêm học viên!");
     }
   };
 
@@ -143,21 +148,21 @@ function AddStudentForm() {
 
   const handleAddNewClass = async () => {
     const { class_name, course_id, total_student } = newClass;
-  
+
     if (!class_name || !course_id || !total_student) {
       alert("Vui lòng điền đầy đủ thông tin lớp học mới.");
       return;
     }
-  
+
     const payload = {
       class_name,
       course_id: Number(course_id),
       total_student: Number(total_student),
     };
-  
+
     try {
       await axios.post("http://localhost:3000/api/v1/classes", payload);
-  
+
       alert("Thêm lớp học mới thành công!");
       setNewClass({
         class_name: "",
@@ -171,11 +176,10 @@ function AddStudentForm() {
       alert("Không thể thêm lớp học mới.");
     }
   };
-  
 
   return (
     <div className="add-student-form-container">
-      <h3>Thêm sinh viên mới</h3>
+      <h3>Thêm học viên mới</h3>
       <form onSubmit={handleSubmit}>
         <input
           name="student_id"
@@ -243,12 +247,12 @@ function AddStudentForm() {
           value={form.plan_title}
           onChange={handleInputChange}
         />
-        <input
+        {/* <input
           name="barcode"
           placeholder="Mã vạch"
           value={form.barcode}
           onChange={handleInputChange}
-        />
+        /> */}
 
         <select
           name="course_id"
@@ -277,7 +281,9 @@ function AddStudentForm() {
           ))}
         </select>
 
-        <button type="submit" className="add-student">Thêm sinh viên</button>
+        <button type="submit" className="add-student">
+          Thêm học viên
+        </button>
         <button
           type="button"
           onClick={() => setShowCourseForm(!showCourseForm)}

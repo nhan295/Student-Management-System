@@ -22,7 +22,6 @@ function StudentInfoPage() {
   const [title, setTitle] = useState("");
   const [education_level, setEducationLevel] = useState("");
 
-
   // ConfirmDialog state
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
@@ -75,7 +74,7 @@ function StudentInfoPage() {
       changes.push(
         `Chức vị: ${studentInfo.professional_level} → ${professionalLevel}`
       );
-      if (education_level !== studentInfo.education_level_level)
+    if (education_level !== studentInfo.education_level_level)
       changes.push(
         `Trình độ học vấn: ${studentInfo.education_level} → ${education_level}`
       );
@@ -141,7 +140,7 @@ function StudentInfoPage() {
       <div className="student-container">
         <div className="student-info-card">
           <div className="student-info-header">
-            <h2>Thông tin sinh viên</h2>
+            <h2>Thông tin học viên</h2>
           </div>
 
           <div className="student-info-content">
@@ -169,7 +168,7 @@ function StudentInfoPage() {
               <span className="info-value">{studentInfo?.gender}</span>
             </div>
 
-             <div className="student-info-row">
+            <div className="student-info-row">
               <span className="info-label">Ngày kết nạp:</span>
               <span className="info-value">
                 {studentInfo?.party_join_date
@@ -187,14 +186,14 @@ function StudentInfoPage() {
 
             <div className="student-info-row">
               <span className="info-label">Trình độ chuyên môn:</span>
-              <span className="info-value">{studentInfo?.professional_level}</span>
+              <span className="info-value">
+                {studentInfo?.professional_level}
+              </span>
             </div>
 
             <div className="student-info-row">
               <span className="info-label">Chức vụ:</span>
-              <span className="info-value">
-                {studentInfo?.title}
-              </span>
+              <span className="info-value">{studentInfo?.title}</span>
             </div>
 
             <div className="student-info-row">
@@ -216,7 +215,6 @@ function StudentInfoPage() {
               <span className="info-label">Khoá học:</span>
               <span className="info-value">{studentInfo?.course_name}</span>
             </div>
-
           </div>
           <div className="student-info-actions">
             <button className="btn-info-edit" onClick={OpenEdit}>
@@ -271,7 +269,7 @@ function StudentInfoPage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                  
+
                   <label>Đơn vị:</label>
                   <input
                     type="text"

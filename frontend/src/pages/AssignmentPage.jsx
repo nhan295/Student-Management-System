@@ -150,7 +150,7 @@ function Assignment() {
     e.preventDefault();
     openConfirm({
       title: "Xác nhận thêm phân công",
-      message: `Giảng viên: ${lecturer_id}\nHọc phần: ${subject_id}\nLớp: ${class_id}`,
+      message: `Bạn có chắc muốn thêm phân công này?`,
       onConfirm: () => {
         performAdd();
         closeConfirm();
@@ -161,7 +161,7 @@ function Assignment() {
   const handleDeleteClick = (assignment_id) => {
     openConfirm({
       title: "Xác nhận xoá",
-      message: `Bạn có chắc muốn xoá phân công ID: ${assignment_id}?`,
+      message: `Bạn có chắc muốn xoá phân công này?`,
       onConfirm: () => {
         performDelete(assignment_id);
         closeConfirm();
@@ -172,7 +172,7 @@ function Assignment() {
   const handleEditClick = (assignment_id, values) => {
     openConfirm({
       title: "Xác nhận cập nhật",
-      message: `Bạn có chắc muốn cập nhật phân công ID: ${assignment_id}?`,
+      message: `Bạn có chắc muốn cập nhật phân công này?`,
       onConfirm: () => {
         performEdit(assignment_id, values);
         closeConfirm();

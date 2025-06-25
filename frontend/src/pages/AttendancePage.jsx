@@ -21,10 +21,28 @@ export default function AttendancePage() {
   const [confirmAction, setConfirmAction] = useState(null);
   const [submittedAssignments, setSubmittedAssignments] = useState([]);
 
-  // Load assignments and mark those already submitted
-  useEffect(() => {
-    api.get("/api/v1/attendance/assignments").then(async (res) => {
-      const data = res.data;
+  // // Load assignments and mark those already submitted
+  // useEffect(() => {
+  //   api.get("/api/v1/attendance/assignments").then(async (res) => {
+  //     const data = res.data;
+  //     const checked = await Promise.all(
+  //       data.map(async (a) => {
+  //         const r = await api.get("/api/v1/attendance/history", {
+  //           params: { assignment_id: a.assignment_id },
+  //         });
+  //         return r.data.length > 0 ? a.assignment_id : null;
+  //       })
+  //     );
+  //     setSubmittedAssignments(checked.filter(Boolean));
+  //     setAssignments(data);
+  //   });
+  // }, []);
+  // 1. Tách fetch assignments + đánh dấu đã submit thành hàm riêng
+  const fetchAssignments = async () => {
+    try {
+      const { data } = await api.get("/api/v1/attendance/assignments");
+      setAssignments(data);
+
       const checked = await Promise.all(
         data.map(async (a) => {
           const r = await api.get("/api/v1/attendance/history", {
@@ -34,8 +52,14 @@ export default function AttendancePage() {
         })
       );
       setSubmittedAssignments(checked.filter(Boolean));
-      setAssignments(data);
-    });
+    } catch {
+      toast.error("❌ Lỗi tải assignments");
+    }
+  };
+
+  // 2. Load lần đầu
+  useEffect(() => {
+    fetchAssignments();
   }, []);
 
   // Load students when in 'form' tab and an assignment is selected
@@ -111,6 +135,44 @@ export default function AttendancePage() {
     setConfirmAction(null);
   };
 
+  // const handleSubmitConfirmed = async () => {
+  //   const absent_students = Object.entries(attendanceData)
+  //     .filter(([, v]) => v && parseInt(v) > 0)
+  //     .map(([student_id, absent_day]) => ({
+  //       student_id: parseInt(student_id),
+  //       absent_day: parseInt(absent_day),
+  //       total_day: totalDay,
+  //     }));
+
+  //   if (!selectedAssignment || absent_students.length === 0) {
+  //     toast.warn("⚠️ Hãy chọn học phần và nhập số ngày vắng.");
+  //     return;
+  //   }
+  //   // Double-check not already submitted:
+  //   const checkRes = await api.get("/api/v1/attendance/history", {
+  //     params: { assignment_id: selectedAssignment.assignment_id },
+  //   });
+  //   if (checkRes.data.length > 0) {
+  //     toast.warning(
+  //       `⚠️ Lớp ${selectedAssignment.class_name} - ${selectedAssignment.subject_name} đã được điểm danh.`
+  //     );
+  //     return;
+  //   }
+
+  //   // Submit
+  //   await api
+  //     .post("/api/v1/attendance/add", {
+  //       assignment_id: selectedAssignment.assignment_id,
+  //       absent_students,
+  //     })
+  //     .then(() =>
+  //       toast.success(
+  //         `✔️ Đã lưu điểm danh cho ${absent_students.length} học viên.`
+  //       )
+  //     )
+  //     .catch(() => toast.error("❌ Không thể lưu điểm danh."));
+  //   setAttendanceData({});
+  // };
   const handleSubmitConfirmed = async () => {
     const absent_students = Object.entries(attendanceData)
       .filter(([, v]) => v && parseInt(v) > 0)
@@ -124,7 +186,8 @@ export default function AttendancePage() {
       toast.warn("⚠️ Hãy chọn học phần và nhập số ngày vắng.");
       return;
     }
-    // Double-check not already submitted:
+
+    // double-check
     const checkRes = await api.get("/api/v1/attendance/history", {
       params: { assignment_id: selectedAssignment.assignment_id },
     });
@@ -136,18 +199,23 @@ export default function AttendancePage() {
     }
 
     // Submit
-    await api
-      .post("/api/v1/attendance/add", {
+    try {
+      await api.post("/api/v1/attendance/add", {
         assignment_id: selectedAssignment.assignment_id,
         absent_students,
-      })
-      .then(() =>
-        toast.success(
-          `✔️ Đã lưu điểm danh cho ${absent_students.length} học viên.`
-        )
-      )
-      .catch(() => toast.error("❌ Không thể lưu điểm danh."));
-    setAttendanceData({});
+      });
+      toast.success(
+        `✔️ Đã lưu điểm danh cho ${absent_students.length} học viên.`
+      );
+
+      // 3. Refresh lại data
+      await fetchAssignments();
+      setSelectedAssignment(null);
+      setAttendanceData({});
+      setTotalDay(0);
+    } catch {
+      toast.error("❌ Không thể lưu điểm danh.");
+    }
   };
 
   const handleUpdateConfirmed = async (warningId) => {

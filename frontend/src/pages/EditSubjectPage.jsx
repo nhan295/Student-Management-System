@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ConfirmDialog from "../components/FormDialog";
 import "../styles/Index.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function EditSubject() {
   const { id } = useParams();
@@ -64,10 +66,14 @@ export default function EditSubject() {
     e.preventDefault();
     const { name, code, totalLessons } = form;
 
-    // No changes
-    if (name === original.name && code === original.code) {
+    // // No changes
+    if (
+      name === original.name &&
+      code === original.code &&
+      totalLessons === original.totalLessons
+    ) {
       openConfirm({
-        message: "Bạn chưa thay đổi tên hoặc mã học phần.",
+        message: "Bạn chưa thay đổi dữ liệu.",
         onConfirm: closeConfirm,
       });
       return;
@@ -108,11 +114,11 @@ export default function EditSubject() {
             subject_code: code,
             total_lessons: Number(totalLessons),
           });
-          alert(`Cập nhật thành công: ${name} (${code})`);
-          navigate("/subjects/add");
+          // navigate("/subjects/add");
+          toast.success(`Cập nhật thành công: ${name} (${code})`);
         } catch (err) {
           console.error("Update error:", err);
-          alert("Lỗi khi cập nhật học phần");
+          toast.error("Lỗi khi cập nhật học phần");
         } finally {
           closeConfirm();
         }
@@ -216,6 +222,12 @@ export default function EditSubject() {
         </div>
       </form>
 
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />
       <ConfirmDialog
         isOpen={confirmParams.isOpen}
         title={confirmParams.title}

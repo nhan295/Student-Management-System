@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ConfirmDialog from "../components/FormDialog";
 import "../styles/Index.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function AddSubject() {
   const [subjectName, setSubjectName] = useState("");
@@ -50,7 +52,7 @@ export default function AddSubject() {
           subject_code: data.code,
           total_lessons: data.totalLessons,
         });
-        alert(`Đã thêm: ${data.name} (${data.code})`);
+        toast.success(`Đã thêm: ${data.name} (${data.code})`);
         setSubjectName("");
         setSubjectCode("");
         setTotalLessons("");
@@ -59,7 +61,7 @@ export default function AddSubject() {
         await axios.delete(
           `http://localhost:3000/api/v1/subjects/${data.subject_id}`
         );
-        alert(`Đã xóa: ${data.subject_name} (${data.subject_code})`);
+        toast.success(`Đã xóa: ${data.subject_name} (${data.subject_code})`);
         fetchRecent();
       }
     } catch (err) {
@@ -227,6 +229,13 @@ export default function AddSubject() {
           </ul>
         </div>
       )}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />
 
       <ConfirmDialog
         isOpen={confirmParams.isOpen}

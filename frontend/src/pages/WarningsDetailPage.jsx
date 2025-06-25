@@ -23,7 +23,7 @@ export default function WarningsDetailPage() {
               ...r,
               stt: i + 1,
               percent: pct,
-              status: pct >= 5, // ví dụ: >=25% là đã cảnh báo
+              status: pct >= 25, // ví dụ: >=25% là đã cảnh báo
             };
           })
         );

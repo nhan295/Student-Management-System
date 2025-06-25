@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const progressController = require("../controllers/ProgressController");
+const progressController = require("../controllers/progressController");
 
 module.exports.setup = (app) => {
   // Tương tự studentRoute.setup(app)

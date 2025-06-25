@@ -106,6 +106,7 @@ function ClassList() {
         <select
           value={subjectId}
           onChange={(e) => setSubjectId(e.target.value)}
+          className="subject-select"
         >
           <option value="">-- Chọn học phần --</option>
           {subjectOptions.map((subject) => (

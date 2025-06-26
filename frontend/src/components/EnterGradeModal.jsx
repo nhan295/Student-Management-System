@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Modal, Form, Select, InputNumber, Table, message } from "antd";
 
 const { Option } = Select;
@@ -17,8 +17,8 @@ const EnterGradeModal = ({ visible, onClose }) => {
     const fetchData = async () => {
       try {
         const [subjectsRes, classesRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/v1/subjects"),
-          axios.get("http://localhost:3000/api/v1/classes/all-classes"),
+          api.get("/api/v1/subjects"),
+          api.get("/api/v1/classes/all-classes"),
         ]);
         setSubjects(subjectsRes.data);
         setClasses(classesRes.data);
@@ -31,8 +31,8 @@ const EnterGradeModal = ({ visible, onClose }) => {
 
   const fetchStudents = async (classId) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/v1/classes/${classId}/students`
+      const res = await api.get(
+        `/api/v1/classes/${classId}/students`
       );
       setStudents(res.data);
     } catch {
@@ -63,7 +63,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
         const grade = grades[student.student_id] ?? null;
 
         if (grade !== null) {
-          await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
+          await api.put("/api/v1/classes/update-grade", {
             studentId: student.student_id,
             subjectName: subjectName,
             newGrade: grade,

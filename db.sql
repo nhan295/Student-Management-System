@@ -3,7 +3,6 @@
 -- =============================================
 CREATE DATABASE IF NOT EXISTS `qlyhocvien`;
 USE `qlyhocvien`;
-drop database qlyhocvien;
 
 -- =============================================
 -- 2. Tạo các bảng “gốc” (không phụ thuộc FK)
@@ -217,19 +216,6 @@ CREATE TABLE `attendance` (
 -- =============================================
 -- 14. Chèn dữ liệu mẫu (theo đúng thứ tự)
 -- =============================================
--- 14.2 LECTURERS
-INSERT INTO `lecturers` (`lecturer_name`, `lecturer_email`)
-VALUES
-  ('Nguyễn Văn A', 'nguyenvana@chinhtri.vn'),
-  ('Trần Thị B',   'tranthib@chinhtri.vn'),
-  ('Lê Văn C',     'levanc@chinhtri.vn');
-
--- 14.3 ROOM
-INSERT INTO `room` (`room_id`, `room_name`)
-VALUES
-  (1, 'Hội Trường A1'),
-  (2, 'P101'),
-  (3, 'P102');
 
 -- 14.4 SUBJECTS
 INSERT INTO `subjects` (`subject_name`, `subject_code`,`total_lessons`)
@@ -239,71 +225,6 @@ VALUES
   ( 'Hai nguyên lý của phép biện chứng duy vật ','A.I.3',4),
   ( ' Các cặp phạm trù của phép biện chứng duy vật','A.I.4',8),
   ( 'Những quy luật cơ bản của phép biện chứng duy vật ','A.I.5',8);
-
- -- course
-INSERT INTO courses (course_name, start_year, end_year)
-VALUES
-('2023-2024', 2023, 2024);
-select * from courses;
-
--- class
-INSERT INTO class (class_name, course_id, total_student)
-VALUES
-('KTT', 13, 20),
-('TT', 13, 20);
-select * from class;
-
--- 14.8 STUDENTS
-INSERT INTO students (
-  student_id, student_name, birthday, gender, party_join_date,
-  professional_level, education_level, title, agency_name,
-   course_id, class_id
-) VALUES
-
-(1, 'Nguyễn Hồ A', '1995-08-08', 'Nam', '2017-02-09',
- 'Cử nhân Luật', 'TNC3','Phó Chủ tịch Hội nông dân', 'Phường Thới An, quận Ô Môn',
- 13, 1),
-
-
-(2, 'Nguyễn Thị B', '1981-04-06', 'Nữ', '2023-12-11',
- 'Thạc sĩ Kinh tế nông nghiệp', 'TNC3', 'Giám đốc Quỹ hỗ trợ Phụ nữ phát triển kinh tế',
- 'Hội Liên hiệp phụ nữ thành phố',
- 13, 1),
-
-
-(3, 'Trần Thanh A', '1979-01-07', 'Nam', '2002-08-15',
- 'Cử nhân ngành Chỉ huy - Tham mưu lục quân', 'TNC3', 'Phó Tham mưu trưởng',
- 'Ban Chỉ huy QS huyện Phong Điền, Bộ Chỉ huy QS thành phố',
- 13, 1),
-
-
-(4, 'Đặng Thị S', '1995-08-24', 'Nữ', '2019-05-21',
- 'Cử nhân Luật', 'TNC3', 'Cán bộ Tổ chức - Văn phòng Đảng uỷ xã',
- 'Xã Trường Long, huyện Phong Điền',
- 13, 1),
-
-(5, 'Nguyễn Văn A', '1994-11-28', 'Nữ', '2022-12-12',
- 'Thạc sĩ Quản trị kinh doanh', 'TNC3', 'Chuyên viên',
- 'Trung tâm Xúc tiến đầu tư - Thương mại và Hội chợ triển lãm Cần Thơ',
- 13, 1),
-
-
-(6, 'Nguyễn Ngọc G', '1989-11-15', 'Nam', '2012-09-14',
- 'Đại học Quản lý đất đai', 'TNC3', 'Công chức ĐC - NN - XD và MT',
- 'Xã Trung An, huyện Cờ Đỏ',
- 13, 2),
-
-
-(7, 'Phan Phúc Q', '1991-11-25', 'Nam', '2016-07-01',
- 'Cử nhân Văn học', 'TNC3', 'Chuyên viên',
- 'Trung tâm VH-TT&TT quận Bình Thủy',
- 13, 2),
-
-
-(8, 'Nguyễn Thị Kim', '1992-06-04', 'Nữ', '2015-12-11',
- 'Cử nhân Luật', 'TNC3', 'Cán bộ chính trị MTTQVN',
- 'Phường Hưng Lợi, quận Ninh Kiều',
- 13, 2);
 
 
 -- =============================================

@@ -181,8 +181,7 @@ table {
 
 thead {
   background-color: #eff6ff;
-  position: sticky;
-  top: 96px; /* bằng tổng height của header + search */
+  top: 96px;
   z-index: 5;
 }
 
@@ -253,6 +252,6 @@ td input[type="number"] {
     width: 100%;
   }
 }
-.subject-select{
+.subject-select {
   margin-left: 36px;
 }

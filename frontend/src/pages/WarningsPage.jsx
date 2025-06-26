@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api.js";
-import "../styles/WarningsPage.css"; // dùng chung CSS đã có
-
+import "../styles/WarningsPage.css";
 export default function WarningsPage() {
   const [classSubjects, setClassSubjects] = useState([]);
   const [error, setError] = useState(null);
@@ -53,77 +52,75 @@ export default function WarningsPage() {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <div className="table-container">
-        <table className="assignment-table">
-          <thead>
-            <tr>
-              <th colSpan="3" className="header">
-                <div className="header-content">
-                  <div className="filters">
-                    <select
-                      value={filterClass}
-                      onChange={(e) => setFilterClass(e.target.value)}
-                      className="header-select"
-                    >
-                      <option value="">Tất cả lớp</option>
-                      {classOptions.map((cls, i) => (
-                        <option key={i} value={cls}>
-                          {cls}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      value={filterSubject}
-                      onChange={(e) => setFilterSubject(e.target.value)}
-                      className="header-select"
-                    >
-                      <option value="">Tất cả học phần</option>
-                      {subjectOptions.map((sub, i) => (
-                        <option key={i} value={sub}>
-                          {sub}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <span className="title">DANH SÁCH CÁC LỚP CÓ CẢNH BÁO</span>
+      <table className="assignment-table">
+        <thead>
+          <tr>
+            <th colSpan="3" className="header">
+              <div className="header-content">
+                <div className="filters">
+                  <select
+                    value={filterClass}
+                    onChange={(e) => setFilterClass(e.target.value)}
+                    className="header-select"
+                  >
+                    <option value="">Tất cả lớp</option>
+                    {classOptions.map((cls, i) => (
+                      <option key={i} value={cls}>
+                        {cls}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={filterSubject}
+                    onChange={(e) => setFilterSubject(e.target.value)}
+                    className="header-select"
+                  >
+                    <option value="">Tất cả học phần</option>
+                    {subjectOptions.map((sub, i) => (
+                      <option key={i} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </th>
-            </tr>
-            <tr className="sub-header">
-              <th>Lớp</th>
-              <th>Học phần</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length > 0 ? (
-              filtered.map((cs, idx) => (
-                <tr
-                  key={`${cs.class_id}-${cs.subject_id}`}
-                  className={idx % 2 === 0 ? "even" : "odd"}
-                >
-                  <td>{cs.class_name}</td>
-                  <td>{cs.subject_name}</td>
-                  <td>
-                    <button
-                      className="view-btn"
-                      onClick={() => handleView(cs.class_id, cs.subject_id)}
-                    >
-                      Xem
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="no-data">
-                  Không tìm thấy
+                <span className="title">DANH SÁCH CÁC LỚP CÓ CẢNH BÁO</span>
+              </div>
+            </th>
+          </tr>
+          <tr className="sub-header">
+            <th>Lớp</th>
+            <th>Học phần</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtered.length > 0 ? (
+            filtered.map((cs, idx) => (
+              <tr
+                key={`${cs.class_id}-${cs.subject_id}`}
+                className={idx % 2 === 0 ? "even" : "odd"}
+              >
+                <td>{cs.class_name}</td>
+                <td>{cs.subject_name}</td>
+                <td>
+                  <button
+                    className="view-btn"
+                    onClick={() => handleView(cs.class_id, cs.subject_id)}
+                  >
+                    Xem
+                  </button>
                 </td>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="no-data">
+                Không tìm thấy
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }

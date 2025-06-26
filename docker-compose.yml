@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend-api
     ports:
-      - "5000:5000"
+      - "5000:3000"
     depends_on:
       - db
     environment:

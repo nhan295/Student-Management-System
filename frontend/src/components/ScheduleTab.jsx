@@ -5,7 +5,7 @@ import WeeklyTimeline from "./WeeklyTimeline";
 import ConfirmDialog from "./FormDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/schedule.css";
+import "../styles/Schedule.css";
 
 export default function ScheduleTab() {
   // ─── State chính ───

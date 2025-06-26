@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import api from "../api";
 import WeeklyTimeline from "./WeeklyTimeline";
 import ConfirmDialog from "./FormDialog";
 import { ToastContainer, toast } from "react-toastify";
@@ -63,11 +63,11 @@ export default function ScheduleTab() {
       try {
         const [lecRes, roomRes, classRes, subRes, assignRes] =
           await Promise.all([
-            axios.get("http://localhost:3000/api/v1/lookups/lecturers"),
-            axios.get("http://localhost:3000/api/v1/lookups/rooms"),
-            axios.get("http://localhost:3000/api/v1/lookups/classes"),
-            axios.get("http://localhost:3000/api/v1/lookups/subjects"),
-            axios.get("http://localhost:3000/api/v1/lookups/assignments"),
+            api.get("/api/v1/lookups/lecturers"),
+            api.get("/api/v1/lookups/rooms"),
+            api.get("/api/v1/lookups/classes"),
+            api.get("/api/v1/lookups/subjects"),
+            api.get("/api/v1/lookups/assignments"),
           ]);
 
         if (lecRes.data.success) setLecturers(lecRes.data.data);
@@ -98,10 +98,10 @@ export default function ScheduleTab() {
       const mm2 = String(saturday.getMonth() + 1).padStart(2, "0");
       const dd2 = String(saturday.getDate()).padStart(2, "0");
       const endDate = `${yyyy2}-${mm2}-${dd2}`;
-      let url = `http://localhost:3000/api/v1/schedules?startDate=${startDate}&endDate=${endDate}`;
+      let url = `${api.defaults.baseURL}api/v1/schedules?startDate=${startDate}&endDate=${endDate}`;
       if (selectedLecturer) url += `&lecturer_id=${selectedLecturer}`;
       try {
-        const res = await axios.get(url);
+        const res = await api.get(url);
         if (res.data.success) setSchedules(res.data.data);
         else setError("Không tải được lịch.");
       } catch (err) {
@@ -184,8 +184,8 @@ export default function ScheduleTab() {
   };
   const fetchSchedulesOfDay = async (dateString) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/v1/schedules?study_date=${dateString}`
+      const res = await api.get(
+        `/api/v1/schedules?study_date=${dateString}`
       );
       return res.data.success ? res.data.data : [];
     } catch {
@@ -291,13 +291,13 @@ export default function ScheduleTab() {
     };
     try {
       if (isEditing && schedule_id) {
-        await axios.put(
-          `http://localhost:3000/api/v1/schedules/${schedule_id}`,
+        await api.put(
+          `/api/v1/schedules/${schedule_id}`,
           payload
         );
         toast.success("Cập nhật thành công.");
       } else {
-        await axios.post("http://localhost:3000/api/v1/schedules", payload);
+        await api.post("/api/v1/schedules", payload);
         toast.success("Thêm lịch học thành công.");
       }
       goToday();
@@ -342,7 +342,7 @@ export default function ScheduleTab() {
   // ─── Xóa ───
   const performDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/schedules/${id}`);
+      await api.delete(`/api/v1/schedules/${id}`);
       toast.success("Xóa thành công.");
       goToday();
     } catch (err) {

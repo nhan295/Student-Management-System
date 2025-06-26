@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import ConfirmDialog from "../components/FormDialog";
 import "../styles/Index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,8 +28,8 @@ export default function EditSubject() {
     async function fetchData() {
       try {
         const [resSub, resAll] = await Promise.all([
-          axios.get(`http://localhost:3000/api/v1/subjects/${id}`),
-          axios.get("http://localhost:3000/api/v1/subjects"),
+          api.get(`/api/v1/subjects/${id}`),
+          api.get("/api/v1/subjects"),
         ]);
         const { subject_name, subject_code, total_lessons } = resSub.data;
         setForm({
@@ -109,7 +109,7 @@ export default function EditSubject() {
       message: `Bạn có muốn cập nhật học phần thành:\nTên: ${name}\nMã: ${code}\nTổng số tiết: ${totalLessons}`,
       onConfirm: async () => {
         try {
-          await axios.put(`http://localhost:3000/api/v1/subjects/${id}`, {
+          await api.put(`/api/v1/subjects/${id}`, {
             subject_name: name,
             subject_code: code,
             total_lessons: Number(totalLessons),

@@ -135,7 +135,6 @@ function ClassList() {
       <table>
         <thead>
           <tr>
-            <th>Học phần</th>
             <th>Tên sinh viên</th>
             <th>Mã lớp</th>
             <th>Điểm</th>
@@ -145,9 +144,8 @@ function ClassList() {
         <tbody>
           {students.map((student, index) => (
             <tr key={index}>
-              <td>{student.subject_name}</td>
               <td>{student.student_name}</td>
-              <td>{student.class_id}</td>
+              <td>{student.class_name}</td>
               <td>
                 {editingIndex === index ? (
                   <input

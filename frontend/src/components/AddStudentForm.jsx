@@ -547,7 +547,7 @@ function AddStudentForm() {
         setShowClassForm(false);
       }
     } catch (err) {
-      toast.error("Lỗi khi thực hiện thao tác!");
+      toast.error("Mã học viên đã tồn tại!");
       console.error(err);
     }
   };

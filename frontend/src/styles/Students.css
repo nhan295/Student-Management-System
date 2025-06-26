@@ -100,7 +100,8 @@
 }
 
 .student-list-container {
-  max-width: 1000px;
+  max-width: 100%;
+  width: 95vw; /* Hoặc bạn có thể dùng 100vw nếu muốn full màn hình */
   margin: 20px auto;
   padding: 10px;
   font-family: Arial, sans-serif;

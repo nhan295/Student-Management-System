@@ -59,7 +59,7 @@ function App() {
         <Route path="classes/search" element={<ClassList />} />
         <Route path="schedules" element={<SchedulePage />} />
 
-        <Route path="students" element={<StudentPage />} />
+        <Route path="students" element={<StudentPage/>} />
         <Route path="student/search" element={<SearchStudentPage />} />
 
         <Route

@@ -6,6 +6,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
+# Thêm dòng này để copy nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Clear cache và xóa lock file, sau đó install lại
 RUN npm cache clean --force
 RUN rm -f package-lock.json

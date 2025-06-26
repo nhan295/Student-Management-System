@@ -401,7 +401,12 @@ export default function SubjectPage() {
       />
 
       {/* Toast notification */}
-      <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />
     </div>
   );
 }

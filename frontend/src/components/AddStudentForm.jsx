@@ -462,7 +462,7 @@ function AddStudentForm() {
     for (let key in form) {
       if (optionalFields.includes(key)) continue;
       if (!form[key]) {
-        alert(`Vui lòng điền đầy đủ thông tin: ${key}`);
+        toast.warning(`Vui lòng điền đầy đủ thông tin: ${key}`);
         return;
       }
     }
@@ -478,7 +478,7 @@ function AddStudentForm() {
   const handleAddNewCourse = () => {
     const { course_name, start_year, end_year } = newCourse;
     if (!course_name || !start_year || !end_year) {
-      alert("Vui lòng điền đầy đủ thông tin khóa học mới.");
+      toast.warning("Vui lòng điền đầy đủ thông tin khóa học mới.");
       return;
     }
     setConfirmParams({
@@ -672,7 +672,6 @@ function AddStudentForm() {
           {showClassForm ? "Ẩn form lớp học" : "Thêm lớp học"}
         </button>
       </form>
-
       {showCourseForm && (
         <div className="new-course-form">
           <h4>Thêm khóa học mới</h4>
@@ -701,7 +700,6 @@ function AddStudentForm() {
           </button>
         </div>
       )}
-
       {showClassForm && (
         <div className="new-class-form">
           <h4>Thêm lớp học mới</h4>
@@ -735,7 +733,6 @@ function AddStudentForm() {
           </button>
         </div>
       )}
-
       {/* ConfirmDialog + ToastContainer */}
       <ConfirmDialog
         isOpen={confirmParams.isOpen}
@@ -752,7 +749,12 @@ function AddStudentForm() {
         onConfirm={handleConfirm}
         onCancel={closeConfirm}
       />
-      <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />{" "}
     </div>
   );
 }

@@ -98,7 +98,7 @@ export default function ScheduleTab() {
       const mm2 = String(saturday.getMonth() + 1).padStart(2, "0");
       const dd2 = String(saturday.getDate()).padStart(2, "0");
       const endDate = `${yyyy2}-${mm2}-${dd2}`;
-      let url = `${api.defaults.baseURL}api/v1/schedules?startDate=${startDate}&endDate=${endDate}`;
+      let url = `${api.defaults.baseURL}/api/v1/schedules?startDate=${startDate}&endDate=${endDate}`;
       if (selectedLecturer) url += `&lecturer_id=${selectedLecturer}`;
       try {
         const res = await api.get(url);

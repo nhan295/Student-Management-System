@@ -216,33 +216,28 @@ CREATE TABLE `attendance` (
 -- =============================================
 -- 14. Chèn dữ liệu mẫu (theo đúng thứ tự)
 -- =============================================
+-- 14.2 LECTURERS
+INSERT INTO `lecturers` (`lecturer_name`, `lecturer_email`)
+VALUES
+  ('Nguyễn Văn A', 'nguyenvana@chinhtri.vn'),
+  ('Trần Thị B',   'tranthib@chinhtri.vn'),
+  ('Lê Văn C',     'levanc@chinhtri.vn');
+
+-- 14.3 ROOM
+INSERT INTO `room` (`room_id`, `room_name`)
+VALUES
+  (1, 'Hội Trường A1'),
+  (2, 'P101'),
+  (3, 'P102');
 
 -- 14.4 SUBJECTS
-INSERT INTO `subjects` (`subject_name`, `subject_code`,`total_lessons`)
+INSERT INTO `subjects` (`subject_name`, `subject_code`, `total_lessons`)
 VALUES
-  ( 'Triết học Mác - Lênin trong đời sống xã hội','A.I.1',4),
-  ( 'Chủ nghĩa duy vật mácxít - thế giới quan khoa học cho nhận thức và cải tạo hiện thực','A.I.2',4),
-  ( 'Hai nguyên lý của phép biện chứng duy vật ','A.I.3',4),
-  ( ' Các cặp phạm trù của phép biện chứng duy vật','A.I.4',8),
-  ( 'Những quy luật cơ bản của phép biện chứng duy vật ','A.I.5',8);
+  ('Triet hoc Mac, Lenin trong doi song xa hoi', 'A.I.1', 4),
+  ('Chu nghia duy vat macxit, the gioi quan khoa hoc cho nhan thuc va cai tao hien thuc', 'A.I.2', 4),
+  ('Hai nguyen ly cua phep bien chung duy vat', 'A.I.3', 4),
+  ('Cac cap pham tru cua phep bien chung duy vat', 'A.I.4', 8),
+  ('Nhung quy luat co ban cua phep bien chung duy vat', 'A.I.5', 8);
 
 
--- =============================================
--- 15. Kiểm tra dữ liệu
--- =============================================
-SELECT * FROM courses;
-SELECT * FROM lecturers;
-SELECT * FROM room;
-SELECT * FROM subjects;
-SELECT * FROM class;
-SELECT * FROM class_subjects;
-SELECT * FROM subjects_lecturers;
-SELECT * FROM students;
-SELECT * FROM assignment;
-SELECT * FROM exam_schedule;
-SELECT * FROM schedules;
-SELECT * FROM exams;
-SELECT * FROM graduation_certificates;
-SELECT * FROM study_warnings;
-SELECT * FROM attendance;
 

@@ -1,7 +1,12 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET character_set_connection=utf8mb4;
 -- =============================================
 -- 1. Tạo Database và chọn schema
 -- =============================================
-CREATE DATABASE IF NOT EXISTS `qlyhocvien`;
+CREATE DATABASE IF NOT EXISTS `qlyhocvien` 
+DEFAULT CHARACTER SET utf8mb4 
+DEFAULT COLLATE utf8mb4_unicode_ci;
 USE `qlyhocvien`;
 
 -- =============================================
@@ -231,13 +236,14 @@ VALUES
   (3, 'P102');
 
 -- 14.4 SUBJECTS
-INSERT INTO `subjects` (`subject_name`, `subject_code`, `total_lessons`)
+INSERT INTO `subjects` (`subject_name`, `subject_code`,`total_lessons`)
 VALUES
-  ('Triet hoc Mac, Lenin trong doi song xa hoi', 'A.I.1', 4),
-  ('Chu nghia duy vat macxit, the gioi quan khoa hoc cho nhan thuc va cai tao hien thuc', 'A.I.2', 4),
-  ('Hai nguyen ly cua phep bien chung duy vat', 'A.I.3', 4),
-  ('Cac cap pham tru cua phep bien chung duy vat', 'A.I.4', 8),
-  ('Nhung quy luat co ban cua phep bien chung duy vat', 'A.I.5', 8);
+  ( 'Triết học Mác - Lênin trong đời sống xã hội','A.I.1',4),
+  ( 'Chủ nghĩa duy vật mácxít - thế giới quan khoa học cho nhận thức và cải tạo hiện thực','A.I.2',4),
+  ( 'Hai nguyên lý của phép biện chứng duy vật ','A.I.3',4),
+  ( ' Các cặp phạm trù của phép biện chứng duy vật','A.I.4',8),
+  ( 'Những quy luật cơ bản của phép biện chứng duy vật ','A.I.5',8);
+
 
 
 

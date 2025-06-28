@@ -8,19 +8,56 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/Schedule.css";
 
 export default function ScheduleTab() {
+  // ─── Timezone utility functions ───
+ const getLocalDate = (date = new Date()) => {
+  // Tạo date object theo timezone Vietnam (UTC+7)
+  // Sử dụng offset cố định để tránh vấn đề timezone khác nhau giữa local và Docker
+  const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+  const vietnamOffset = 7 * 60; // UTC+7 in minutes
+  const vietnamTime = new Date(utcTime + (vietnamOffset * 60000));
+  return vietnamTime;
+};
+
+
+  const getSundayOfWeek = (date = new Date()) => {
+    const localDate = getLocalDate(date);
+    const day = localDate.getDay();
+    const diff = day === 0 ? 0 : -day;
+    const sunday = new Date(localDate);
+    sunday.setDate(localDate.getDate() + diff);
+    sunday.setHours(0, 0, 0, 0);
+    return sunday;
+  };
+
+  const formatDateForAPI = (date) => {
+    // Đảm bảo format date theo timezone địa phương
+    const localDate = getLocalDate(date);
+    const yyyy = localDate.getFullYear();
+    const mm = String(localDate.getMonth() + 1).padStart(2, "0");
+    const dd = String(localDate.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Helper function để parse date string an toàn
+const parseDate = (dateString) => {
+  // Nếu là ISO string (có timezone), parse bình thường
+  if (dateString.includes('T') || dateString.includes('Z')) {
+    return new Date(dateString);
+  }
+  // Nếu là YYYY-MM-DD, parse như UTC để tránh timezone shifting
+  return new Date(dateString + 'T00:00:00.000Z');
+};
+
+const toLocalDateString = (iso) => {
+  // Parse date an toàn và format
+  const d = parseDate(iso);
+  return formatDateForAPI(d);
+};
   // ─── State chính ───
   const [schedules, setSchedules] = useState([]);
   const [lecturers, setLecturers] = useState([]);
   const [selectedLecturer, setSelectedLecturer] = useState("");
-  const [currentSunday, setCurrentSunday] = useState(() => {
-    const today = new Date();
-    const day = today.getDay();
-    const diff = day === 0 ? 0 : -day;
-    const sunday = new Date(today);
-    sunday.setDate(today.getDate() + diff);
-    sunday.setHours(0, 0, 0, 0);
-    return sunday;
-  });
+  const [currentSunday, setCurrentSunday] = useState(() => getSundayOfWeek());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -88,18 +125,15 @@ export default function ScheduleTab() {
     async function fetchSchedules() {
       setLoading(true);
       setError("");
-      const yyyy = currentSunday.getFullYear();
-      const mm = String(currentSunday.getMonth() + 1).padStart(2, "0");
-      const dd = String(currentSunday.getDate()).padStart(2, "0");
-      const startDate = `${yyyy}-${mm}-${dd}`;
+      
+      const startDate = formatDateForAPI(currentSunday);
       const saturday = new Date(currentSunday);
       saturday.setDate(currentSunday.getDate() + 6);
-      const yyyy2 = saturday.getFullYear();
-      const mm2 = String(saturday.getMonth() + 1).padStart(2, "0");
-      const dd2 = String(saturday.getDate()).padStart(2, "0");
-      const endDate = `${yyyy2}-${mm2}-${dd2}`;
+      const endDate = formatDateForAPI(saturday);
+      
       let url = `${api.defaults.baseURL}/api/v1/schedules?startDate=${startDate}&endDate=${endDate}`;
       if (selectedLecturer) url += `&lecturer_id=${selectedLecturer}`;
+      
       try {
         const res = await api.get(url);
         if (res.data.success) setSchedules(res.data.data);
@@ -126,13 +160,7 @@ export default function ScheduleTab() {
     setCurrentSunday(next);
   };
   const goToday = () => {
-    const today = new Date();
-    const day = today.getDay();
-    const diff = day === 0 ? 0 : -day;
-    const sunday = new Date(today);
-    sunday.setDate(today.getDate() + diff);
-    sunday.setHours(0, 0, 0, 0);
-    setCurrentSunday(sunday);
+    setCurrentSunday(getSundayOfWeek());
   };
 
   // ─── 4. Lọc dropdown ───
@@ -153,6 +181,7 @@ export default function ScheduleTab() {
       }
     return unique;
   }, [assignments, formData.subject_id]);
+
   const classesForSelection = useMemo(() => {
     if (!formData.subject_id || !formData.lecturer_id) return [];
     const filtered = assignments.filter(
@@ -175,13 +204,7 @@ export default function ScheduleTab() {
     const [hh, mm] = timeStr.split(":").map((x) => parseInt(x, 10));
     return hh * 60 + mm;
   };
-  const toLocalDateString = (iso) => {
-    const d = new Date(iso);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-  };
+
   const fetchSchedulesOfDay = async (dateString) => {
     try {
       const res = await api.get(
@@ -230,6 +253,7 @@ export default function ScheduleTab() {
       lecturer_id,
       class_id,
     } = formData;
+    
     // validate
     if (
       !study_date ||
@@ -243,12 +267,14 @@ export default function ScheduleTab() {
       toast.error("Vui lòng điền đầy đủ thông tin.");
       return;
     }
+    
     const newStart = parseTimeToMinutes(start_time),
       newEnd = parseTimeToMinutes(end_time);
     if (newEnd <= newStart) {
       toast.error("Giờ kết thúc phải lớn hơn giờ bắt đầu.");
       return;
     }
+    
     const found = assignments.find(
       (a) =>
         String(a.subject_id) === subject_id &&
@@ -259,6 +285,7 @@ export default function ScheduleTab() {
       toast.error("Cặp (Học phần – Giảng viên – Lớp) không tồn tại.");
       return;
     }
+    
     // check conflict
     const schedulesOfDay = await fetchSchedulesOfDay(study_date);
     for (const row of schedulesOfDay) {
@@ -281,6 +308,7 @@ export default function ScheduleTab() {
         }
       }
     }
+    
     // payload & API
     const payload = {
       study_date,
@@ -289,12 +317,10 @@ export default function ScheduleTab() {
       room_id: Number(room_id),
       assignment_id: found.assignment_id,
     };
+    
     try {
       if (isEditing && schedule_id) {
-        await api.put(
-          `/api/v1/schedules/${schedule_id}`,
-          payload
-        );
+        await api.put(`/api/v1/schedules/${schedule_id}`, payload);
         toast.success("Cập nhật thành công.");
       } else {
         await api.post("/api/v1/schedules", payload);
@@ -350,6 +376,7 @@ export default function ScheduleTab() {
       toast.warning("Lỗi khi xóa.");
     }
   };
+  
   const handleDeleteClick = (id) => {
     openConfirm({
       title: "Xác nhận xóa lịch",
@@ -547,7 +574,7 @@ export default function ScheduleTab() {
               schedules.map((row) => (
                 <tr key={row.schedule_id} className="hover:bg-gray-100">
                   <td>
-                    {new Date(row.study_date).toLocaleDateString("vi-VN")}
+                    {getLocalDate(new Date(row.study_date)).toLocaleDateString("vi-VN")}
                   </td>
                   <td>{row.start_time.slice(0, 5)}</td>
                   <td>{row.end_time.slice(0, 5)}</td>

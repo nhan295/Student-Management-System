@@ -11,24 +11,46 @@ export default function WeeklyTimeline({
   nextWeek,
   goToday,
 }) {
-  // --- Tính toán 7 ngày trong tuần (CN→Thứ 7) ---
+  // --- Helpers ---
+
+  // Parse date string an toàn
+  const parseDate = (dateString) => {
+    if (dateString.includes("T") || dateString.includes("Z")) {
+      return new Date(dateString);
+    }
+    return new Date(dateString + "T00:00:00");
+  };
+
+  // Format date theo local time: YYYY-MM-DD
+  const formatDateLocal = (date) => {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Tính 7 ngày trong tuần bắt đầu từ currentSunday
   const daysOfWeek = Array.from({ length: 7 }, (_, idx) => {
     const d = new Date(currentSunday);
     d.setDate(currentSunday.getDate() + idx);
+
     return {
-      iso: d.toISOString().slice(0, 10), // "YYYY-MM-DD"
+      iso: formatDateLocal(d),
       labelDay: idx === 0 ? "CN" : `Thứ ${idx + 1}`,
       labelDate: `${d.getDate()}/${d.getMonth() + 1}`,
       dateObj: d,
     };
   });
 
-  // --- Mảng giờ từ 6 → 18 (mỗi 1h 1 dòng) ---
-  const hours = Array.from({ length: 13 }, (_, i) => 6 + i); // [6,7,...,18]
+  // Mảng giờ từ 6h đến 18h
+  const hours = Array.from({ length: 13 }, (_, i) => 6 + i);
+
+  // Lấy ngày hôm nay theo local time
+  const todayISO = formatDateLocal(new Date());
 
   return (
     <div className="weekly-calendar-container">
-      {/* ===== Controls: “Hôm nay”, <<, >>, Title Tháng Năm, Dropdown giảng viên ===== */}
+      {/* Controls */}
       <div className="calendar-controls">
         <div className="left-group">
           <button className="today-button" onClick={goToday}>
@@ -40,6 +62,7 @@ export default function WeeklyTimeline({
             {currentSunday.toLocaleString("vi-VN", {
               month: "long",
               year: "numeric",
+              timeZone: "Asia/Ho_Chi_Minh",
             })}
           </span>
         </div>
@@ -62,11 +85,11 @@ export default function WeeklyTimeline({
         </div>
       </div>
 
-      {/* ===== Header: ô trống góc trái + 7 cột ngày ===== */}
+      {/* Header */}
       <div className="calendar-header">
         <div className="corner-cell"></div>
         {daysOfWeek.map((day, idx) => {
-          const isToday = day.iso === new Date().toISOString().slice(0, 10);
+          const isToday = day.iso === todayISO;
           return (
             <div key={idx} className={`day-cell ${isToday ? "current" : ""}`}>
               <div>{day.labelDay}</div>
@@ -76,7 +99,7 @@ export default function WeeklyTimeline({
         })}
       </div>
 
-      {/* ===== Body: cột thời gian + 7 cột ngày ===== */}
+      {/* Body */}
       <div className="calendar-body">
         {/* Cột giờ */}
         <div className="time-column">
@@ -87,36 +110,30 @@ export default function WeeklyTimeline({
           ))}
         </div>
 
-        {/* 7 cột ngày */}
+        {/* Các cột ngày */}
         {daysOfWeek.map((day, dIdx) => {
-          // Lọc những event có cùng study_date = day.iso
-          const eventsOfDay = schedules.filter(
-            (evt) => evt.study_date.slice(0, 10) === day.iso
-          );
+          const eventsOfDay = schedules.filter((evt) => {
+            const eventDate = formatDateLocal(parseDate(evt.study_date));
+            return eventDate === day.iso;
+          });
 
           return (
             <div key={dIdx} className="day-column">
-              {/* Hàng trống khung giờ */}
               {hours.map((h) => (
                 <div key={h} className="hour-slot"></div>
               ))}
 
-              {/* Vẽ event */}
               {eventsOfDay.map((evt) => {
-                // Convert kiểu "HH:MM:SS" hoặc "HH:mm" sang số phút từ 6:00
                 const start = evt.start_time.slice(0, 5);
                 const end = evt.end_time.slice(0, 5);
                 const [sh, sm] = start.split(":").map(Number);
                 const [eh, em] = end.split(":").map(Number);
 
-                // Số phút từ 6 AM: (sh*60 + sm) − (6*60)
                 const offsetMinutes = sh * 60 + sm - 6 * 60;
-                // Thời lượng (minutes)
                 const duration = eh * 60 + em - (sh * 60 + sm);
 
-                // Chuyển số phút thành pixel (giả sử mỗi giờ = 60px)
-                const topPx = (offsetMinutes / 60) * 60 + 1;
-                const heightPx = (duration / 60) * 60 - 2;
+                const topPx = Math.max(1, (offsetMinutes / 60) * 60 + 1);
+                const heightPx = Math.max(20, (duration / 60) * 60 - 2);
 
                 return (
                   <div
@@ -128,7 +145,7 @@ export default function WeeklyTimeline({
                       left: "4px",
                       right: "4px",
                     }}
-                    title={`${evt.subject_name} – ${evt.class_name}\n${start}–${end}\nPhòng: ${evt.room_name}`}
+                    title={`${evt.subject_name} – ${evt.class_name}\n${start}–${end}\nPhòng: ${evt.room_name}\nGiảng viên: ${evt.lecturer_name}`}
                   >
                     <div className="font-semibold text-sm">
                       {evt.subject_name}
@@ -142,6 +159,24 @@ export default function WeeklyTimeline({
                   </div>
                 );
               })}
+
+              {eventsOfDay.length > 0 && (
+                <div
+                  className="debug-info"
+                  style={{
+                    position: "absolute",
+                    bottom: "2px",
+                    left: "2px",
+                    fontSize: "10px",
+                    background: "rgba(0,0,0,0.5)",
+                    color: "white",
+                    padding: "2px",
+                    borderRadius: "2px",
+                  }}
+                >
+                  {eventsOfDay.length} events
+                </div>
+              )}
             </div>
           );
         })}

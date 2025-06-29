@@ -247,6 +247,7 @@ function StudentInfoPage() {
                         : ""
                     }
                     onChange={(e) => setPartyJoinDate(e.target.value)}
+                    max={new Date().toISOString().split('T')[0]}
                   />
 
                   <label>Trình độ học vấn:</label>
@@ -254,6 +255,7 @@ function StudentInfoPage() {
                     type="text"
                     value={education_level}
                     onChange={(e) => setEducationLevel(e.target.value)}
+                   
                   />
 
                   <label>Trình độ chuyên môn:</label>

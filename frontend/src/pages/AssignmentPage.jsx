@@ -130,7 +130,7 @@ function Assignment() {
       loadAssigned();
     } catch (error) {
       console.error(error);
-      toast.warning("Giảng viên đã có lịch học, không thể xoá phân công");
+      toast.warning("Đã có lịch học hoặc hình thức thi, không thể xoá phân công");
     }
   };
 

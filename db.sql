@@ -111,7 +111,7 @@ CREATE TABLE `exam_schedule` (
   `assignment_id` int NOT NULL unique,
   PRIMARY KEY (`exSchedule_id`),
   KEY `fk_ES_assignment_idx` (`assignment_id`),
-  CONSTRAINT `fk_ES_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignment` (`assignment_id`)
+  CONSTRAINT `fk_ES_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignment` (`assignment_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 -- =============================================

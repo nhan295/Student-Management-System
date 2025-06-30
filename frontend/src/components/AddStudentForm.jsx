@@ -196,7 +196,7 @@ function AddStudentForm() {
       <form onSubmit={handleSubmit}>
         <input
           name="student_id"
-          placeholder="MSSV"
+          placeholder="MSHV"
           value={form.student_id}
           onChange={handleInputChange}
         />

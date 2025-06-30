@@ -41,12 +41,27 @@ module.exports = {
         "w.created_at"
       ),
 
+  // getClassSubjectWithWarnings: () =>
+  //   db("study_warnings as w")
+  //     .join("assignment as a", "w.assignment_id", "a.assignment_id")
+  //     .join("class as c", "a.class_id", "c.class_id")
+  //     .join("subjects as s", "a.subject_id", "s.subject_id")
+  //     .distinct("c.class_id", "c.class_name", "s.subject_id", "s.subject_name")
+  //     .orderBy("c.class_name", "asc")
+  //     .orderBy("s.subject_name", "asc"),
   getClassSubjectWithWarnings: () =>
     db("study_warnings as w")
       .join("assignment as a", "w.assignment_id", "a.assignment_id")
       .join("class as c", "a.class_id", "c.class_id")
+      .join("courses as k", "c.course_id", "k.course_id") // JOIN khóa học
       .join("subjects as s", "a.subject_id", "s.subject_id")
-      .distinct("c.class_id", "c.class_name", "s.subject_id", "s.subject_name")
+      .distinct(
+        "c.class_id",
+        "c.class_name",
+        "k.course_name", // Lấy thêm tên khóa
+        "s.subject_id",
+        "s.subject_name"
+      )
       .orderBy("c.class_name", "asc")
       .orderBy("s.subject_name", "asc"),
 

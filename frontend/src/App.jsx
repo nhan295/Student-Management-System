@@ -6,7 +6,7 @@ import AddSubject from "./pages/AddSubjectPage";
 import EditSubject from "./pages/EditSubjectPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import SubjectPage from "./pages/subjectPage";
+import SubjectPage from "./pages/SubjectPage";
 import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import ConfirmDialog from "../components/FormDialog";
 import "../styles/Index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,7 +21,7 @@ export default function AddSubject() {
   // Load two most recent subjects
   const fetchRecent = async () => {
     try {
-      const resp = await axios.get("http://localhost:3000/api/v1/subjects");
+      const resp = await api.get("/api/v1/subjects");
       const sorted = resp.data.sort((a, b) => b.subject_id - a.subject_id);
       setRecentSubjects(sorted.slice(0, 2));
     } catch (err) {
@@ -47,7 +47,7 @@ export default function AddSubject() {
     closeConfirm();
     try {
       if (mode === "add") {
-        await axios.post("http://localhost:3000/api/v1/subjects", {
+        await api.post("/api/v1/subjects", {
           subject_name: data.name,
           subject_code: data.code,
           total_lessons: data.totalLessons,
@@ -58,8 +58,8 @@ export default function AddSubject() {
         setTotalLessons("");
         fetchRecent();
       } else if (mode === "delete") {
-        await axios.delete(
-          `http://localhost:3000/api/v1/subjects/${data.subject_id}`
+        await api.delete(
+          `/api/v1/subjects/${data.subject_id}`
         );
         toast.success(`Đã xóa: ${data.subject_name} (${data.subject_code})`);
         fetchRecent();

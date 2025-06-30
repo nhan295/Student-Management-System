@@ -5,32 +5,23 @@ import ConfirmDialog from "../components/FormDialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/ExamAssignmentPage.css";
-import "react-toastify/dist/ReactToastify.css";
 
 function ExamAssignmentPage() {
-  // Form selections
   const [subject_id, setSubject] = useState("");
   const [class_id, setClass] = useState("");
-
-  // Options for selects
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [classOptions, setClassOptions] = useState([]);
-
-  // Assigned list
   const [assignedList, setAssignedList] = useState([]);
 
-  // Modal state
   const [showAddModal, setShowAddModal] = useState(false);
   const [modalSubjectId, setModalSubjectId] = useState("");
   const [modalClassId, setModalClassId] = useState("");
   const [modalExamFormat, setModalExamFormat] = useState("");
-  const [modalAssignmentId, setModalAssignmentId] = useState(""); // lưu trạng thái assignment_id sau khi có subject_id và class_id
+  const [modalAssignmentId, setModalAssignmentId] = useState("");
 
-  // Edit state
-  const [editingId, setEditingId] = useState(null); // ID của item đang được edit
-  const [editFormat, setEditFormat] = useState(""); // Format mới khi edit
+  const [editingId, setEditingId] = useState(null);
+  const [editFormat, setEditFormat] = useState("");
 
-  // ConfirmDialog state
   const [confirmParams, setConfirmParams] = useState({
     isOpen: false,
     title: "",
@@ -45,7 +36,6 @@ function ExamAssignmentPage() {
     setConfirmParams((cp) => ({ ...cp, isOpen: false }));
   };
 
-  // ─── Effects ───
   useEffect(() => {
     getSubjectOptions();
   }, []);
@@ -58,9 +48,21 @@ function ExamAssignmentPage() {
     if (modalSubjectId) getClassOptions(modalSubjectId);
   }, [modalSubjectId]);
 
-  // ─── API calls ───
-  // danh sách môn học để tìm kiếm
-  const getSubjectOptions = async () => {   
+  useEffect(() => {
+    const fetchModalAssignId = async () => {
+      if (modalSubjectId && modalClassId) {
+        try {
+          const id = await getAssignId(modalSubjectId, modalClassId);
+          setModalAssignmentId(id);
+        } catch {
+          toast.warn("Không lấy được assignment_id");
+        }
+      }
+    };
+    fetchModalAssignId();
+  }, [modalSubjectId, modalClassId]);
+
+  const getSubjectOptions = async () => {
     try {
       const res = await api.get("/api/v1/assignment/subjects");
       setSubjectOptions(
@@ -72,8 +74,7 @@ function ExamAssignmentPage() {
     }
   };
 
-  // danh sách lớp theo môn để tìm kiếm
-  const getClassOptions = async (subject_id) => {   
+  const getClassOptions = async (subject_id) => {
     try {
       const res = await api.get(`/api/v1/assignment/class/${subject_id}`);
       setClassOptions(
@@ -88,7 +89,6 @@ function ExamAssignmentPage() {
     }
   };
 
-  // lấy assignment_id theo subject_id và class_id
   const getAssignId = async (subjId, clsId) => {
     const res = await api.get("/api/v1/assignment/getid", {
       params: { subject_id: subjId, class_id: clsId },
@@ -106,23 +106,6 @@ function ExamAssignmentPage() {
     setModalAssignmentId("");
   };
 
-  useEffect(() => {
-    // theo dõi subject_id và class_id khi người dùng có thay đổi
-    const fetchModalAssignId = async () => {
-      if (modalSubjectId && modalClassId) {
-        try {
-          const id = await getAssignId(modalSubjectId, modalClassId); // gọi getAssign và cập nhật modalAssignmentId
-          setModalAssignmentId(id);
-        } catch {
-          toast.warn("Không lấy được assignment_id");
-        }
-      }
-    };
-    fetchModalAssignId();
-  }, [modalSubjectId, modalClassId]);
-
-
-// thêm hình thức thi mới
   const handleAddClick = (e) => {
     e.preventDefault();
     if (!modalAssignmentId || !modalExamFormat)
@@ -146,25 +129,22 @@ function ExamAssignmentPage() {
     });
   };
 
-  // lấy danh sách hình thức thi
-  const getAllAssignment = async () => {
+  const getAllAssignment = async (suppressAlert = false) => {
     if (!subject_id || !class_id) {
-      alert("Vui lòng chọn đầy đủ thông tin");
+      if (!suppressAlert) alert("Vui lòng chọn đầy đủ thông tin");
       return;
     }
     try {
       const res = await api.get("/api/v1/exam-assignment/", {
-        params: {
-          subject_id: subject_id,
-          class_id: class_id,
-        },
+        params: { subject_id, class_id },
       });
-      console.log("res.data:", res.data);
       if (res.data && res.data.length > 0) {
         setAssignedList(res.data);
       } else {
         setAssignedList([]);
-        alert("Không tìm thấy hình thức thi nào cho lớp và học phần đã chọn");
+        if (!suppressAlert) {
+          alert("Không tìm thấy hình thức thi nào cho lớp và học phần đã chọn");
+        }
       }
     } catch (err) {
       console.error("Lỗi khi lấy danh sách exam assignment:", err);
@@ -176,7 +156,6 @@ function ExamAssignmentPage() {
     getAllAssignment();
   };
 
-  // Sửa hình thức thi
   const handleEditClick = (id, format) => {
     openConfirm({
       title: "Xác nhận cập nhật",
@@ -202,11 +181,12 @@ function ExamAssignmentPage() {
       },
     });
   };
-  // Xoá nội dung thi
+
   const handleDelete = async (exSchedule_id) => {
     try {
       await api.delete(`/api/v1/exam-assignment/delete/${exSchedule_id}`);
       toast.success("Đã xoá nội dung thi");
+      getAllAssignment(true);
     } catch (error) {
       console.error(error);
       toast.error("Không thể xoá nội dung thi");
@@ -215,12 +195,8 @@ function ExamAssignmentPage() {
 
   return (
     <div className="exam-assign-container">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        pauseOnHover
-      />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+
       <ConfirmDialog
         isOpen={confirmParams.isOpen}
         title={confirmParams.title}
@@ -315,14 +291,6 @@ function ExamAssignmentPage() {
               >
                 Xoá
               </button>
-
-              {/* Toast notifications */}
-              <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar
-                pauseOnHover
-              />
             </div>
           </div>
         ))}

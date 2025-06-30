@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import AddStudentForm from "../components/AddStudentForm";
 import StudentList from "../components/StudentList";
 import "../styles/Students.css";
@@ -10,13 +10,13 @@ function StudentPage() {
   const [activeTab, setActiveTab] = useState("list");
 
   const fetchCourses = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/courses");
+    const res = await api.get("/api/v1/courses");
     setCourses(res.data);
   };
 
   const fetchClasses = async () => {
-    const res = await axios.get(
-      "http://localhost:3000/api/v1/classes/all-classes"
+    const res = await api.get(
+      "/api/v1/classes/all-classes"
     );
     setClasses(res.data);
   };

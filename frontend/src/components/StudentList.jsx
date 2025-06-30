@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import "../styles/Students.css";
 
 function StudentList() {
@@ -12,11 +12,11 @@ function StudentList() {
   const [filteredClasses, setFilteredClasses] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/v1/classes/all-classes")
+    api
+      .get("/api/v1/classes/all-classes")
       .then((res) => setClasses(res.data));
-    axios
-      .get("http://localhost:3000/api/v1/courses")
+    api
+      .get("/api/v1/courses")
       .then((res) => setCourses(res.data));
   }, []);
 
@@ -36,7 +36,7 @@ function StudentList() {
     }
 
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/students", {
+      const res = await api.get("/api/v1/students", {
         params: { classId, courseId },
       });
       setStudents(res.data);

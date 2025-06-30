@@ -20,22 +20,7 @@ export default function GraduateCertPage() {
     issue_date: "",
     is_issued: false,
   });
-
-  // useEffect(() => {
-  //   fetchAll();
-  // }, []);
-
-  // const fetchAll = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const resp = await api.get("/api/v1/graduation_certificates");
-  //     setResults(resp.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+;
 
   const handleSearch = async (e) => {
     e.preventDefault();

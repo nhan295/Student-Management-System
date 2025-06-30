@@ -297,7 +297,12 @@ export default function GraduateCertPage() {
                 </>
               ) : (
                 <>
-                  <button onClick={handleStartEdit} className="graduate-fix-btn">Sửa</button>
+                  <button
+                    onClick={handleStartEdit}
+                    className="graduate-fix-btn"
+                  >
+                    Sửa
+                  </button>
                   {/* <button
                     onClick={handleDelete}
                     style={{ background: "#ef4444", color: "#fff" }}
@@ -313,7 +318,7 @@ export default function GraduateCertPage() {
 
       {/* Modal Thêm mới */}
       {isAddOpen && (
-        <div className="modal-overlay" onClick={closeAdd}>
+        <div className="modal-overlay">
           <div
             className="modal-content cert-display"
             onClick={(e) => e.stopPropagation()}

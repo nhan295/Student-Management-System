@@ -403,7 +403,7 @@ function AddStudentForm() {
   const [newClass, setNewClass] = useState({
     class_name: "",
     course_id: "",
-    total_student: "",
+    total_student: 100,
   });
 
   // Xác nhận thao tác
@@ -496,7 +496,7 @@ function AddStudentForm() {
   // SỬA: Gọi xác nhận thay vì gọi API trực tiếp
   const handleAddNewClass = () => {
     const { class_name, course_id, total_student } = newClass;
-    if (!class_name || !course_id || !total_student) {
+    if (!class_name || !course_id) {
       alert("Vui lòng điền đầy đủ thông tin lớp học mới.");
       return;
     }
@@ -547,7 +547,7 @@ function AddStudentForm() {
         setShowClassForm(false);
       }
     } catch (err) {
-      toast.error("Mã học viên đã tồn tại!");
+      toast.error("Có lỗi xảy ra khi thực hiện thao tác!");
       console.error(err);
     }
   };
@@ -721,13 +721,13 @@ function AddStudentForm() {
               </option>
             ))}
           </select>
-          <input
+          {/* <input
             name="total_student"
             type="number"
             placeholder="Sĩ số lớp"
             value={newClass.total_student}
             onChange={handleNewClassChange}
-          />
+          /> */}
           <button type="button" onClick={handleAddNewClass}>
             Lưu lớp học
           </button>

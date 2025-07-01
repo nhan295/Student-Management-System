@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 import ConfirmDialog from "../components/FormDialog";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/SubjectPage.css";
 
 const PAGE_SIZE = 5;
@@ -23,11 +25,11 @@ export default function SubjectPage() {
   // Load danh sách
   const fetchSubjects = async () => {
     try {
-      const resp = await axios.get("http://localhost:3000/api/v1/subjects");
+      const resp = await api.get("/api/v1/subjects");
       setSubjects(resp.data);
     } catch (err) {
       console.error(err);
-      alert("Lỗi khi tải danh sách học phần");
+      toast.error("Lỗi khi tải danh sách học phần");
     }
   };
   useEffect(() => {
@@ -50,11 +52,12 @@ export default function SubjectPage() {
   // Thực sự xóa
   const performDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/subjects/${id}`);
+      await api.delete(`/api/v1/subjects/${id}`);
       fetchSubjects();
+      toast.success("Xóa học phần thành công!");
     } catch (err) {
       console.error(err);
-      alert("Xóa thất bại");
+      toast.error("Học phần đang được sử dụng, không thể xóa");
     }
   };
 
@@ -194,6 +197,14 @@ export default function SubjectPage() {
         message={confirmParams.message}
         onConfirm={confirmParams.onConfirm}
         onCancel={closeConfirm}
+      />
+
+      {/* Toast notification */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
       />
     </div>
   );

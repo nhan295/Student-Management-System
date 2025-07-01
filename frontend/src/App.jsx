@@ -6,7 +6,7 @@ import AddSubject from "./pages/AddSubjectPage";
 import EditSubject from "./pages/EditSubjectPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import SubjectPage from "./pages/subjectPage";
+import SubjectPage from "./pages/SubjectPage";
 import ClassList from "./components/ClassList";
 import SchedulePage from "./pages/SchedulePage";
 
@@ -59,7 +59,7 @@ function App() {
         <Route path="classes/search" element={<ClassList />} />
         <Route path="schedules" element={<SchedulePage />} />
 
-        <Route path="students" element={<StudentPage />} />
+        <Route path="students" element={<StudentPage/>} />
         <Route path="student/search" element={<SearchStudentPage />} />
 
         <Route

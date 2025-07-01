@@ -43,7 +43,7 @@ exports.addStudent = async (req, res) => {
 
     res.status(200).json({ message: "Thêm sinh viên thành công" });
   } catch (err) {
-    console.error("🔥 Lỗi thêm sinh viên:", err);
+    console.error("Lỗi thêm sinh viên:", err);
     res.status(500).json({ error: err.message });
   }
 };

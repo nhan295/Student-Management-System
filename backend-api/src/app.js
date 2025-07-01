@@ -12,7 +12,7 @@ const lectureRoute = require("./routes/lectureRoute");
 const assignmentRoute = require("./routes/assignmentRoute");
 const studentRoute = require("./routes/studentRoute");
 const courseRoute = require("./routes/courseRoute");
-const progressRoute = require("./routes/ProgressRoute");
+const progressRoute = require("./routes/progressRoute");
 
 const examAssignmentRoute = require("./routes/examAssignmentRoute");
 
@@ -25,7 +25,7 @@ const app = express();
 // CORS trước mọi routes
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:3000","http://localhost:5173"],
     credentials: true,
   })
 );

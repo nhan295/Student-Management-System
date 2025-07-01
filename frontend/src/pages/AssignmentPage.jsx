@@ -130,7 +130,7 @@ function Assignment() {
       loadAssigned();
     } catch (error) {
       console.error(error);
-      toast.warning("Giảng viên đã có lịch học, không thể xoá phân công");
+      toast.warning("Đã có lịch học hoặc hình thức thi, không thể xoá phân công");
     }
   };
 
@@ -205,6 +205,7 @@ function Assignment() {
             <label>Giảng viên</label>
             <Select
               options={lecturerOptions}
+              value={lecturerOptions.find((opt)=> opt.value===lecturer_id) || null}
               onChange={(opt) => setLecturer(opt?.value || "")}
               placeholder="Chọn giảng viên..."
               isSearchable
@@ -212,12 +213,14 @@ function Assignment() {
             <label>Học phần</label>
             <Select
               options={subjectOptions}
+              value={lecturerOptions.find((opt)=> opt.value===subject_id) || null}
               onChange={(opt) => setSubject(opt?.value || "")}
               placeholder="Chọn học phần..."
             />
             <label>Lớp học</label>
             <Select
               options={classOptions}
+              value={lecturerOptions.find((opt)=> opt.value===class_id) || null}
               onChange={(opt) => setClass(opt?.value || "")}
               placeholder="Chọn lớp học..."
             />

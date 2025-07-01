@@ -20,22 +20,7 @@ export default function GraduateCertPage() {
     issue_date: "",
     is_issued: false,
   });
-
-  // useEffect(() => {
-  //   fetchAll();
-  // }, []);
-
-  // const fetchAll = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const resp = await api.get("/api/v1/graduation_certificates");
-  //     setResults(resp.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+;
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -297,7 +282,12 @@ export default function GraduateCertPage() {
                 </>
               ) : (
                 <>
-                  <button onClick={handleStartEdit} className="graduate-fix-btn">Sửa</button>
+                  <button
+                    onClick={handleStartEdit}
+                    className="graduate-fix-btn"
+                  >
+                    Sửa
+                  </button>
                   {/* <button
                     onClick={handleDelete}
                     style={{ background: "#ef4444", color: "#fff" }}
@@ -313,7 +303,7 @@ export default function GraduateCertPage() {
 
       {/* Modal Thêm mới */}
       {isAddOpen && (
-        <div className="modal-overlay" onClick={closeAdd}>
+        <div className="modal-overlay">
           <div
             className="modal-content cert-display"
             onClick={(e) => e.stopPropagation()}

@@ -6,7 +6,7 @@ const lookupModel = {
     return db("room").select("room_id", "room_name");
   },
   getClasses: () => {
-    return db("Class").select("class_id", "class_name");
+    return db("class").select("class_id", "class_name");
   },
   getSubjects: () => {
     return db("subjects").select("subject_id", "subject_name");
@@ -19,7 +19,7 @@ const lookupModel = {
   // Thêm hàm này để lấy data "assignment"
   getAssignments: () => {
     return db("assignment as a")
-      .join("Class      as c", "a.class_id", "c.class_id")
+      .join("class      as c", "a.class_id", "c.class_id")
       .join("subjects   as sub", "a.subject_id", "sub.subject_id")
       .join("lecturers  as lec", "a.lecturer_id", "lec.lecturer_id")
       .select(

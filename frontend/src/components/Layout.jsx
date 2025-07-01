@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
-import "../styles/index.css";
+import "../styles/Index.css";
 
 export default function Layout({ onLogout }) {
   const [isOpen, setIsOpen] = useState(true);

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
+import ConfirmDialog from "../components/FormDialog";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/Students.css";
 
 function AddStudentForm() {
@@ -35,7 +38,14 @@ function AddStudentForm() {
   const [newClass, setNewClass] = useState({
     class_name: "",
     course_id: "",
-    total_student: "",
+    total_student: 100,
+  });
+
+  // Xác nhận thao tác
+  const [confirmParams, setConfirmParams] = useState({
+    isOpen: false,
+    action: "",
+    data: null,
   });
 
   useEffect(() => {
@@ -45,8 +55,8 @@ function AddStudentForm() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/students/courses"
+      const res = await api.get(
+        "/api/v1/students/courses"
       );
       setCourses(res.data);
     } catch (err) {
@@ -56,8 +66,8 @@ function AddStudentForm() {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3000/api/v1/classes/all-classes"
+      const res = await api.get(
+        "/api/v1/classes/all-classes"
       );
       setClasses(res.data);
     } catch (err) {
@@ -79,21 +89,18 @@ function AddStudentForm() {
     setFilteredClasses(filtered);
   };
 
-  const handleSubmit = async (e) => {
+  // SỬA: Gọi xác nhận thay vì gọi API trực tiếp
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     // Các trường không cần validate
     const optionalFields = ["barcode", "plan_title"];
-
-    // Check các trường bắt buộc
     for (let key in form) {
       if (optionalFields.includes(key)) continue;
       if (!form[key]) {
-        alert(`Vui lòng điền đầy đủ thông tin: ${key}`);
+        toast.warning(`Vui lòng điền đầy đủ thông tin: ${key}`);
         return;
       }
     }
-
         // Kiểm tra ngày hợp lệ
     const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại dưới dạng YYYY-MM-DD
 
@@ -128,6 +135,7 @@ function AddStudentForm() {
       console.error("Lỗi từ backend:", err.response?.data || err.message);
       alert("Lỗi khi thêm học viên!");
     }
+    setConfirmParams({ isOpen: true, action: "addStudent", data: { ...form } });
   };
 
   const handleNewCourseChange = (e) => {
@@ -135,60 +143,86 @@ function AddStudentForm() {
     setNewCourse((prev) => ({ ...prev, [name]: value }));
   };
 
+  // SỬA: Gọi xác nhận thay vì gọi API trực tiếp
+  const handleAddNewCourse = () => {
+    const { course_name, start_year, end_year } = newCourse;
+    if (!course_name || !start_year || !end_year) {
+      toast.warning("Vui lòng điền đầy đủ thông tin khóa học mới.");
+      return;
+    }
+    setConfirmParams({
+      isOpen: true,
+      action: "addCourse",
+      data: { ...newCourse },
+    });
+  };
+
   const handleNewClassChange = (e) => {
     const { name, value } = e.target;
     setNewClass((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddNewCourse = async () => {
-    const { course_name, start_year, end_year } = newCourse;
-    if (!course_name || !start_year || !end_year) {
-      alert("Vui lòng điền đầy đủ thông tin khóa học mới.");
-      return;
-    }
-
-    try {
-      await axios.post("http://localhost:3000/api/v1/courses", newCourse);
-      alert("Thêm khóa học mới thành công!");
-      setNewCourse({ course_name: "", start_year: "", end_year: "" });
-      fetchCourses();
-      setShowCourseForm(false);
-    } catch (err) {
-      console.error("Lỗi khi thêm khóa học mới:", err);
-      alert("Không thể thêm khóa học mới.");
-    }
-  };
-
-  const handleAddNewClass = async () => {
+  // SỬA: Gọi xác nhận thay vì gọi API trực tiếp
+  const handleAddNewClass = () => {
     const { class_name, course_id, total_student } = newClass;
-
-    if (!class_name || !course_id || !total_student) {
+    if (!class_name || !course_id) {
       alert("Vui lòng điền đầy đủ thông tin lớp học mới.");
       return;
     }
+    setConfirmParams({
+      isOpen: true,
+      action: "addClass",
+      data: {
+        class_name,
+        course_id: Number(course_id),
+        total_student: Number(total_student),
+      },
+    });
+  };
 
-    const payload = {
-      class_name,
-      course_id: Number(course_id),
-      total_student: Number(total_student),
-    };
-
+  // Hàm thực thi sau khi xác nhận
+  const handleConfirm = async () => {
+    const { action, data } = confirmParams;
+    setConfirmParams({ isOpen: false, action: "", data: null });
     try {
-      await axios.post("http://localhost:3000/api/v1/classes", payload);
-
-      alert("Thêm lớp học mới thành công!");
-      setNewClass({
-        class_name: "",
-        course_id: "",
-        total_student: "",
-      });
-      fetchClasses();
-      setShowClassForm(false);
+      if (action === "addStudent") {
+        await api.post("/api/v1/students", data);
+        toast.success("Thêm học viên thành công!");
+        setForm({
+          student_id: "",
+          student_name: "",
+          birthday: "",
+          gender: "",
+          party_join_date: "",
+          professional_level: "",
+          title: "",
+          agency_name: "",
+          plan_title: "",
+          barcode: "",
+          course_id: "",
+          class_id: "",
+        });
+      } else if (action === "addCourse") {
+        await api.post("/api/v1/courses", data);
+        toast.success("Thêm khóa học mới thành công!");
+        setNewCourse({ course_name: "", start_year: "", end_year: "" });
+        fetchCourses();
+        setShowCourseForm(false);
+      } else if (action === "addClass") {
+        await api.post("/api/v1/classes", data);
+        toast.success("Thêm lớp học mới thành công!");
+        setNewClass({ class_name: "", course_id: "", total_student: "" });
+        fetchClasses();
+        setShowClassForm(false);
+      }
     } catch (err) {
-      console.error("Lỗi khi thêm lớp học mới:", err);
-      alert("Không thể thêm lớp học mới.");
+      toast.error("Có lỗi xảy ra khi thực hiện thao tác!");
+      console.error(err);
     }
   };
+
+  const closeConfirm = () =>
+    setConfirmParams({ isOpen: false, action: "", data: null });
 
   return (
     <div className="add-student-form-container">
@@ -196,7 +230,7 @@ function AddStudentForm() {
       <form onSubmit={handleSubmit}>
         <input
           name="student_id"
-          placeholder="MSSV"
+          placeholder="MSHV"
           value={form.student_id}
           onChange={handleInputChange}
         />
@@ -307,7 +341,6 @@ function AddStudentForm() {
           {showClassForm ? "Ẩn form lớp học" : "Thêm lớp học"}
         </button>
       </form>
-
       {showCourseForm && (
         <div className="new-course-form">
           <h4>Thêm khóa học mới</h4>
@@ -336,7 +369,6 @@ function AddStudentForm() {
           </button>
         </div>
       )}
-
       {showClassForm && (
         <div className="new-class-form">
           <h4>Thêm lớp học mới</h4>
@@ -358,18 +390,40 @@ function AddStudentForm() {
               </option>
             ))}
           </select>
-          <input
+          {/* <input
             name="total_student"
             type="number"
             placeholder="Sĩ số lớp"
             value={newClass.total_student}
             onChange={handleNewClassChange}
-          />
+          /> */}
           <button type="button" onClick={handleAddNewClass}>
             Lưu lớp học
           </button>
         </div>
       )}
+      {/* ConfirmDialog + ToastContainer */}
+      <ConfirmDialog
+        isOpen={confirmParams.isOpen}
+        title="Xác nhận thao tác"
+        message={
+          confirmParams.action === "addStudent"
+            ? "Bạn có chắc chắn muốn thêm học viên này?"
+            : confirmParams.action === "addCourse"
+            ? "Bạn có chắc chắn muốn thêm khóa học mới?"
+            : confirmParams.action === "addClass"
+            ? "Bạn có chắc chắn muốn thêm lớp học mới?"
+            : ""
+        }
+        onConfirm={handleConfirm}
+        onCancel={closeConfirm}
+      />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+      />{" "}
     </div>
   );
 }

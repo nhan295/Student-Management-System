@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/SearchStudentPage.css";
@@ -17,8 +17,8 @@ const SearchStudentPage = () => {
     }
     setLoading(true);
     try {
-      const { data } = await axios.get(
-        "http://localhost:3000/api/v1/student/search",
+      const { data } = await api.get(
+        "/api/v1/student/search",
         { params: { term: searchTerm.trim() } }
       );
       setResults(data);

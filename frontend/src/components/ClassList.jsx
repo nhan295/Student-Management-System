@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import "../styles/ClassList.css";
 import EnterGradeModal from "./EnterGradeModal";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,10 +19,10 @@ function ClassList() {
     const fetchInitialData = async () => {
       try {
         const [classRes, subjectRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/v1/classes/all-classes", {
+          api.get("/api/v1/classes/all-classes", {
             withCredentials: true,
           }),
-          axios.get("http://localhost:3000/api/v1/classes/all-subjects", {
+          api.get("/api/v1/classes/all-subjects", {
             withCredentials: true,
           }),
         ]);
@@ -43,8 +43,8 @@ function ClassList() {
     }
 
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/classes/students-by-subject",
+      const response = await api.get(
+        "/api/v1/classes/students-by-subject",
         {
           params: { subjectId, classId },
           withCredentials: true,
@@ -72,8 +72,8 @@ function ClassList() {
     }
   
     try {
-      await axios.put(
-        "http://localhost:3000/api/v1/classes/update-grade",
+      await api.put(
+        "/api/v1/classes/update-grade",
         {
           studentId: student.student_id,
           subjectName: student.subject_name,
@@ -99,7 +99,7 @@ function ClassList() {
     if (!subjectId || !classId) {
       return toast.warn("Vui lòng chọn học phần và lớp học trước khi xuất");
     }
-    const url = `http://localhost:3000/api/v1/classes/export-to-excel?subjectId=${subjectId}&classId=${classId}`;
+    const url = `${api.defaults.baseURL}/api/v1/classes/export-to-excel?subjectId=${subjectId}&classId=${classId}`;
     window.open(url, "_blank");
     toast.info("Đang xuất file Excel…");
   };

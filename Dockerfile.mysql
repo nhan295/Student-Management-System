@@ -1,0 +1,19 @@
+# Dockerfile.mysql - Phiên bản đơn giản
+FROM mysql:8
+
+# Copy file SQL khởi tạo
+COPY db.sql /docker-entrypoint-initdb.d/
+
+# Environment variables
+ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes
+ENV MYSQL_DATABASE=qlyhocvien
+ENV TZ=Asia/Ho_Chi_Minh
+
+# Tạo file cấu hình UTF-8 đơn giản
+RUN echo '[mysqld]' > /etc/mysql/conf.d/charset.cnf && \
+    echo 'character-set-server = utf8mb4' >> /etc/mysql/conf.d/charset.cnf && \
+    echo 'collation-server = utf8mb4_unicode_ci' >> /etc/mysql/conf.d/charset.cnf && \
+    echo '[client]' >> /etc/mysql/conf.d/charset.cnf && \
+    echo 'default-character-set = utf8mb4' >> /etc/mysql/conf.d/charset.cnf
+
+EXPOSE 3306

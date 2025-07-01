@@ -21,23 +21,6 @@ export default function AttendancePage() {
   const [confirmAction, setConfirmAction] = useState(null);
   const [submittedAssignments, setSubmittedAssignments] = useState([]);
 
-  // // Load assignments and mark those already submitted
-  // useEffect(() => {
-  //   api.get("/api/v1/attendance/assignments").then(async (res) => {
-  //     const data = res.data;
-  //     const checked = await Promise.all(
-  //       data.map(async (a) => {
-  //         const r = await api.get("/api/v1/attendance/history", {
-  //           params: { assignment_id: a.assignment_id },
-  //         });
-  //         return r.data.length > 0 ? a.assignment_id : null;
-  //       })
-  //     );
-  //     setSubmittedAssignments(checked.filter(Boolean));
-  //     setAssignments(data);
-  //   });
-  // }, []);
-  // 1. Tách fetch assignments + đánh dấu đã submit thành hàm riêng
   const fetchAssignments = async () => {
     try {
       const { data } = await api.get("/api/v1/attendance/assignments");

@@ -59,25 +59,31 @@ function ClassList() {
       toast.error("Lỗi khi tìm kiếm dữ liệu");
     }
   };
+  
 
   const handleUpdateGrade = async (student) => {
     if (editedGrade === "") {
       return toast.warn("Vui lòng nhập điểm trước khi lưu");
     }
-
+  
+    const numericGrade = parseFloat(editedGrade);
+    if (isNaN(numericGrade) || numericGrade < 0 || numericGrade > 10) {
+      return toast.error("Điểm phải là số từ 0 đến 10");
+    }
+  
     try {
       await api.put(
         "/api/v1/classes/update-grade",
         {
           studentId: student.student_id,
           subjectName: student.subject_name,
-          newGrade: editedGrade,
+          newGrade: numericGrade,
         },
         { withCredentials: true }
       );
-
+  
       const updatedStudents = [...students];
-      updatedStudents[editingIndex].grade = editedGrade;
+      updatedStudents[editingIndex].grade = numericGrade;
       setStudents(updatedStudents);
       setEditingIndex(null);
       setEditedGrade("");
@@ -87,6 +93,7 @@ function ClassList() {
       toast.error("Cập nhật điểm thất bại");
     }
   };
+  
 
   const handleExport = () => {
     if (!subjectId || !classId) {

@@ -63,6 +63,13 @@ const EnterGradeModal = ({ visible, onClose }) => {
         const grade = grades[student.student_id] ?? null;
 
         if (grade !== null) {
+          // ✅ Kiểm tra nếu điểm không hợp lệ
+          if (isNaN(grade) || grade < 0 || grade > 10) {
+            message.error(
+              `Điểm của sinh viên ${student.student_name} phải từ 0 đến 10`
+            );
+            return;
+          }
           await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
             studentId: student.student_id,
             subjectName: subjectName,
@@ -140,17 +147,34 @@ const EnterGradeModal = ({ visible, onClose }) => {
               title: "Điểm",
               render: (_, record) => (
                 <InputNumber
-                  min={0}
-                  max={10}
-                  step={0.1}
-                  style={{ width: "100%" }}
-                  value={grades[record.student_id]}
-                  onChange={(value) =>
-                    handleGradeChange(record.student_id, value)
-                  }
-                />
+  min={0}
+  max={10}
+  step={0.1}
+  style={{ width: "100%" }}
+  value={grades[record.student_id]}
+  formatter={(value) => (value !== undefined ? `${value}` : "")}
+  parser={(value) => {
+    const parsed = parseFloat(value);
+    if (isNaN(parsed)) return undefined;
+
+    // Nếu người dùng nhập sai (ví dụ: -2 hoặc 12), hiển thị cảnh báo
+    if (parsed < 0 || parsed > 10) {
+      message.error("Điểm phải từ 0 đến 10");
+      return undefined; // Không lưu giá trị sai
+    }
+
+    return parsed;
+  }}
+  onChange={(value) => {
+    if (value !== undefined) {
+      handleGradeChange(record.student_id, value);
+    }
+  }}
+/>
+
               ),
-            },
+            }
+            
           ]}
         />
       )}

@@ -24,6 +24,18 @@ const updateGrade = async (req, res) => {
     return res.status(400).json({ error: "Thiếu dữ liệu để cập nhật điểm." });
   }
 
+  const numericGrade = Number(newGrade);
+  if (
+    typeof numericGrade !== "number" ||
+    isNaN(numericGrade) ||
+    numericGrade < 0 ||
+    numericGrade > 10
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Điểm không hợp lệ. Vui lòng nhập số từ 0 đến 10." });
+  }
+
   try {
     const subject = await db("subjects")
       .where({ subject_name: subjectName })
@@ -37,9 +49,9 @@ const updateGrade = async (req, res) => {
 
     const existing = await classModel.findGradeRecord(studentId, subjectId);
     if (existing) {
-      await classModel.updateGrade(studentId, subjectId, newGrade);
+      await classModel.updateGrade(studentId, subjectId, numericGrade);
     } else {
-      await classModel.insertGrade(studentId, subjectId, newGrade);
+      await classModel.insertGrade(studentId, subjectId, numericGrade);
     }
 
     res.json({ message: "Cập nhật điểm thành công!" });

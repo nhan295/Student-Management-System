@@ -94,6 +94,19 @@ function AddStudentForm() {
       }
     }
 
+        // Kiểm tra ngày hợp lệ
+    const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại dưới dạng YYYY-MM-DD
+
+    if (form.birthday > today) {
+      alert("Ngày sinh không được lớn hơn ngày hiện tại.");
+      return;
+    }
+
+    if (form.party_join_date && form.party_join_date > today) {
+      alert("Ngày vào Đảng không được lớn hơn ngày hiện tại.");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:3000/api/v1/students", form);
       alert("Thêm học viên thành công!");

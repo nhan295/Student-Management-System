@@ -225,6 +225,7 @@ function AddStudentForm() {
           type={form.birthday ? "date" : "text"}
           value={form.birthday}
           onChange={handleInputChange}
+          max={new Date().toISOString().split('T')[0]}
           placeholder="Ngày sinh (mm/dd/yyyy)"
           onFocus={(e) => (e.target.type = "date")}
         />
@@ -240,6 +241,7 @@ function AddStudentForm() {
           type={form.party_join_date ? "date" : "text"}
           value={form.party_join_date}
           onChange={handleInputChange}
+          max={new Date().toISOString().split('T')[0]}
           placeholder="Ngày vào đảng (mm/dd/yyyy)"
           onFocus={(e) => (e.target.type = "date")}
         />

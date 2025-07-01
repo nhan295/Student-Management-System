@@ -213,14 +213,14 @@ function Assignment() {
             <label>Học phần</label>
             <Select
               options={subjectOptions}
-              value={lecturerOptions.find((opt)=> opt.value===subject_id) || null}
+              value={subjectOptions.find((opt)=> opt.value===subject_id) || null}
               onChange={(opt) => setSubject(opt?.value || "")}
               placeholder="Chọn học phần..."
             />
             <label>Lớp học</label>
             <Select
               options={classOptions}
-              value={lecturerOptions.find((opt)=> opt.value===class_id) || null}
+              value={classOptions.find((opt)=> opt.value===class_id) || null}
               onChange={(opt) => setClass(opt?.value || "")}
               placeholder="Chọn lớp học..."
             />

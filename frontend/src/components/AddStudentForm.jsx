@@ -114,27 +114,6 @@ function AddStudentForm() {
       return;
     }
 
-    try {
-      await axios.post("http://localhost:3000/api/v1/students", form);
-      alert("Thêm học viên thành công!");
-      setForm({
-        student_id: "",
-        student_name: "",
-        birthday: "",
-        gender: "",
-        party_join_date: "",
-        professional_level: "",
-        title: "",
-        agency_name: "",
-        plan_title: "",
-        barcode: "",
-        course_id: "",
-        class_id: "",
-      });
-    } catch (err) {
-      console.error("Lỗi từ backend:", err.response?.data || err.message);
-      alert("Lỗi khi thêm học viên!");
-    }
     setConfirmParams({ isOpen: true, action: "addStudent", data: { ...form } });
   };
 

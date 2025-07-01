@@ -71,8 +71,7 @@ const EnterGradeModal = ({ visible, onClose }) => {
             );
             return;
           }
-          await axios.put("http://localhost:3000/api/v1/classes/update-grade", {
-
+         
           await api.put("/api/v1/classes/update-grade", {
 
             studentId: student.student_id,

@@ -173,6 +173,7 @@ function AddStudentForm() {
           birthday: "",
           gender: "",
           party_join_date: "",
+          education_level: "",
           professional_level: "",
           title: "",
           agency_name: "",

@@ -129,6 +129,10 @@ function AddStudentForm() {
       toast.warning("Vui lòng điền đầy đủ thông tin khóa học mới.");
       return;
     }
+    if (parseInt(start_year)>= parseInt(end_year)){
+      toast.error('Năm bắt đầu phải nhỏ hơn năm kết thúc')
+      return;
+    }
     setConfirmParams({
       isOpen: true,
       action: "addCourse",
@@ -173,6 +177,7 @@ function AddStudentForm() {
           birthday: "",
           gender: "",
           party_join_date: "",
+          education_level: "",
           professional_level: "",
           title: "",
           agency_name: "",

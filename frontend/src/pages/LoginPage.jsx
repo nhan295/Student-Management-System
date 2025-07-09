@@ -54,7 +54,7 @@ function Login() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              placeholder="Tên đăng nhập"
             />
           </div>
 
@@ -66,7 +66,7 @@ function Login() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder="Mật khẩu"
             />
             <button
             type="button"
@@ -77,7 +77,7 @@ function Login() {
           </div>
 
           <button className="login-btn-form" type="submit">
-            Login
+            Đăng nhập
           </button>
         </form>
       </div>

@@ -36,7 +36,7 @@ CREATE TABLE `room` (
 
 CREATE TABLE `subjects` (
   `subject_id` int NOT NULL AUTO_INCREMENT,
-  `subject_name` varchar(100) DEFAULT NULL,
+  `subject_name` varchar(100) DEFAULT NULL unique,
   `subject_code` varchar(50) DEFAULT NULL,
   `total_lessons` int default null,
   PRIMARY KEY (`subject_id`)

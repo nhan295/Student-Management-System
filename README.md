@@ -51,7 +51,7 @@ JWT_REFRESH_SECRET=
 ```bash
 # Terminal 1
 cd backend
-npm run dev
+npm run start
 
 # Terminal 2
 cd frontend
@@ -61,8 +61,11 @@ npm run dev
 > Or run via Docker Compose:
 ```bash
 docker-compose up --build
-```
+docker-compose down -v (stop and delete volumn)
 
+```
+To pull and run the app, please check the instructions here:
+https://github.com/nhan295/student-management-system-deploy
 ---
 
 ## 🧩 Main Features

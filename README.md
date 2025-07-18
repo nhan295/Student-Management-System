@@ -58,13 +58,13 @@ cd frontend
 npm run dev
 ```
 
-> Or run via Docker Compose:
+> Or run via Docker Compose in local:
 ```bash
 docker-compose up --build
 docker-compose down -v (stop and delete volumn)
 
 ```
-To pull and run the app, please check the instructions here:
+> To pull and run the app from dockerhub, please check the instructions here:
 https://github.com/nhan295/student-management-system-deploy
 ---
 

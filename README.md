@@ -85,17 +85,17 @@ https://github.com/nhan295/student-management-system-deploy
 
 ## 🧩 Main Features
 
-| 🧩 Module                        | 📝 Description                                                                 |
+| 🧩 Module                        | 📝 Description                                                                |
 |----------------------------------|--------------------------------------------------------------------------------|
-| 📘 Enrollment                      |Add new student profiles                                                 |
-| 👤 Student Profiles                | View and update student information; track academic performance                    |
-| 📋 Education Program               | Manage list of courses in the training program                                 |
-| 🗓️ Teaching Schedule & Assignment  | Schedule classes and assign lecturers                                           |
-| ✏️ Exam Formats & Content          | Manage exam formats and exam content                                      |
-| 📚 Academic Results                | View class performance, export results to Excel if needed                                  |
-| 🎓 Graduation Status               | Track and manage graduation records                                            |
-| ⚠️ Academic Warnings               | Monitor students under academic warning due to attendance                      |
-| 📝 Attendance                      | Track student attendance; link to warning system when absenteeism is high     |
+| 📘 Enrollment                      |Add new student profiles                                                 
+| 👤 Student Profiles                | View and update student information; track academic performance                    
+| 📋 Education Program               | Manage list of courses in the training program                                 
+| 🗓️ Teaching Schedule & Assignment  | Schedule classes and assign lecturers                                           
+| ✏️ Exam Formats & Content          | Manage exam formats and exam content                                     
+| 📚 Academic Results                | View class performance, export results to Excel if needed                                  
+| 🎓 Graduation Status               | Track and manage graduation records                                            
+| ⚠️ Academic Warnings               | Monitor students under academic warning due to attendance                      
+| 📝 Attendance                      | Track student attendance; link to warning system when absenteeism is high     
 
 ---
 

@@ -87,15 +87,15 @@ https://github.com/nhan295/student-management-system-deploy
 
 | 🧩 Module                        | 📝 Description                                                                 |
 |----------------------------------|--------------------------------------------------------------------------------|
-| 📘 Tuyển sinh                   | Nhập thông tin sinh viên mới                                                   |
-| 👤 Hồ sơ học viên              | Xem, chỉnh sửa thông tin học viên; xem kết quả học tập                        |
-| 📋 Chương trình đào tạo        | Quản lý danh sách môn học trong chương trình                                  |
-| 🗓️ Lịch giảng dạy & phân công | Sắp lịch dạy & phân công giảng viên                                           |
-| ✏️ Hình thức & nội dung thi    | Quản lý nội dung đề thi và hình thức thi                                      |
-| 📚 Kết quả học tập             | Xem kết quả các lớp, xuất file Excel nếu cần                                   |
-| 🎓 Kết quả tốt nghiệp          | Tra cứu và quản lý bằng tốt nghiệp                                             |
-| ⚠️ Cảnh báo học vụ             | Theo dõi học viên bị cảnh báo do kết quả hoặc điểm danh                       |
-| 📝 Điểm danh                   | Quản lý việc tham gia lớp, liên kết với cảnh báo nếu học viên vắng quá mức     |
+| 📘 Enrollment                      |Add new student profiles                                                 |
+| 👤 Student Profiles                | View and update student information; track academic performance                    |
+| 📋 Education Program               | Manage list of courses in the training program                                 |
+| 🗓️ Teaching Schedule & Assignment  | Schedule classes and assign lecturers                                           |
+| ✏️ Exam Formats & Content          | Manage exam formats and exam content                                      |
+| 📚 Academic Results                | View class performance, export results to Excel if needed                                  |
+| 🎓 Graduation Status               | Track and manage graduation records                                            |
+| ⚠️ Academic Warnings               | Monitor students under academic warning due to attendance                      |
+| 📝 Attendance                      | Track student attendance; link to warning system when absenteeism is high     |
 
 ---
 

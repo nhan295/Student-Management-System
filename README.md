@@ -61,7 +61,21 @@ npm run dev
 > Or run via Docker Compose in local:
 ```bash
 docker-compose up --build
-docker-compose down -v (stop and delete volumn)
+```
+# Tag backend
+docker tag student-management-system-backend nhan295/student-management-system-backend:latest
+
+# Tag frontend
+docker tag student-management-system-frontend nhan295/student-management-system-frontend:latest
+
+# Tag database (custom MySQL với data)
+docker tag student-management-system-db nhan295/student-management-system-mysql:latest
+# Push to Docker Hub
+docker push nhan295/student-management-system-backend:latest
+docker push nhan295/student-management-system-frontend:latest
+docker push nhan295/student-management-system-mysql:latest
+# And
+```bash docker-compose down -v ``` is used to stop all containers and remove the associated volumes.
 
 ```
 > To pull and run the app from dockerhub, please check the instructions here:

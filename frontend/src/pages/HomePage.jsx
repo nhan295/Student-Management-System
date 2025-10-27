@@ -1,6 +1,6 @@
 import "../styles/HomePage.css";
 import { useNavigate } from "react-router-dom";
-import banner from "../assets/images/banner.png";
+import banner from "../assets/images/banner1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";

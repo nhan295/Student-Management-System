@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, Navigate } from "react-router-dom";
-import banner from "../assets/images/banner.png";
+import banner from "../assets/images/banner1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ConfirmDialog from "./FormDialog";
